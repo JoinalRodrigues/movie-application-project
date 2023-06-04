@@ -1,0 +1,34 @@
+<div class="contain mt-5 p-5">
+ 
+   <form>
+    <div class="row">
+        <div class="mb-3 col-lg-10">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control searchdesign" placeholder="Search for movies..." [(ngModel)]="searchStr"
+                        name="searchStr" (keyup.enter)="search()">
+                        
+                    <div class="col-lg-2">
+                        <button class="btn btn-md" type="button" (click)="search()">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</form>
+
+<!-- search results -->
+<div class="row mt-5" >
+    <div class="col-lg-4"  *ngFor="let s of searchResult">
+        <div class="row">
+            <div class="col-lg-3 mt-4 mb-4" *ngIf="s.posterPath">
+                <img src="https://image.tmdb.org/t/p/original/{{s.posterPath}}"> 
+            </div>
+                 <div class="col-lg-9 mt-4 mb-4">
+                <h3>{{s.originalTitle}}</h3>
+                <p>{{s.overview}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

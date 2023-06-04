@@ -1,0 +1,35 @@
+image: maven:3.8-openjdk-17
+
+build-job:
+  stage: build
+  script:
+    - echo "Hello, $GITLAB_USER_LOGIN!"
+    - curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-432.0.0-linux-x86_64.tar.gz
+    - RUN mkdir -p /usr/local/gcloud \
+      && tar -C /usr/local/gcloud -xvf /tmp/google-cloud-cli-432.0.0-linux-x86_64.tar.gz \
+      && /usr/local/gcloud/google-cloud-sdk/install.sh
+    - pwd
+    - echo $PATH
+    - export PATH=/usr/local/gcloud/google-cloud-sdk/bin:$PATH
+    - echo $PATH
+    - dir
+    - gcloud auth activate-service-account ci-cd-935@aerial-venture-386206.iam.gserviceaccount.com  --key-file=/builds/766963_JOINAL/movie-main-project/aerial-venture-386206-b11b4f81d05e.json --project=aerial-venture-386206
+    - mvn compile
+#    - /usr/local/gcloud/google-cloud-sdk/bin/gcloud init
+    - cd api-gateway
+    - mvn compile
+
+test-job:
+  stage: test
+  script:
+    - echo "This job tests something"
+    - cd api-gateway
+    - mvn test
+
+package-job:
+  stage: deploy
+  script:
+    - echo "This job packs something"
+    - cd api-gateway
+    - mvn package
+

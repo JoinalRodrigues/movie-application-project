@@ -1,0 +1,54 @@
+server:
+  port: 8761
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: eureka-server-1
+  data:
+    redis:
+      host: 10.96.0.15
+      port: 6379
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://10.96.0.12:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
+    preferIpAddress: true
+    statusPageUrlPath: http://34.83.1.21/api/v1/admin/${MY_POD_IP}/actuator
+
+springdoc:
+  show-actuator: true
+  use-management-port: true
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  server:
+    port: 8090
+  endpoints:
+    enabled-by-default: true
+    web:
+      base-path: /api/v1/admin/${MY_POD_IP}/actuator
+      exposure:
+        include: "*"
+#      cors: # according to docs this is disabled by default unless values specified
+#        allowed-origins: "http://localhost:4200"
+#        allowed-methods: GET,POST
+  security:
+    enabled: false
+    sessions: never
+
+logging:
+  file:
+    name: ./logs/eureka-server-1.log
+  level:
+    com:
+      netflix:
+        eureka: OFF
+        discovery: OFF

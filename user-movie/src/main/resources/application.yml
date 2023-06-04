@@ -1,0 +1,82 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: user-movie
+  data:
+    mongodb:
+      uri: mongodb+srv://tomaranjali1702:anjali1702@cluster.s7icl63.mongodb.net/?retryWrites=true&w=majority
+      database: user-movie
+    redis:
+      host: 10.96.0.15
+      port: 6379
+  rabbitmq:
+    host: 10.96.0.14
+    port: 5672
+    username: admin
+    password: admin
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://10.96.0.11:8761/eureka, http://10.96.0.12:8761/eureka
+    fetchRegistry: true
+    registerWithEureka: true
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
+    statusPageUrlPath: http://34.83.1.21/api/v1/admin/${MY_POD_IP}/actuator
+    preferIpAddress: true
+
+springdoc:
+  show-actuator: true
+  use-management-port: true
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  server:
+    port: 8090
+  endpoints:
+    enabled-by-default: true
+    web:
+      base-path: /api/v1/admin/${MY_POD_IP}/actuator
+      exposure:
+        include: "*"
+#        cors: # according to docs this is disabled by default unless values specified
+#          allowed-origins: "http://localhost:4200"
+#          allowed-methods: GET,POST
+  security:
+    enabled: false
+    sessions: never
+
+logging:
+  file:
+    name: ./logs/user-movie.log
+
+#  logback:
+#    rollingpolicy:
+#      max-file-size: 10MB
+
+#server:
+#  port: 8080
+#
+#
+#spring:
+#  application:
+#    name: user-movie
+#  data:
+#    mongodb:
+#      uri: mongodb://mongodbservice:27017/movie_db
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://eureka-server:8761/eureka
+#      fetchRegistry: true
+#      registerWithEureka: true
+
+
+

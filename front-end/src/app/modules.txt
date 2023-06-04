@@ -1,0 +1,3 @@
+Please these modules in app.module.ts
+
+MatTableModule, MatCheckboxModule, MatSelectModule, MatPaginatorModule
