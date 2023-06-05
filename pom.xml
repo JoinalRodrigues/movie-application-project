@@ -21,11 +21,11 @@
 	</properties>
 
 	<modules>
-		<module>api-gateway</module>
-		<module>user-authentication</module>
+<!--		<module>api-gateway</module>-->
+<!--		<module>user-authentication</module>-->
 		<module>user-movie</module>
-		<module>recommended-service</module>
-		<module>push-notification</module>
+<!--		<module>recommended-service</module>-->
+<!--		<module>push-notification</module>-->
 	</modules>
 
 	<dependencies>

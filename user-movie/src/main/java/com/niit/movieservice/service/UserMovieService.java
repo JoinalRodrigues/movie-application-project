@@ -1,6 +1,7 @@
 package com.niit.movieservice.service;
 
 import com.niit.movieservice.dto.NotificationDTO;
+import com.niit.movieservice.dto.NotificationDeliveredDTO;
 import com.niit.movieservice.exception.*;
 import com.niit.movieservice.model.Movie;
 import com.niit.movieservice.model.User;
@@ -16,5 +17,5 @@ public interface UserMovieService {
     List<Movie> getAllFavouriteMovies(String email);
     boolean removeMovieFromFavourites(int movieId, String emailId) throws MovieNotFoundException;
     boolean pushNotification(Movie movie,String email) throws UserNotFoundException;
-
+    void deleteNotification(NotificationDeliveredDTO notificationDeliveredDTO) throws Exception,UserNotFoundException;
     }

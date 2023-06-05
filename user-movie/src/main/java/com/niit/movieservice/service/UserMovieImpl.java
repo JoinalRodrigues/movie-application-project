@@ -37,7 +37,6 @@ public class UserMovieImpl implements UserMovieService{
     private final DirectExchange directExchange;
 
 
-
     @Override
     public User registerUser(String email, String password, MultipartFile file) throws UserAlreadyExistsException, ImageTooLargeException, IOException, InternalServerError, ExecutionException, InterruptedException {
         User user = new User();
@@ -71,20 +70,20 @@ throw new InternalServerError();
         return true ;
     }
 
+    @Override
     @RabbitListener(queues = "notification-delivered-queue", ackMode = "AUTO")
-    public void deleteNotification(NotificationDeliveredDTO notificationDeliveredDTO) throws Exception {
+    public void deleteNotification(NotificationDeliveredDTO notificationDeliveredDTO) throws Exception, UserNotFoundException {
         boolean movieIdIsPresent = false;
-        if (userMovieRepository.findById(notificationDeliveredDTO.getEmailId()).isPresent()) {
-            User userDetails = userMovieRepository.findById(notificationDeliveredDTO.getEmailId()).get();
+            User userDetails = userMovieRepository.findById(notificationDeliveredDTO.getEmailId()).orElseThrow(UserNotFoundException::new);
             List<Movie> delMovies = userDetails.getNotifications();
-            movieIdIsPresent = delMovies.removeIf(x -> x.getMovieId()==(notificationDeliveredDTO.getMovie().getMovieId()));
+            movieIdIsPresent = delMovies.removeIf(x -> x.getMovieId()==notificationDeliveredDTO.getMovie().getMovieId());
 
-            System.out.println(userDetails);
+            System.err.print(delMovies);
             userDetails.setNotifications(delMovies);
             userMovieRepository.save(userDetails);
         }
 
-    }
+
     @Override
     public User addMovieToFavourites(Movie movie, String email) throws UserNotFoundException {
         if (userMovieRepository.findById(email).isPresent()) {
