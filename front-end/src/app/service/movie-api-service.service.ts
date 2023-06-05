@@ -22,7 +22,7 @@ export class MovieApiServiceService {
         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
       })
     }
-    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/recommended/popularMovie', httpOptions);
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/recommended/popularMovie');
   }
 
 
@@ -32,7 +32,7 @@ export class MovieApiServiceService {
         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
       })
     }
-    return this.http.get<any>(`${this.baseUrl + '/api/v1/recommended/searchMovie'}/${movieName}`, httpOptions);
+    return this.http.get<any>(`${this.baseUrl + '/api/v1/recommended/searchMovie'}/${movieName}`);
   }
 
 
@@ -42,7 +42,7 @@ export class MovieApiServiceService {
         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
       })
     }
-    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/upcomingMovies', httpOptions);
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/upcomingMovies');
   }
 
   actionMovies(): Observable<Movie[]> {
@@ -51,7 +51,7 @@ export class MovieApiServiceService {
         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
       })
     }
-    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Action', httpOptions);
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Action');
   }
   comedyMovies(): Observable<Movie[]> {
     let httpOptions = {
@@ -59,7 +59,7 @@ export class MovieApiServiceService {
         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
       })
     }
-    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Comedy', httpOptions);
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Comedy');
   }
   crimeMovies(): Observable<Movie[]> {
     let httpOptions = {
@@ -67,7 +67,7 @@ export class MovieApiServiceService {
         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
       })
     }
-    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Crime', httpOptions);
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Crime');
   }
   familyMovies(): Observable<Movie[]> {
     let httpOptions = {
@@ -75,6 +75,6 @@ export class MovieApiServiceService {
         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
       })
     }
-    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Family', httpOptions);
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Family');
   }
 }

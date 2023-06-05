@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
 import { User } from 'src/app/user';
 import { FileHandle } from './helpers/file-handle.model';
@@ -18,12 +18,12 @@ export class SignupComponent implements OnInit {
     email: "",
     password: ""
   }
-  register: FormGroup = new FormGroup({
+  register: UntypedFormGroup = new UntypedFormGroup({
 
-    email: new FormControl(''),
-    password: new FormControl(''),
-    confirmPassword: new FormControl(''),
-    acceptTerms: new FormControl(false),
+    email: new UntypedFormControl(''),
+    password: new UntypedFormControl(''),
+    confirmPassword: new UntypedFormControl(''),
+    acceptTerms: new UntypedFormControl(false),
   });
   submitted = false;
   private file!: File;
@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit {
 
   url: string = "assets/profile-image-circle.png";
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthServiceService,
+  constructor(private formBuilder: UntypedFormBuilder, private authService: AuthServiceService,
     private router: Router, private sanitizer: DomSanitizer) {
 
   }

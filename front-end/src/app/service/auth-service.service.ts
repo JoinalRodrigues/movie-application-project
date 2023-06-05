@@ -20,7 +20,7 @@ export class AuthServiceService {
       return this.http.post<User>(this.usersUrl1, user);
     }
 
-    public loginUser(user:FormData):Observable<any>{
+    public loginUser(user:any):Observable<any>{
       return  this.http.post<User>(this.usersUrl2, user);
     }
 

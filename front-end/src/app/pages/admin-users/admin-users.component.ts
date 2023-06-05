@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { AdminService, DatabaseUser, Role } from '../../service/admin.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatOption } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
+import { MatLegacyOption as MatOption } from '@angular/material/legacy-core';
+import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -23,7 +23,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AdminUsersComponent implements OnInit, AfterViewInit {
 
-  user: FormControl = new FormControl('');
+  user: UntypedFormControl = new UntypedFormControl('');
 
   allRoles: Role[] = [];
 
@@ -42,18 +42,18 @@ export class AdminUsersComponent implements OnInit, AfterViewInit {
   constructor(private adminService: AdminService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.adminService.adminLogin().subscribe(res => {
-      sessionStorage.setItem('token', res.message.substring(6));
+    // this.adminService.adminLogin().subscribe(res => {
+    //   sessionStorage.setItem('token', res.message.substring(6));
       this.adminService.getRoles().subscribe(res => this.allRoles = res);
-    });
-    this.changedDatabaseUser = new FormGroup({
-      id: new FormControl({ value: '', disabled: true, }),
-      email: new FormControl({ value: '', disabled: true }),
-      enabled: new FormControl(false),
-      accountExpiryDate: new FormControl({ value: '', disabled: true }),
-      accountNonLocked: new FormControl({ value: false, disabled: true }),
-      credentialsExpiryDate: new FormControl({ value: '', disabled: true }),
-      roles: new FormControl(new Array<Role>())
+    // });
+    this.changedDatabaseUser = new UntypedFormGroup({
+      id: new UntypedFormControl({ value: '', disabled: true, }),
+      email: new UntypedFormControl({ value: '', disabled: true }),
+      enabled: new UntypedFormControl(false),
+      accountExpiryDate: new UntypedFormControl({ value: '', disabled: true }),
+      accountNonLocked: new UntypedFormControl({ value: false, disabled: true }),
+      credentialsExpiryDate: new UntypedFormControl({ value: '', disabled: true }),
+      roles: new UntypedFormControl(new Array<Role>())
     }
     )
   }

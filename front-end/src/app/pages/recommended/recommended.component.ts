@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Movie } from 'src/app/movie';
 import { MovieApiServiceService } from 'src/app/service/movie-api-service.service';
 @Component({
@@ -6,9 +6,18 @@ import { MovieApiServiceService } from 'src/app/service/movie-api-service.servic
   templateUrl: './recommended.component.html',
   styleUrls: ['./recommended.component.css']
 })
-export class RecommendedComponent implements OnInit {
+export class RecommendedComponent implements OnInit{
 
   constructor(private movieService:MovieApiServiceService) { }
+  // ngAfterViewInit(): void {
+  //   setTimeout(() => this.recommendedMovie(), 100);
+  //   setTimeout(() => this.upcomingMovies(), 200);
+  //   setTimeout(() => this.actionMovies(), 300);
+  //   setTimeout(() => this.comedyMovies(), 400);
+  //   setTimeout(() => this.crimeMovies(), 500);
+  //   setTimeout(() => this.familyMovies(), 600);
+  //   throw new Error('Method not implemented.');
+  // }
  bannerResult:any=[];
  recommendedMoviesResult:Movie[]=[];
  upcomingMoviesResult:Movie[]=[];
