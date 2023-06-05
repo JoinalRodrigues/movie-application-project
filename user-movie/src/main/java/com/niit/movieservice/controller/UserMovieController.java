@@ -1,10 +1,7 @@
 package com.niit.movieservice.controller;
 
 import com.niit.movieservice.dto.NotificationDTO;
-import com.niit.movieservice.exception.InternalServerError;
-import com.niit.movieservice.exception.MovieNotFoundException;
-import com.niit.movieservice.exception.UserAlreadyExistsException;
-import com.niit.movieservice.exception.UserNotFoundException;
+import com.niit.movieservice.exception.*;
 import com.niit.movieservice.model.Movie;
 import com.niit.movieservice.model.User;
 import com.niit.movieservice.service.UserMovieService;
@@ -49,7 +46,7 @@ public class UserMovieController {
 
     }
     @PostMapping("/user/favourite")
-    public ResponseEntity<?> addMovieToFavourites(@RequestBody Movie movie, Principal principal) throws UserNotFoundException {
+    public ResponseEntity<?> addMovieToFavourites(@RequestBody Movie movie, Principal principal) throws UserNotFoundException, MovieAlreadyExistsException {
 
         return new ResponseEntity<>(userMovieService.addMovieToFavourites(movie, principal.getName()), HttpStatus.OK);
     }

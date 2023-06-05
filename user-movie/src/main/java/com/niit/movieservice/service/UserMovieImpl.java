@@ -89,10 +89,12 @@ throw new InternalServerError();
        User user = userMovieRepository.findById(email).orElseThrow(UserNotFoundException::new);
         List<Movie> getAllMovies = user.getFavourites();
 
-        if (getAllMovies.stream().anyMatch(x -> x.getOriginalTitle().equalsIgnoreCase(movie.getOriginalTitle())))
+        if (getAllMovies.stream().anyMatch(x -> x.getOriginalTitle().equals(movie.getOriginalTitle())))
             throw new MovieAlreadyExistsException();
         else {
             getAllMovies.add(movie);
+            user.setFavourites(getAllMovies);
+
 //            user.getFavourites(getAllMovies).add(movie);
             return userMovieRepository.save(user);
         }
