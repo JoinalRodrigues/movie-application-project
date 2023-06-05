@@ -44,7 +44,7 @@ public class UserAuthenticationController {
     private final AdminService adminService;
 
     @ApiResponse(description = "Login (User), returns jwt token on user login")
-    @PostMapping(value = {"/api/v1/login", "/api/v1/admin/login"})
+    @PostMapping(value = "/api/v1/login")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     public CompletableFuture<ResponseEntity<MessageDTO>> login(@RequestBody @Valid UserDTO userDTO) throws InvalidCredentialsException {
@@ -55,7 +55,7 @@ public class UserAuthenticationController {
     }
 
     @ApiResponse(description = "Login (User), returns jwt token on user login")
-    @PostMapping(value = {"/api/v1/login", "/api/v1/admin/login"})
+    @PostMapping(value = "/api/v1/admin/login")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     public CompletableFuture<ResponseEntity<?>> adminLogin(Authentication authentication) throws InvalidCredentialsException {
