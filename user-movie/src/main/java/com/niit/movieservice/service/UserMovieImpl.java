@@ -84,10 +84,12 @@ throw new InternalServerError();
         }
 
     @Override
-    public User addMovieToFavourites(Movie movie, String email) throws UserNotFoundException {
+    public User addMovieToFavourites(Movie movie, String email) throws UserNotFoundException, MovieAlreadyExistsException {
         if (userMovieRepository.findById(email).isPresent()) {
             User user = userMovieRepository.findById(email).get();
             List<Movie> getAllMovies = user.getFavourites();
+            if(getAllMovies.stream().anyMatch(i -> i.getMovieId() == movie.getMovieId()))
+                throw new MovieAlreadyExistsException();
             getAllMovies.add(movie);
 
             user.setFavourites(getAllMovies);
@@ -130,7 +132,6 @@ throw new InternalServerError();
             if (!movieIdIsPresent) {
                 throw new MovieNotFoundException();
             }
-            System.out.println(userDetails);
             userDetails.setFavourites(favMovies);
             userMovieRepository.save(userDetails);
             return true;

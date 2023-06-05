@@ -1,4 +1,4 @@
 package com.niit.movieservice.exception;
 
-public class MovieNotFoundException extends Throwable{
+public class MovieNotFoundException extends RuntimeException{
 }

@@ -1,4 +1,4 @@
 package com.niit.movieservice.exception;
 
-public class UserAlreadyExistsException extends Throwable{
+public class UserAlreadyExistsException extends RuntimeException{
 }

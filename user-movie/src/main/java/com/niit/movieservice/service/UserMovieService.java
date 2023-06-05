@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 public interface UserMovieService {
     User registerUser(String email, String password, MultipartFile file) throws UserAlreadyExistsException, ImageTooLargeException, IOException, InternalServerError, ExecutionException, InterruptedException;
-    User addMovieToFavourites(Movie movie, String userId) throws UserNotFoundException;
+    User addMovieToFavourites(Movie movie, String userId) throws UserNotFoundException, MovieAlreadyExistsException;
     List<Movie> getAllFavouriteMovies(String email);
     boolean removeMovieFromFavourites(int movieId, String emailId) throws MovieNotFoundException;
     boolean pushNotification(Movie movie,String email) throws UserNotFoundException;

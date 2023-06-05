@@ -1,4 +1,4 @@
 package com.niit.movieservice.exception;
 
-public class InternalServerError extends Throwable{
+public class InternalServerError extends RuntimeException{
 }
