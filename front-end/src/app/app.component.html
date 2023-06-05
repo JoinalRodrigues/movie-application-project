@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg" [ngStyle]="navbg">
+<nav class="navbar navbar-expand-lg fixed-top" [ngStyle]="navbg">
   <div class="container-fluid">
     <h2 class="navbar-brand" routerLink="">Movie App</h2>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,6 +15,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="admin-user">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="notification">Notification</a>
         </li>
         <li class="nav-item">
           <button class="btn" style="background-color: #dd3675; margin: 3px;" routerLink="login">Login</button>

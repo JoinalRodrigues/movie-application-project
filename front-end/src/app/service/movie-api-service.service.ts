@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Movie } from '../movie';
 
@@ -9,52 +9,72 @@ import { Movie } from '../movie';
 export class MovieApiServiceService {
 
 
-  private movieUrl!: string;
-  private movieUrl2!: string;
-  private movieUrl3!: string;
-
-  private baseUrl!: string
-
+  private baseUrl: string = 'http://34.83.1.21';
 
 
   constructor(private http: HttpClient) {
-    this.movieUrl = "http://localhost:8081/api/v1/recommended/popularMovie";
-    this.movieUrl2 = "http://localhost:8081/api/v1/recommended/searchMovie";
-    this.movieUrl3 = "http://localhost:8081/api/v1/thirdParty/upcomingMovies";
-    this.baseUrl = "http://localhost:8081/api/v1/thirdParty";
 
   }
-  // baseUrl = 'https://api.themoviedb.org/3/';
-  // apiKey = "08cc33bd5ae3a747598ce2ad84376e66";
 
-
-
-  // bannerApiData():Observable<any>{
-  //   return this.http.get(`${this.baseUrl}/trending/all/week?api_key=${this.apiKey}`);
-  // }
-
-  recommendedMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(this.movieUrl);
+  public recommendedMovies(): Observable<Movie[]> {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+      })
+    }
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/recommended/popularMovie', httpOptions);
   }
 
-  searchMovie(movieName: string): Observable<any> {
-    return this.http.get<any>(`${this.movieUrl2}/${movieName}`);
+
+  public searchMovie(movieName: string): Observable<any> {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+      })
+    }
+    return this.http.get<any>(`${this.baseUrl + '/api/v1/recommended/searchMovie'}/${movieName}`, httpOptions);
   }
+
 
   upComingMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(this.movieUrl3);
-
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+      })
+    }
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/upcomingMovies', httpOptions);
   }
+
   actionMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(`${this.baseUrl}/Action`);
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+      })
+    }
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Action', httpOptions);
   }
   comedyMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(`${this.baseUrl}/Comedy`);
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+      })
+    }
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Comedy', httpOptions);
   }
   crimeMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(`${this.baseUrl}/Crime`);
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+      })
+    }
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Crime', httpOptions);
   }
   familyMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(`${this.baseUrl}/Family`);
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+      })
+    }
+    return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Family', httpOptions);
   }
 }

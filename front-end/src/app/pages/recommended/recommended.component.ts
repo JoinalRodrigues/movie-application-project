@@ -17,11 +17,6 @@ export class RecommendedComponent implements OnInit {
  crimeMoviesResult:Movie[]=[];
  familyMoviesResult:Movie[]=[];
 
-
-
-
-
-
   ngOnInit(): void {
     // this.bannerData();
     this.recommendedMovie();

@@ -24,7 +24,7 @@ export class SigninComponent implements OnInit {
       sessionStorage.setItem('token', result.message.substring(6));
       console.log("login succesfully");
     }))
-    // this.router.navigate(['/movie'])
+    this.router.navigate(['/movie'])
   }
 }
 // sessionStorage.setItem('token', res.message.substring(6));
