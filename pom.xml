@@ -26,6 +26,7 @@
 		<module>user-movie</module>
 		<module>recommended-service</module>
 		<module>push-notification</module>
+		<module>eureka-server-1</module>
 	</modules>
 
 	<dependencies>
