@@ -25,3 +25,5 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: SPRING_PROFILES_ACTIVE
+              value: "google-cloud-deploy"
