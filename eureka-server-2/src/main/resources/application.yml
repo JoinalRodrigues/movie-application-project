@@ -1,9 +1,14 @@
+# google-cloud-deploy
+
 server:
   port: 8761
   error:
     include-message: always
 
 spring:
+  config:
+    activate:
+      on-profile: "google-cloud-deploy"
   application:
     name: eureka-server-2
   data:
@@ -52,3 +57,6 @@ logging:
       netflix:
         eureka: OFF
         discovery: OFF
+
+---
+# docker
