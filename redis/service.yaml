@@ -3,8 +3,9 @@ kind: Service
 metadata:
   name: movie-app-redis
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   clusterIP: 10.96.0.15
+  loadBalancerIP: 34.83.1.21
   ports:
     - port: 6379
       protocol: TCP
