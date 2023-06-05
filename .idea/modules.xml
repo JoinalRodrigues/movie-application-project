@@ -6,9 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/eureka-server-1/eureka-server-1.iml" filepath="$PROJECT_DIR$/eureka-server-1/eureka-server-1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/movie-main-project.iml" filepath="$PROJECT_DIR$/.idea/movie-main-project.iml" />
       <module fileurl="file://$PROJECT_DIR$/push-notification/push-notification.iml" filepath="$PROJECT_DIR$/push-notification/push-notification.iml" />
-      <module fileurl="file://$PROJECT_DIR$/recommended-service/recommended-service.iml" filepath="$PROJECT_DIR$/recommended-service/recommended-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/user-authentication/user-authentication.iml" filepath="$PROJECT_DIR$/user-authentication/user-authentication.iml" />
-      <module fileurl="file://$PROJECT_DIR$/user-movie/user-movie.iml" filepath="$PROJECT_DIR$/user-movie/user-movie.iml" />
     </modules>
   </component>
 </project>
