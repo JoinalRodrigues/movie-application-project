@@ -46,7 +46,7 @@ public class UserMovieController {
 
     }
     @PostMapping("/user/favourite")
-    public ResponseEntity<?> addMovieToFavourites(@RequestBody Movie movie, Principal principal) throws UserNotFoundException, MovieAlreadyExistsException {
+    public ResponseEntity<?> addMovieToFavourites(@RequestBody Movie movie, Principal principal) throws UserNotFoundException{
 
         return new ResponseEntity<>(userMovieService.addMovieToFavourites(movie, principal.getName()), HttpStatus.OK);
     }

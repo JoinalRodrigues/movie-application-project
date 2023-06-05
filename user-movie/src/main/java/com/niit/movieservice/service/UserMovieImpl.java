@@ -83,22 +83,36 @@ throw new InternalServerError();
             userMovieRepository.save(userDetails);
         }
 
-
     @Override
-    public User addMovieToFavourites(Movie movie,String email) throws UserNotFoundException, MovieAlreadyExistsException {
-       User user = userMovieRepository.findById(email).orElseThrow(UserNotFoundException::new);
-        List<Movie> getAllMovies = user.getFavourites();
-
-        if (getAllMovies.stream().anyMatch(x -> x.getOriginalTitle().equals(movie.getOriginalTitle())))
-            throw new MovieAlreadyExistsException();
-        else {
+    public User addMovieToFavourites(Movie movie, String email) throws UserNotFoundException {
+        if (userMovieRepository.findById(email).isPresent()) {
+            User user = userMovieRepository.findById(email).get();
+            List<Movie> getAllMovies = user.getFavourites();
             getAllMovies.add(movie);
-            user.setFavourites(getAllMovies);
 
-//            user.getFavourites(getAllMovies).add(movie);
+            user.setFavourites(getAllMovies);
             return userMovieRepository.save(user);
+
+        }
+        else {
+            throw new UserNotFoundException();
         }
     }
+//    @Override
+//    public User addMovieToFavourites(Movie movie,String email) throws UserNotFoundException, MovieAlreadyExistsException {
+//       User user = userMovieRepository.findById(email).orElseThrow(UserNotFoundException::new);
+//        List<Movie> getAllMovies = user.getFavourites();
+//
+//        if (getAllMovies.stream().anyMatch(x -> x.getOriginalTitle().equals(movie.getOriginalTitle())))
+//            throw new MovieAlreadyExistsException();
+//        else {
+//            getAllMovies.add(movie);
+//            user.setFavourites(getAllMovies);
+//
+////            user.getFavourites(getAllMovies).add(movie);
+//            return userMovieRepository.save(user);
+//        }
+//    }
     @Override
     public List<Movie> getAllFavouriteMovies(String email) {
 
