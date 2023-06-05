@@ -38,8 +38,6 @@ public class RoutesConfig {
                         ,"/api/v1/recommended/**").uri("lb://recommended-service"))
                 .route(i -> i.path("/api/v1/test-message")
                         .uri("lb://push-notification"))
-                .route(i -> i.path("/", "", "/**.js", "/**.css", "/**.ico")
-                        .uri("http://10.96.0.14:15672"))
                 .route(i -> i.path("/api/v1/admin/*/actuator"
                         , "/api/v1/admin/*/actuator**"
                         , "/api/v1/admin/*/actuator/**")
