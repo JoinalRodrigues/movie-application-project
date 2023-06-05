@@ -46,6 +46,7 @@ public class SecurityConfiguration {
                 .disable()
                 .httpBasic()
                 .disable()
+                .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .authorizeHttpRequests(i -> i.anyRequest().permitAll())
                 .addFilterBefore(new FilterForToken(), AnonymousAuthenticationFilter.class);
         return http.build();
@@ -62,7 +63,8 @@ public class SecurityConfiguration {
                 .disable()
                 .httpBasic()
                 .disable()
-                .authorizeHttpRequests(i -> i.anyRequest().permitAll())
+                .authorizeHttpRequests(i -> i.anyRequest().hasRole("ADMIN"))
+                .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .addFilterBefore(new FilterForToken(), AnonymousAuthenticationFilter.class);
         return http.build();
     }

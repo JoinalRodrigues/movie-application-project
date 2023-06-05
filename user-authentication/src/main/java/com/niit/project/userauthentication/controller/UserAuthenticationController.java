@@ -54,7 +54,15 @@ public class UserAuthenticationController {
                 , HttpStatus.OK));
     }
 
-    @ApiResponse(description = "Save(User), save users and image and give confirmation response")
+    @ApiResponse(description = "Login (User), returns jwt token on user login")
+    @PostMapping(value = {"/api/v1/login", "/api/v1/admin/login"})
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    public CompletableFuture<ResponseEntity<?>> adminLogin(Authentication authentication) throws InvalidCredentialsException {
+        return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.OK));
+    }
+
+        @ApiResponse(description = "Save(User), save users and image and give confirmation response")
     @PostMapping(value = "/api/v1/save", consumes = "multipart/form-data")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
