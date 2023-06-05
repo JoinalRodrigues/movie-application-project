@@ -1,14 +1,12 @@
 package com.niit.movieservice.dto;
 
 import com.niit.movieservice.model.Movie;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class NotificationDeliveredDTO {
     private String emailId;
