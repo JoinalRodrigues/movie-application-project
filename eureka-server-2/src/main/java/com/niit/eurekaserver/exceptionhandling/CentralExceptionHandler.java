@@ -2,6 +2,8 @@ package com.niit.eurekaserver.exceptionhandling;
 
 
 import com.niit.eurekaserver.dto.ErrorMessageDTO;
+import com.niit.eurekaserver.exception.InvalidCredentialsException;
+import com.niit.eurekaserver.exception.TokenExpiredException;
 import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
