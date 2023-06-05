@@ -38,7 +38,7 @@ public class SecurityConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
-        http.securityMatchers(i -> i.requestMatchers("/api/v1/login", "/api/v1/save", "/api/v1/image", "/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**"))
+        http.securityMatchers(i -> i.requestMatchers("/api/v1/login", "/api/v1/save", "/api/v1/image"))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .csrf()
                 .disable()
@@ -63,8 +63,8 @@ public class SecurityConfiguration {
                 .disable()
                 .httpBasic()
                 .disable()
-                .authorizeHttpRequests(i -> i.anyRequest().hasRole("ADMIN"))
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
+                .authorizeHttpRequests(i -> i.anyRequest().hasRole("ADMIN"))
                 .addFilterBefore(new FilterForToken(), AnonymousAuthenticationFilter.class);
         return http.build();
     }

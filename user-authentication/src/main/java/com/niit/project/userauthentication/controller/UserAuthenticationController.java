@@ -59,6 +59,7 @@ public class UserAuthenticationController {
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     public CompletableFuture<ResponseEntity<?>> adminLogin(Authentication authentication) throws InvalidCredentialsException {
+        System.err.println(authentication);
         return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.OK));
     }
 
