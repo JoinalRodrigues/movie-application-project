@@ -38,9 +38,6 @@ public class SecurityConfiguration {
         return provider;
     }
 
-    @Autowired
-    private Environment environment;
-
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -101,7 +98,7 @@ public class SecurityConfiguration {
                 .and()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**", "", "/", "/**").hasRole("ADMIN"))
-                .addFilterBefore(new FilterForToken(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new FilterForToken(), AnonymousAuthenticationFilter.class);
         return http.build();
     }
 
