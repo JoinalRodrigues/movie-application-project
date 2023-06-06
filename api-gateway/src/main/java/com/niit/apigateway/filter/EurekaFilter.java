@@ -20,8 +20,8 @@ public class EurekaFilter implements GatewayFilter, Ordered {
         catch (Exception e){
             System.out.println("Invalid Url schema");
         }
-        System.err.println(uri);
         exchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR, uri);
+        exchange.getResponse().getCookies().remove("JSESSIONID");
         return chain.filter(exchange);
     }
 
