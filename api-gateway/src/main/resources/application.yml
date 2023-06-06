@@ -27,7 +27,7 @@ spring:
 #      filter:
 #        secure-headers:
 #          enabled: false
-    enabled:
+  data:
     redis:
       host: 10.96.0.15
       port: 6379
