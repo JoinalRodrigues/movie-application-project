@@ -16,6 +16,8 @@ spring:
 #    allow-bean-definition-overriding: true
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:
         corsConfigurations:
             '[/**]':
