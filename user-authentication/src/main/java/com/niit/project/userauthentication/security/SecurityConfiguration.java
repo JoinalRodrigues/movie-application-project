@@ -96,6 +96,9 @@ public class SecurityConfiguration {
                 .headers()
                 .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy", "frame-ancestors 'self' http://34.83.1.21 http://localhost:4200"))
                 .and()
+                .headers()
+                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", ""))
+                .and()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**", "", "/", "/**").hasRole("ADMIN"))
                 .addFilterBefore(new FilterForToken(), AnonymousAuthenticationFilter.class);
