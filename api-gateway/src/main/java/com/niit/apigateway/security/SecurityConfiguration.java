@@ -60,7 +60,8 @@ public class SecurityConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE + 1)
     public SecurityWebFilterChain filterChain2(ServerHttpSecurity http) throws Exception {
-        http.securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
+        http
+                //.securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
                 .securityMatcher(i -> ServerWebExchangeMatcher.MatchResult.match())
                 .authorizeExchange(i -> i.pathMatchers("**", "/", "/**").permitAll())
                 .csrf()
