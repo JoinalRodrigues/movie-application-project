@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 
 
@@ -89,10 +90,11 @@ public class SecurityConfiguration {
                 .disable()
                 .headers()
                 .frameOptions(i -> i.sameOrigin())
+                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Credentials", "true"))
                 .and()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**", "", "/", "/**").hasRole("ADMIN"))
-                .addFilterBefore(new FilterForToken(), UsernamePasswordAuthenticationFilter.class);;
+                .addFilterBefore(new FilterForToken(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
