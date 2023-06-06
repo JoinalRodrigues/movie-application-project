@@ -78,7 +78,7 @@ public class SecurityConfiguration {
     @Order(Ordered.HIGHEST_PRECEDENCE + 2)
     public SecurityFilterChain filterChain3(HttpSecurity http) throws Exception {
         http.securityMatchers(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**", "", "/", "/**"))
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
                 .csrf()
                 .disable()
                 .cors()
@@ -97,11 +97,11 @@ public class SecurityConfiguration {
                 .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy", "frame-ancestors 'self' http://34.83.1.21 http://localhost:4200"))
                 .and()
                 .headers()
-                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", ""))
+                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "http://localhost:4200"))
                 .and()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**", "", "/", "/**").hasRole("ADMIN"))
-                .addFilterBefore(new FilterForToken(), AnonymousAuthenticationFilter.class);
+                .addFilterBefore(new FilterForToken(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
