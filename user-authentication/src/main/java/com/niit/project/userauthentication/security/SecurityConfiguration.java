@@ -1,11 +1,13 @@
 package com.niit.project.userauthentication.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -35,10 +37,14 @@ public class SecurityConfiguration {
         return provider;
     }
 
+    @Autowired
+    private Environment environment;
+
+
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
-        http.securityMatchers(i -> i.requestMatchers("/api/v1/login", "/api/v1/save", "/api/v1/image"))
+        http.securityMatchers(i -> i.requestMatchers("/api/v1/login", "/api/v1/save", "/api/v1/image", "/api/v1/admin/" + environment.getProperty("MY_POD_IP") + "/actuator/logfile"))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .csrf()
                 .disable()
