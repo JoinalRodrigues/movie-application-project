@@ -86,7 +86,7 @@ public class SecurityConfiguration {
                 .and()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**", "", "/", "/**").hasRole("ADMIN"))
-                .addFilterBefore(new FilterForToken(), UsernamePasswordAuthenticationFilter.class);;
+//                .addFilterBefore(new FilterForToken(), UsernamePasswordAuthenticationFilter.class);;
         return http.build();
     }
 
