@@ -77,6 +77,7 @@ public class SecurityConfiguration {
     private AuthenticationWebFilter customAuthenticationWebFilter(){
         AuthenticationWebFilter authenticationWebFilter;
         authenticationWebFilter = new AuthenticationWebFilter(new DummyPreAuthenticatedAuthenticationManager());
+        authenticationWebFilter.setSecurityContextRepository(NoOpServerSecurityContextRepository.getInstance());
         authenticationWebFilter.setServerAuthenticationConverter(i -> {
             String token = i.getRequest().getHeaders().getFirst("Authorization");
             if(token == null) {

@@ -63,7 +63,7 @@ public class UserAuthenticationController {
         return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.OK));
     }
 
-        @ApiResponse(description = "Save(User), save users and image and give confirmation response")
+    @ApiResponse(description = "Save(User), save users and image and give confirmation response")
     @PostMapping(value = "/api/v1/save", consumes = "multipart/form-data")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
