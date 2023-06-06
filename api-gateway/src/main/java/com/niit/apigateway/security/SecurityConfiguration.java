@@ -38,11 +38,12 @@ public class SecurityConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityWebFilterChain filterChain1(ServerHttpSecurity http) throws Exception {
-        http.securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
+        http
+                //.securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
                 .securityMatcher(i -> {
             String path = i.getRequest().getPath().subPath(0).toString();
-//            if(path.contains("/api/v1/admin/" + this.environment.getProperty("MY_POD_IP") + "actuator"))
-//                return ServerWebExchangeMatcher.MatchResult.match();
+            if(path.contains("/api/v1/admin/" + this.environment.getProperty("MY_POD_IP") + "actuator"))
+                return ServerWebExchangeMatcher.MatchResult.match();
             return ServerWebExchangeMatcher.MatchResult.notMatch();
         })
                 .authenticationManager(new DummyPreAuthenticatedAuthenticationManager())
@@ -60,8 +61,7 @@ public class SecurityConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE + 1)
     public SecurityWebFilterChain filterChain2(ServerHttpSecurity http) throws Exception {
-        http
-                //.securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
+        http.securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
                 .securityMatcher(i -> ServerWebExchangeMatcher.MatchResult.match())
                 .authorizeExchange(i -> i.pathMatchers("**", "/", "/**").permitAll())
                 .csrf()
