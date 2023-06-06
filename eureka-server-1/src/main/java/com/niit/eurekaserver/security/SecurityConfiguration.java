@@ -11,6 +11,7 @@ import org.springframework.security.config.authentication.AuthenticationManagerB
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 
 @Configuration
@@ -45,7 +46,11 @@ public class SecurityConfiguration {
                 .httpBasic()
                 .disable()
                 .headers()
-                .frameOptions(i -> i.sameOrigin())
+                .frameOptions()
+                .disable()
+                .and()
+                .headers()
+                .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy", "frame-ancestors self http://34.83.1.21"))
                 .and()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**", "/", "", "/**").hasRole("ADMIN"))
