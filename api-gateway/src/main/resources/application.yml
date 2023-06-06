@@ -4,6 +4,10 @@ server:
   port: 8080
   error:
     include-message: always
+  reactive:
+    session:
+      cookie:
+        name: SESSION_${spring.application.name}
 
 spring:
   config:
