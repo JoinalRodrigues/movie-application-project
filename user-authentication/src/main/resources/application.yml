@@ -10,7 +10,7 @@ server:
   servlet:
     session:
       cookie:
-        same-site: lax
+        same-site: strict
 
 spring:
   config:
