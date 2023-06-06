@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: movie-app-eureka-server-1
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   clusterIP: 10.96.0.11
-  loadBalancerIP: 34.83.1.21
+#  loadBalancerIP: 34.83.1.21
   ports:
     - port: 8761
       protocol: TCP
