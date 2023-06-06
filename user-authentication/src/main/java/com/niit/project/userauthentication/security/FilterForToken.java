@@ -23,10 +23,6 @@ public class FilterForToken implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest)servletRequest;
-
-        SecurityContext scTest = SecurityContextHolder.getContext();
-        System.err.println(scTest.getAuthentication());
-
         String token = httpServletRequest.getHeader("Authorization");
         if(token == null) {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -41,7 +37,6 @@ public class FilterForToken implements Filter {
         SecurityContext sc = SecurityContextHolder.getContext();
         sc.setAuthentication(at);
         httpServletRequest.getSession(true).setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
-
         filterChain.doFilter(servletRequest, servletResponse);
     }
 }

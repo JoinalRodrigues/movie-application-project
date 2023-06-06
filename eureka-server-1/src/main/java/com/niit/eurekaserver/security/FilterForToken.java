@@ -1,6 +1,5 @@
 package com.niit.eurekaserver.security;
 
-
 import com.niit.eurekaserver.exception.TokenExpiredException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -24,10 +23,6 @@ public class FilterForToken implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest)servletRequest;
-
-        SecurityContext scTest = SecurityContextHolder.getContext();
-        System.err.println(scTest.getAuthentication());
-
         String token = httpServletRequest.getHeader("Authorization");
         if(token == null) {
             filterChain.doFilter(servletRequest, servletResponse);
