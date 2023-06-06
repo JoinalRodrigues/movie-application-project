@@ -21,7 +21,7 @@ public class SecurityConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
-        http.securityMatchers(i -> i.requestMatchers("/eureka", "/eureka**", "/eureka/**", "/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**"))
+        http.securityMatchers(i -> i.requestMatchers("/eureka", "/eureka**", "/eureka/**", "/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**", "", "/"))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .csrf()
                 .disable()
