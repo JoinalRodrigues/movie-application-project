@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Initializer extends AbstractHttpSessionApplicationInitializer {
+    public Initializer() {
+        super(Config.class);
+    }
 
 }
 
