@@ -15,7 +15,7 @@ public class EurekaFilter implements GatewayFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         URI uri = null;
         try {
-            uri = new URI("http", null, "10.96.0.11", 8761, "/" + exchange.getRequest().getPath().subPath(1).value(), null, null);
+            uri = new URI("http", null, "10.96.0.11", 8761, "/", null, null);
         }
         catch (Exception e){
             System.out.println("Invalid Url schema");

@@ -41,7 +41,7 @@ public class RoutesConfig {
                         .uri("lb://push-notification"))
                 .route(i -> i.path("/eureka").filters(j -> j.filter(new EurekaFilter()))
                         .uri("no://op"))
-                .route(i -> i.path("/eureka/**").filters(j -> j.filter(new EurekaFilter()))
+                .route(i -> i.path("/eureka/**")
                         .uri("lb://eureka-server-1"))
                 .route(i -> i.path("/api/v1/admin/*/actuator"
                         , "/api/v1/admin/*/actuator**"
