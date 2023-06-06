@@ -29,17 +29,6 @@ public class SecurityConfiguration {
                 .disable()
                 .httpBasic()
                 .disable()
-//                .headers()
-//                .frameOptions()
-//                .disable()
-//                .and()
-//                .headers()
-//                .contentTypeOptions()
-//                .disable()
-//                .and()
-//                .headers()
-//                .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy", "frame-ancestors 'self' http://34.83.1.21 http://localhost:4200"))
-//                .and()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .authorizeHttpRequests(i -> i.anyRequest().permitAll());
         return http.build();
