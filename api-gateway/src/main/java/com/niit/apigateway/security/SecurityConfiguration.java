@@ -20,6 +20,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher;
+import org.springframework.session.data.redis.ReactiveRedisSessionRepository;
 import reactor.core.publisher.Mono;
 
 import java.time.Instant;
