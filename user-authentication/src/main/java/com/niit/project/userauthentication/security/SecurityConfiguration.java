@@ -81,7 +81,7 @@ public class SecurityConfiguration {
     @Order(Ordered.HIGHEST_PRECEDENCE + 2)
     public SecurityFilterChain filterChain3(HttpSecurity http) throws Exception {
         http.securityMatcher("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**", "", "/", "/**")
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
                 .csrf()
                 .disable()
                 .cors()
