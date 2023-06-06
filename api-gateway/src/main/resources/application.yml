@@ -24,7 +24,10 @@ spring:
                 - content-type
                 - authorization
               allowedMethods: "*"
-  data:
+      filter:
+        secure-headers:
+          enabled: false
+    enabled:
     redis:
       host: 10.96.0.15
       port: 6379
