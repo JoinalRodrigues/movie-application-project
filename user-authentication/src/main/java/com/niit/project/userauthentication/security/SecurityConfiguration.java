@@ -44,7 +44,7 @@ public class SecurityConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
-        http.securityMatchers(i -> i.requestMatchers("/api/v1/login", "/api/v1/save", "/api/v1/image", "/api/v1/admin/" + environment.getProperty("MY_POD_IP") + "/actuator/logfile"))
+        http.securityMatchers(i -> i.requestMatchers("/api/v1/login", "/api/v1/save", "/api/v1/image", "/api/v1/admin/" + environment.getProperty("MY_POD_IP") + "/actuator/**"))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .csrf()
                 .disable()
