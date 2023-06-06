@@ -1,6 +1,7 @@
 package com.niit.apigateway.routes;
 
 import com.niit.apigateway.filter.AdminUrlsFilter;
+import com.niit.apigateway.filter.EurekaFilter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +39,10 @@ public class RoutesConfig {
                         ,"/api/v1/recommended/**").uri("lb://recommended-service"))
                 .route(i -> i.path("/api/v1/test-message")
                         .uri("lb://push-notification"))
+                .route(i -> i.path("/eureka").filters(j -> j.filter(new EurekaFilter()))
+                        .uri("no://op"))
+                .route(i -> i.path("/eureka/**").filters(j -> j.filter(new EurekaFilter()))
+                        .uri("lb://eureka-server-1"))
                 .route(i -> i.path("/api/v1/admin/*/actuator"
                         , "/api/v1/admin/*/actuator**"
                         , "/api/v1/admin/*/actuator/**")
