@@ -67,9 +67,9 @@ management:
 #      cors: # according to docs this is disabled by default unless values specified
 #        allowed-origins: "http://localhost:4200"
 #        allowed-methods: GET,POST
-  security:
-    enabled: false
-    sessions: never
+#  security:
+#    enabled: false
+#    sessions: never
 
 logging:
   file:
