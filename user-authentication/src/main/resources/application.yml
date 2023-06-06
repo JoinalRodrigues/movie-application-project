@@ -7,6 +7,10 @@ server:
   #servlet:
    # session:
     #  timeout:
+  servlet:
+    session:
+      cookie:
+        same-site: strict
 
 spring:
   config:
