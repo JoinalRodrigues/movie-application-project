@@ -65,7 +65,7 @@ public class SecurityConfiguration {
                 .disable()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .authorizeHttpRequests(i -> i.anyRequest().hasRole("ADMIN"))
-                .addFilterBefore(new FilterForToken(), AnonymousAuthenticationFilter.class);
+                .addFilterBefore(new FilterForToken(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -73,15 +73,19 @@ public class SecurityConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE + 2)
     public SecurityFilterChain filterChain3(HttpSecurity http) throws Exception {
-        http.securityMatcher("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**")
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
+        http.securityMatcher("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**", "", "/", "/**")
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
                 .csrf()
                 .disable()
                 .cors()
                 .disable()
+                .httpBasic()
+                .disable()
+                .headers()
+                .frameOptions(i -> i.sameOrigin())
+                .and()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
-                .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**").hasRole("ADMIN")
-                        .anyRequest().denyAll())
+                .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**", "", "/", "/**").hasRole("ADMIN"))
                 .addFilterBefore(new FilterForToken(), UsernamePasswordAuthenticationFilter.class);;
         return http.build();
     }

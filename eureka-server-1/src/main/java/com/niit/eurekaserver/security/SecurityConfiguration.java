@@ -28,6 +28,7 @@ public class SecurityConfiguration {
                 .disable()
                 .httpBasic()
                 .disable()
+                .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .authorizeHttpRequests(i -> i.anyRequest().permitAll());
         return http.build();
     }
