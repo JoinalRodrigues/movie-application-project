@@ -24,9 +24,9 @@ spring:
                 - content-type
                 - authorization
               allowedMethods: "*"
-      filter:
-        secure-headers:
-          enabled: false
+#      filter:
+#        secure-headers:
+#          enabled: false
     enabled:
     redis:
       host: 10.96.0.15
