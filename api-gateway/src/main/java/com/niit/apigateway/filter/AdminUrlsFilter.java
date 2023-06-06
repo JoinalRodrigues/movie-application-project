@@ -21,7 +21,7 @@ public class AdminUrlsFilter implements GatewayFilter, Ordered {
             System.out.println("Invalid Url schema");
         }
         exchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR, uri);
-        System.err.println(exchange.getRequest().getCookies().toSingleValueMap());
+        System.err.println(exchange.getRequest().getCookies());
         return chain.filter(exchange);
     }
 
