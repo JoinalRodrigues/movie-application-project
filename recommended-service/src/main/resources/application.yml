@@ -1,9 +1,14 @@
+# google cloud deploy
+
 server:
   port: 8080
   error:
     include-message: always
 
 spring:
+  config:
+    activate:
+      on-profile: "google-cloud-deploy"
   application:
     name: recommended-service
   data:
@@ -20,8 +25,62 @@ eureka:
     registerWithEureka: true
   instance:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
-    statusPageUrlPath: http://34.83.1.21/api/v1/admin/${MY_POD_IP}/actuator
+    statusPageUrlPath: http://34.83.1.21/api/v1/admin/${MY_POD_IP}/swagger-ui.html
     preferIpAddress: true
+
+springdoc:
+  api-docs:
+    path: /api/v1/admin/${MY_POD_IP}/v3/api-docs
+  show-actuator: true
+  swagger-ui:
+    path: /api/v1/admin/${MY_POD_IP}/swagger-ui.html
+    disable-swagger-default-url: true
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      base-path: /api/v1/admin/${MY_POD_IP}/actuator
+      exposure:
+        include: "*"
+
+
+logging:
+  file:
+    name: ./logs/recommended-service.log
+#  logback:
+#    rollingpolicy:
+#      max-file-size: 10MB
+
+---
+# docker
+
+server:
+  port: 8080
+  error:
+    include-message: always
+
+spring:
+  config:
+    activate:
+      on-profile: "docker"
+  application:
+    name: recommended-service
+  data:
+    redis:
+      host: redis
+      port: 6379
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka
+    fetchRegistry: true
+    registerWithEureka: true
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
+    statusPageUrlPath: http://localhost/api/v1/admin/recommended-service/actuator
 
 
 springdoc:
@@ -36,7 +95,7 @@ management:
   endpoints:
     enabled-by-default: true
     web:
-      base-path: /api/v1/admin/${MY_POD_IP}/actuator
+      base-path: /api/v1/admin/recommended-service/actuator
       exposure:
         include: "*"
   #      cors: # according to docs this is disabled by default unless values specified
@@ -52,3 +111,4 @@ logging:
 #  logback:
 #    rollingpolicy:
 #      max-file-size: 10MB
+

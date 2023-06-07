@@ -28,7 +28,7 @@ public class SecurityConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
-        http.securityMatchers(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**"
+        http.securityMatchers(i -> i.requestMatchers(
                         ,"/api/v1/recommended/genre"
                         , "/api/v1/recommended/popularMovie"
                         , "/api/v1/recommended/searchMovie/**"
@@ -68,6 +68,19 @@ public class SecurityConfiguration {
                 .disable()
                 .httpBasic()
                 .disable()
+                .httpBasic()
+                .disable()
+                .headers()
+                .frameOptions()
+                .disable()
+                .and()
+                .headers()
+                .contentTypeOptions()
+                .disable()
+                .and()
+                .headers()
+                .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy", "frame-ancestors 'self' http://34.83.1.21 http://localhost:4200"))
+                .and()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
                 .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**").permitAll()
                         .anyRequest().denyAll())

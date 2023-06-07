@@ -19,7 +19,6 @@ spec:
 #          imagePullPolicy: Never   # So it doesn't pull the image from remote registry
           ports:
             - containerPort: 8080
-            - containerPort: 8090
           env:
             - name: MY_POD_IP
               valueFrom:
