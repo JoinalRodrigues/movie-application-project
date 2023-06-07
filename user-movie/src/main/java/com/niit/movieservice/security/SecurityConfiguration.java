@@ -42,7 +42,7 @@ public class SecurityConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE + 1)
     public SecurityFilterChain filterChain2(HttpSecurity http) throws Exception {
-        http.securityMatchers(i -> i.requestMatchers("/api/v1/**"))
+        http.securityMatchers(i -> i.requestMatchers("/api/v1/user/**"))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .csrf()
                 .disable()
@@ -84,6 +84,6 @@ public class SecurityConfiguration {
                 .addFilterBefore(new FilterForToken(), UsernamePasswordAuthenticationFilter.class);;
         return http.build();
     }
-    
+
 }
 
