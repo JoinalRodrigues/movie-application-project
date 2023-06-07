@@ -28,8 +28,7 @@ public class SecurityConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
-        http.securityMatchers(i -> i.requestMatchers(
-                        ,"/api/v1/recommended/genre"
+        http.securityMatchers(i -> i.requestMatchers("/api/v1/recommended/genre"
                         , "/api/v1/recommended/popularMovie"
                         , "/api/v1/recommended/searchMovie/**"
                         , "/api/v1/thirdParty/cast/**"
