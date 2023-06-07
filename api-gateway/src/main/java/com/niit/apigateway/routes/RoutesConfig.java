@@ -46,7 +46,10 @@ public class RoutesConfig {
                         .uri("lb://eureka-server-1"))
                 .route(i -> i.path("/api/v1/admin/*/actuator"
                         , "/api/v1/admin/*/actuator**"
-                        , "/api/v1/admin/*/actuator/**")
+                        , "/api/v1/admin/*/actuator/**"
+                        , "/api/v1/admin/*/swagger-ui"
+                        , "/api/v1/admin/*/swagger-ui**"
+                        , "/api/v1/admin/*/swagger-ui/**")
                         .filters(j -> j.filter(new AdminUrlsFilter()).addResponseHeader("Access-Control-Allow-Credentials", "true"))
                         .uri("no://op"))
                 .build();
