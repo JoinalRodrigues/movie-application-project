@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg fixed-top" [ngStyle]="navbg">
   <div class="container-fluid">
-    <h2 class="navbar-brand" routerLink="">Movie App</h2>
+    <h1 class="navbar-brand display-1" routerLink="">Movie App</h1>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -20,19 +20,30 @@
           <a class="nav-link" routerLink="notification">Notification</a>
         </li>
         <li class="nav-item">
-          <button class="btn" style="background-color: #dd3675; margin: 3px;" routerLink="login">Login</button>
+          <a class="nav-link" routerLink="user-favourite">favourite</a>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-outline" style="color: #dd3675; " routerLink="login">Login</button>
+
+          <!-- <button class="btn" style="background-color: #dd3675; margin: 3px;" routerLink="login">Login</button> -->
+        </li>
+        <li>
+          <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search" routerLink="search"></i></button>
+
         </li>
         
-        <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+        <!-- <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
           <div class="input-group">
             <input type="search" placeholder="Search Movies...." routerLink="search" class="form-control border-0 bg-transparent">
             <div class="input-group-append">
-              <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+              <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search" routerLink="search"></i></button>
 
             </div>
           </div>
-        </div>
-        
+        </div> -->
+        <!-- <mat-icon routerLink="search">search</mat-icon>
+
+        <mat-icon matTooltip="Manage profile">person</mat-icon> -->
    
         <!-- <li class="nav-item">
           <a class="nav-link" routerLink="search">Search</a>

@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
 import { User } from 'src/app/user';
 import { FileHandle } from './helpers/file-handle.model';
+import {FormGroup,FormControl} from '@angular/forms';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import Validation from './helpers/Validation';
-
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
-export class SignupComponent implements OnInit {
+export class NavbarComponent {
+
+
   user: User = {
     userImages: "",
     email: "",
@@ -25,6 +27,11 @@ export class SignupComponent implements OnInit {
     confirmPassword: new UntypedFormControl(''),
     acceptTerms: new UntypedFormControl(false),
   });
+
+  login = new FormGroup({
+    email:new FormControl(''),
+    password:new FormControl('')
+  })
   submitted = false;
   private file!: File;
   fileToUpload!: File;
@@ -86,7 +93,7 @@ export class SignupComponent implements OnInit {
 
     let confirmPass = this.ConfirmPassword?.value;
 console.log(this.file);
-// this.router.navigate(['/login'])
+this.router.navigate(['/login'])
 
     if (pass == confirmPass) {
       this.user.email = this.email?.value;
@@ -98,7 +105,7 @@ console.log(this.file);
         (data: any) => {
           console.warn(data);
           console.log("registered succesfully");
-          // this.router.navigate(['/login'])
+          this.router.navigate(['/login'])
         },
         error => {
           console.log("error occur while registring User. please try after sometime.");
@@ -137,6 +144,14 @@ console.log(this.file);
   }
 
  
-  
+  signin(){
+    console.warn(this.login.value);
+    this.authService.loginUser(this.login.value).subscribe((result=>{
+      sessionStorage.setItem('token', result.message.substring(6));
+      console.log("login succesfully");
+      this.router.navigate(['/movie']);
+
+    }))
+  }  
   }
 

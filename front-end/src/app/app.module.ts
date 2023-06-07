@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -18,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatChipsModule } from '@angular/material/chips';
+import {MatTabsModule} from '@angular/material/tabs';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { RecommendedComponent } from './pages/recommended/recommended.component';
@@ -26,8 +26,14 @@ import {MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NotificationComponent } from './pages/notification/notification.component';
-import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
 import { ArrayCombineSubstringPipe } from './pipes/array-combine-substring.pipe';
+import {ImageAuthPipe } from './pipes/image-auth-pipe';
+
+import { FavouriteMoviesComponent } from './pages/favourite-movies/favourite-movies.component';
+import {MatCardModule} from '@angular/material/card';
+import { NavbarComponent } from './navbar/navbar.component';
+import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
+
 
 
 @NgModule({
@@ -41,7 +47,12 @@ import { ArrayCombineSubstringPipe } from './pipes/array-combine-substring.pipe'
     RecommendedComponent,
     NotificationComponent,
     AdminUsersComponent,
-    ArrayCombineSubstringPipe
+    ArrayCombineSubstringPipe,
+    FavouriteMoviesComponent,
+    NavbarComponent,
+    ImageAuthPipe
+
+
   ],
   imports: [
     BrowserModule,
@@ -51,7 +62,7 @@ import { ArrayCombineSubstringPipe } from './pipes/array-combine-substring.pipe'
     FormsModule,
     BrowserAnimationsModule,
     MatIconModule,MatToolbarModule,MatMenuModule,MatButtonModule,MatChipsModule,MatListModule,MatGridListModule,
-    MatTableModule, MatCheckboxModule, MatSelectModule, MatPaginatorModule
+    MatTableModule, MatCheckboxModule, MatSelectModule, MatPaginatorModule,MatCardModule,MatTabsModule
   ],
   providers: [MovieApiServiceService],
   bootstrap: [AppComponent]

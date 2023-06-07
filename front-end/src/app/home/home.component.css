@@ -27,9 +27,16 @@
   }
 
   .btn:hover {
-    transform: scale(1.2); 
+    transform: scale(1.1);
+    background-color: #dd3675 ;
+    color: white;
   }
-
+ 
+  .btn{
+    width: 200px; 
+    font-size: large;
+    
+  }
   .background-radial-gradient {
     background-color: hsl(218, 41%, 15%);
     background-image: radial-gradient(650px circle at 0% 0%,
