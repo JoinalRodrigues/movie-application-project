@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.AnonymousAuthenticationFi
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.security.web.session.ForceEagerSessionCreationFilter;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 import java.util.Arrays;
 
