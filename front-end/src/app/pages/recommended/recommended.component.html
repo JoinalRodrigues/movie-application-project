@@ -1,4 +1,8 @@
 
+<!-- <img [src]="'http://34.83.1.21/api/v1/image' | imageAuth | async" /> -->
+
+
+
 <div class="container-fluid">
  
       
@@ -36,12 +40,8 @@
         <div class="posters" >
           <ng-container *ngFor="let r of recommendedMoviesResult">
     
-            <img src="https://image.tmdb.org/t/p/original/{{r.posterPath}}" class="rowimg largeposter">
-            <!-- [routerLink]="['/movie',r.originalTitle]">  -->
-            <!-- <div class="col-lg-9">
-              <h5>{{r.originalTitle}}</h5>
-              <p>{{r.overview}}</p>
-          </div> -->
+            <img src="https://image.tmdb.org/t/p/original/{{r.posterPath}}" class="rowimg largeposter"
+            [routerLink]="['/movie',r.originalTitle]">
           </ng-container>
          
         </div>
@@ -51,7 +51,8 @@
         <div class="posters">
           <ng-container *ngFor="let r of actionMoviesResult">
     
-            <img src="https://image.tmdb.org/t/p/original/{{r.posterPath}}" class="rowimg largeposter">
+            <img src="https://image.tmdb.org/t/p/original/{{r.posterPath}}" class="rowimg largeposter"
+            [routerLink]="['/movie',r.originalTitle]">
           
           </ng-container>
          
@@ -62,7 +63,9 @@
         <div class="posters">
           <ng-container *ngFor="let r of comedyMoviesResult">
     
-            <img src="https://image.tmdb.org/t/p/original/{{r.posterPath}}" class="rowimg largeposter">
+            <img src="https://image.tmdb.org/t/p/original/{{r.posterPath}}" class="rowimg largeposter"
+            [routerLink]="['/movie',r.originalTitle]">
+
          
           </ng-container>
          
@@ -73,7 +76,9 @@
         <div class="posters">
           <ng-container *ngFor="let r of crimeMoviesResult">
     
-            <img src="https://image.tmdb.org/t/p/original/{{r.posterPath}}" class="rowimg largeposter">
+            <img src="https://image.tmdb.org/t/p/original/{{r.posterPath}}" class="rowimg largeposter"
+            [routerLink]="['/movie',r.originalTitle]">
+
          
           </ng-container>
          
@@ -84,7 +89,9 @@
         <div class="posters">
           <ng-container *ngFor="let r of familyMoviesResult">
     
-            <img src="https://image.tmdb.org/t/p/original/{{r.posterPath}}" class="rowimg largeposter">
+            <img src="https://image.tmdb.org/t/p/original/{{r.posterPath}}" class="rowimg largeposter"
+            [routerLink]="['/movie',r.originalTitle]">
+
          
           </ng-container>
          

@@ -1,0 +1,19 @@
+<div class="contain mt-5 p-5">
+
+  <div class="row mt-5">
+    <h1 class="text-white">Favourite Movies</h1>
+
+    <div class="col-lg-4" *ngFor="let r of movie">
+      <div class="row">
+        <div class="col-lg-3 mt-4 mb-4">
+          <img src="https://image.tmdb.org/t/p/original/{{r.posterPath}}">
+        </div>
+        <div class="col-lg-9 mt-4 mb-4">
+          <button mat-button (click)="deleteFavouriteMovie(r)">Remove</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

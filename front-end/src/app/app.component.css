@@ -6,9 +6,14 @@ font-weight: bold;
 
 .navbar-nav .nav-item .nav-link{
     color: #dd3675;
-
+    font-size: large;
+    padding: 20px;
+/* justify-content: space-between; */
 }
-
+button{
+    font-size: large;
+    padding: 15px;  
+}
 /* .search-box {
     border: 1px solid white;
     padding: 2px 4px;
@@ -53,3 +58,4 @@ input,i{
     color: #aaa;
     font-style: italic;
   } */
+

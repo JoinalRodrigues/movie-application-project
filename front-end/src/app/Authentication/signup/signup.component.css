@@ -35,7 +35,10 @@
       } */
   
       .bg-glass {
-        background-color: hsla(0, 0%, 100%, 0.9) !important;
+        /* background-color:  hsla(218, 41%, 35%) 15%; */
+        box-shadow: 0 0 15px 3px #ffffff;
+
+        background-color: hsl(0, 0%, 100%) !important;
         backdrop-filter: saturate(200%) blur(25px);
       }
 

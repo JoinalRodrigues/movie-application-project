@@ -1,0 +1,25 @@
+button {
+   background-color: #dd3675;
+   color: #ffffff;
+   margin-left: 100px;
+}
+
+button:hover {
+   background-color: #dd3675;
+   color: #ffffff;
+
+}
+
+img {
+   width: 300%;
+}
+
+h3,
+p {
+   color: white;
+}
+
+.poster {
+   height: 500px;
+   width: 500px;
+}

@@ -15,6 +15,14 @@ export class MovieApiServiceService {
   constructor(private http: HttpClient) {
 
   }
+   baseUrl1 = 'https://api.themoviedb.org/3/';
+  apiKey = "08cc33bd5ae3a747598ce2ad84376e66";
+
+
+
+  bannerApiData():Observable<any>{
+    return this.http.get(`${this.baseUrl1}/trending/all/week?api_key=${this.apiKey}`);
+  }
 
   public recommendedMovies(): Observable<Movie[]> {
     let httpOptions = {

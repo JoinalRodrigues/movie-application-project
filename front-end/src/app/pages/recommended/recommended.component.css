@@ -23,6 +23,7 @@
     overflow-x:scroll;
  }
  .rowimg{
+   border-radius: 20px;
     max-height: 200px;
     object-fit:contain;
     width:100%; 

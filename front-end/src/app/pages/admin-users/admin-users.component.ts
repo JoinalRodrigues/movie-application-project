@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { AdminService, DatabaseUser, Role } from '../../service/admin.service';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatLegacyOption as MatOption } from '@angular/material/legacy-core';
-import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -23,7 +23,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AdminUsersComponent implements OnInit, AfterViewInit {
 
-  user: UntypedFormControl = new UntypedFormControl('');
+  user: FormControl = new FormControl('');
 
   allRoles: Role[] = [];
 
@@ -42,18 +42,15 @@ export class AdminUsersComponent implements OnInit, AfterViewInit {
   constructor(private adminService: AdminService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    // this.adminService.adminLogin().subscribe(res => {
-    //   sessionStorage.setItem('token', res.message.substring(6));
-      this.adminService.getRoles().subscribe(res => this.allRoles = res);
-    // });
-    this.changedDatabaseUser = new UntypedFormGroup({
-      id: new UntypedFormControl({ value: '', disabled: true, }),
-      email: new UntypedFormControl({ value: '', disabled: true }),
-      enabled: new UntypedFormControl(false),
-      accountExpiryDate: new UntypedFormControl({ value: '', disabled: true }),
-      accountNonLocked: new UntypedFormControl({ value: false, disabled: true }),
-      credentialsExpiryDate: new UntypedFormControl({ value: '', disabled: true }),
-      roles: new UntypedFormControl(new Array<Role>())
+    this.adminService.getRoles().subscribe(res => this.allRoles = res);
+    this.changedDatabaseUser = new FormGroup({
+      id: new FormControl({ value: '', disabled: true, }),
+      email: new FormControl({ value: '', disabled: true }),
+      enabled: new FormControl(false),
+      accountExpiryDate: new FormControl({ value: '', disabled: true }),
+      accountNonLocked: new FormControl({ value: false, disabled: true }),
+      credentialsExpiryDate: new FormControl({ value: '', disabled: true }),
+      roles: new FormControl(new Array<Role>())
     }
     )
   }
@@ -67,7 +64,7 @@ export class AdminUsersComponent implements OnInit, AfterViewInit {
       this.changedDatabaseUser?.controls['enabled'].setValue(this.expandedElement.enabled);
       this.changedDatabaseUser?.controls['roles'].setValue(this.expandedElement.roles);
       //      this.changedDatabaseUser?.controls['accountNonLocked'].setValue(this.expandedElement.accountNonLocked);
-      if(databaseUser.email === 'test@test.com')
+      if (databaseUser.email === 'test@test.com')
         this.changedDatabaseUser?.controls['roles'].disable();
       this.changedDatabaseUser?.patchValue(this.expandedElement);
     }
@@ -86,6 +83,29 @@ export class AdminUsersComponent implements OnInit, AfterViewInit {
 
   compareWith(o1: any, o2: any): boolean {
     return (o1?.name as string) === (o2?.name as string);
+  }
+
+  hijackIframe(ev: Event) {
+    let iframe: HTMLIFrameElement = (ev.target as HTMLIFrameElement);
+    if (iframe?.contentDocument) {
+      var atags = iframe?.contentDocument?.getElementsByTagName('a');
+      if (atags) {
+        for (let i = 0; i < atags.length; i++) {
+          atags[i].setAttribute('target', '_self');
+        }
+      }
+      console.log(document.body.scrollHeight);
+      let height = iframe?.contentWindow?.document.body.scrollHeight+'px';
+      console.log(iframe?.contentWindow?.document.body.scrollHeight);
+      console.log(iframe?.contentWindow?.document.body.offsetHeight);
+      console.log(iframe?.contentWindow?.document.documentElement.scrollHeight);
+      console.log(iframe?.contentWindow?.document.documentElement.offsetHeight);
+      console.log(height);
+      if(height){
+        // iframe.height= height;
+      }
+    }
+    
   }
 }
 
