@@ -50,6 +50,8 @@ eureka:
     preferIpAddress: true
 
 springdoc:
+  api-docs:
+    path: /api/v1/admin/${MY_POD_IP}/v3/api-docs
   show-actuator: true
 #  use-management-port: true
   swagger-ui:
@@ -169,7 +171,7 @@ server:
 spring:
   config:
     activate:
-      on-profile: "test"
+      on-profile: "default"
   application:
     name: user-authentication
   datasource:
@@ -204,10 +206,15 @@ eureka:
     preferIpAddress: true
 
 springdoc:
+  api-docs:
+    path: /api/v1/admin/v3/api-docs
   show-actuator: true
 #  use-management-port: true
   swagger-ui:
     path: /api/v1/admin/swagger-ui.html
+    disable-swagger-default-url: true
+    #    configUrl: /api/v1/admin/v3/api-docs/swagger-config
+
 
 management:
 #  server:
