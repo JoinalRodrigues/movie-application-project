@@ -47,6 +47,7 @@ springdoc:
   show-actuator: true
   swagger-ui:
     path: /api/v1/admin/${MY_POD_IP}/swagger-ui.html
+    disable-swagger-default-url: true
 
 management:
   api-docs:
