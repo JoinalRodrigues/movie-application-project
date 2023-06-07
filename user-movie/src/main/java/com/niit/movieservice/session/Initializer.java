@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 public class Initializer extends AbstractHttpSessionApplicationInitializer
 {
 
-
 }
 
 
