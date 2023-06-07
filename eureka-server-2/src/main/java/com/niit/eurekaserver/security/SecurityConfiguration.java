@@ -41,7 +41,7 @@ public class SecurityConfiguration {
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER - 1)
     public SecurityFilterChain filterChain2(HttpSecurity http) throws Exception {
-        http.securityMatchers(i -> i.requestMatchers"/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**"))
+        http.securityMatchers(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**"))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
                 .csrf()
                 .disable()
