@@ -49,7 +49,10 @@ public class RoutesConfig {
                         , "/api/v1/admin/*/actuator/**"
                         , "/api/v1/admin/*/swagger-ui"
                         , "/api/v1/admin/*/swagger-ui**"
-                        , "/api/v1/admin/*/swagger-ui/**")
+                        , "/api/v1/admin/*/swagger-ui/**"
+                        , "/api/v1/admin/*/v3/api-docs"
+                        , "/api/v1/admin/*/v3/api-docs**"
+                        , "/api/v1/admin/*/v3/api-docs/**")
                         .filters(j -> j.filter(new AdminUrlsFilter()).addResponseHeader("Access-Control-Allow-Credentials", "true"))
                         .uri("no://op"))
                 .build();
