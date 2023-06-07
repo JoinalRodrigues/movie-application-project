@@ -160,7 +160,7 @@ server:
 spring:
   config:
     activate:
-      on-profile: "default"
+      on-profile: "test"
   application:
     name: user-authentication
   datasource:
