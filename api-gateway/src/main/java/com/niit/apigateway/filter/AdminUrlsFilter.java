@@ -15,7 +15,7 @@ public class AdminUrlsFilter implements GatewayFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         URI uri = null;
         try {
-            uri = new URI("http", null, exchange.getRequest().getPath().subPath(7, 8).value(), 8090, "/" + exchange.getRequest().getPath().subPath(1).value(), null, null);
+            uri = new URI("http", null, exchange.getRequest().getPath().subPath(7, 8).value(), 8080, "/" + exchange.getRequest().getPath().subPath(1).value(), null, null);
         }
         catch (Exception e){
             System.out.println("Invalid Url schema");
