@@ -17,7 +17,6 @@ spring:
     name: api-gateway
   main:
     web-application-type: reactive
-#    allow-bean-definition-overriding: true
   cloud:
     gateway:
       globalcors:
@@ -41,19 +40,17 @@ eureka:
     registerWithEureka: true
   instance:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
-    statusPageUrlPath: http://34.83.1.21/api/v1/admin/${MY_POD_IP}/actuator
-#    statusPageUrlPath: http://34.83.1.21/${MY_POD_IP}/actuator
+    statusPageUrlPath: http://34.83.1.21/api/v1/admin/${MY_POD_IP}/swagger-ui.html
     preferIpAddress: true
 
 springdoc:
   show-actuator: true
-  use-management-port: true
   swagger-ui:
-    path: /swagger-ui.html
+    path: /api/v1/admin/${MY_POD_IP}/swagger-ui.html
 
 management:
-  server:
-    port: 8090
+  api-docs:
+    path: /api/v1/admin/${MY_POD_IP}/v3/api-docs
   endpoints:
     enabled-by-default: true
     gateway:
@@ -62,12 +59,6 @@ management:
       base-path: /api/v1/admin/${MY_POD_IP}/actuator
       exposure:
         include: "*"
-#      cors:
-#        allowed-origins: "http://localhost:4200"
-#        allowed-methods: GET,POST
-  security:
-    enabled: false
-    sessions: never
 
 logging:
   file:

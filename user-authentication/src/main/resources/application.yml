@@ -20,8 +20,6 @@ spring:
     name: user-authentication
   datasource:
     url: jdbc:mysql://35.184.175.226:3306/users_authentication?createDatabaseIfNotExist=true&verifyServerCertificate=true&useSSL=true&requireSSL=true&clientCertificateKeyStoreUrl=file:keystore&clientCertificateKeyStorePassword=mypassword&trustCertificateKeyStoreUrl=file:truststore&trustCertificateKeyStorePassword=mypassword
-    #url: ${MYSQL_DATABASE_URL}
-    #url: jdbc:mysql://localhost:3306/users_authentication?createDatabaseIfNotExist=true
     username: root
     password: root
   jpa:
@@ -53,26 +51,17 @@ springdoc:
   api-docs:
     path: /api/v1/admin/${MY_POD_IP}/v3/api-docs
   show-actuator: true
-#  use-management-port: true
   swagger-ui:
     path: /api/v1/admin/${MY_POD_IP}/swagger-ui.html
     disable-swagger-default-url: true
 
 management:
-#  server:
-#    port: 8090
   endpoints:
     enabled-by-default: true
     web:
       base-path: /api/v1/admin/${MY_POD_IP}/actuator
       exposure:
         include: "*"
-#      cors: # according to docs this is disabled by default unless values specified
-#        allowed-origins: "http://localhost:4200"
-#        allowed-methods: GET,POST
-#  security:
-#    enabled: false
-#    sessions: never
 
 logging:
   file:

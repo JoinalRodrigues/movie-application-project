@@ -18,8 +18,7 @@ spec:
           image: us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-eureka-server-2/movie-app-eureka-server-2:latest   # The one built and tagged locally
 #          imagePullPolicy: Never   # So it doesn't pull the image from remote registry
           ports:
-            - containerPort: 8761
-            - containerPort: 8090
+            - containerPort: 8080
           env:
             - name: MY_POD_IP
               valueFrom:

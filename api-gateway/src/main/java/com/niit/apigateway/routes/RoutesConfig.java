@@ -37,8 +37,6 @@ public class RoutesConfig {
                         , "/api/v1/thirdParty/Family"
                         , "/api/v1/recommended/movie/**"
                         ,"/api/v1/recommended/**").uri("lb://recommended-service"))
-                .route(i -> i.path("/api/v1/test-message")
-                        .uri("lb://push-notification"))
                 .route(i -> i.path("/eureka").filters(j -> j.filter(new EurekaFilter())
                                 .addResponseHeader("Access-Control-Allow-Credentials", "true"))
                         .uri("no://op"))
