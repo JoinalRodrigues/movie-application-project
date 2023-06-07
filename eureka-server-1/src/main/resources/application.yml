@@ -28,6 +28,8 @@ eureka:
     preferIpAddress: true
 
 springdoc:
+  api-docs:
+    path: /api/v1/admin/${MY_POD_IP}/v3/api-docs
   show-actuator: true
   swagger-ui:
     path: /api/v1/admin/${MY_POD_IP}/swagger-ui.html
