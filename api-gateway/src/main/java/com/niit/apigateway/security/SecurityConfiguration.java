@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                 //.securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
                 .securityMatcher(i -> {
             String path = i.getRequest().getPath().subPath(0).toString();
-            if(path.contains("/api/v1/admin/" + this.environment.getProperty("MY_POD_IP") + "actuator"))
+            if(path.contains("/api/v1/admin/" + this.environment.getProperty("MY_POD_IP")))
                 return ServerWebExchangeMatcher.MatchResult.match();
             return ServerWebExchangeMatcher.MatchResult.notMatch();
         })
@@ -78,7 +78,6 @@ public class SecurityConfiguration {
     private AuthenticationWebFilter customAuthenticationWebFilter(){
         AuthenticationWebFilter authenticationWebFilter;
         authenticationWebFilter = new AuthenticationWebFilter(new DummyPreAuthenticatedAuthenticationManager());
-        authenticationWebFilter.setSecurityContextRepository(NoOpServerSecurityContextRepository.getInstance());
         authenticationWebFilter.setServerAuthenticationConverter(i -> {
             String token = i.getRequest().getHeaders().getFirst("Authorization");
             if(token == null) {

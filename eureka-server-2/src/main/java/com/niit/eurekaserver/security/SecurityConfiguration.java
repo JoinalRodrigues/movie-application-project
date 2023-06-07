@@ -26,7 +26,7 @@ public class SecurityConfiguration {
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER - 2)
     public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
-        http.securityMatchers(i -> i.requestMatchers("/eureka**", "/eureka/***", "/"))
+        http.securityMatchers(i -> i.requestMatchers("/eureka", "/eureka**", "/eureka/***", "/", ""))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .csrf()
                 .disable()
@@ -41,15 +41,25 @@ public class SecurityConfiguration {
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER - 1)
     public SecurityFilterChain filterChain2(HttpSecurity http) throws Exception {
-        http.securityMatcher("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**")
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
+        http.securityMatchers(i -> i.requestMatchers"/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**"))
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
                 .csrf()
                 .disable()
                 .cors()
                 .disable()
+                .headers()
+                .frameOptions()
+                .disable()
+                .and()
+                .headers()
+                .contentTypeOptions()
+                .disable()
+                .and()
+                .headers()
+                .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy", "frame-ancestors 'self' http://34.83.1.21 http://localhost:4200"))
+                .and()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
-                .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**").hasRole("ADMIN")
-                        .anyRequest().denyAll())
+                .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**").hasRole("ADMIN"))
                 .addFilterBefore(new FilterForToken(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
