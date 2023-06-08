@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "aerial-venture-386206",
+  "private_key_id": "b11b4f81d05e7162931830765bc6779b610d8621",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCPtuj4DfjzIBnT\nrymMpsFlRtzmtw7BgcSq/Ei6CNX7nVS1TQOeSSa5N+rXPex9Danbo9ebY44R4VYn\nEfH61pmyNmgL9CQEGjwcadO7thfo7F5BXsz5cmAZ+JtqLaGJlDRi53p4EUotrUh0\nVgdu9qvwNn0hi79gSXr/U+GrQCMSuu+oBLVY0Z0GiKxZ4sLKp93zzekS38N/DxM7\nZM8hYEW99a5OgUAcu4wTVL1bNAihC7HNZ9UixCQ0AfVn2XSTrikvjim42bWaWapT\nm/2ximfU6KdpsbY2RobkW8egmsYGYYpdNR0x5mrh4tChY3b3tlTf9rvaaS34KCpX\nSQjVLlR9AgMBAAECggEAIc68hUX8L214xeRp2M2Npz6BTsD3dqwJUNPiY+kaNYOw\nXqoMVNsOgfnWg+XsUQq6z5F+ce58iFZDBxPgocqEA3lrBozbQB/PzjtS9NCEVWXt\nUmFzxKaUVue138d2PcAghre/hqlCkvY1mjB2tTLQBcU7sH2IeqUuiwv3hWqkFY6L\n53HLlnfYwrX8f011dzH18i4NN6zvaTO9sx9dMU3wV3iIBybuMIMNyoyO16MKQWKG\nK8PsgW5U+99c/ztq8pRxiZGBuVQAoBrB5zT438RNkFDHSQFoALTgAlJpJhM1x1oE\nfZB6wXfLvUFmn0lP8trYjO4miV1dtJZ8tiwdfHSJIQKBgQDIZuJnwm2cWZiXaPQN\nIZ5lieJttTYEc6HCHcZmn6ep2+yoRNvropOuo4IH2G2+oFXYblZRTCeGaOBWrh6r\n421Oya90dhlzSsij4oJD8+2exG0n8WJt0hOl0RZkik5Sgmr1+yYbyADMpZBz+5Q3\nKSL3QQ7Ru3OVP3JBFF7rNE+CtQKBgQC3leyikVXicfG9JT00nJN9OhSsI7E71Eu1\nulpOQnhnMDbDH+Wzu6RZFabhvlJ8vaEu5i6egAkoHDD/mycg/oGk4THk/IQmR5s4\ndPA2KqejvhleZXOUzlLZQEOE/I4LKPiO6QqiEX/GooYBcP1wyf7+LbsbOuhC9QzV\naEucEPy/qQKBgGgdC4LcgBW6dowy+pfX33LhL8HPY0Ds0h0HWwv15iVZHJpPK/I/\nhHo2eFebGWjv46mNqUqTRfWOhv6Bd23VufQ00/KtaIt9Tr/V7ddf4xOY+RzHS1vC\nyHJdLkUNlaNIHkmtMR89ySyI14NqMJZ3yLKsGgbcXDAtxi4JZ0bK5oQBAoGBAJE9\n+rXu95ysew0ijha2nXUgY0SBBHIKFk/S/CkYK3uvyFN9Q9R7ap3UJHBKi6YGvKOH\nFnDtaNEj5JwEmuNelyDjzP6VzNMgKaxzz6t6+Z/xAM8Owm+DAEbCsehfit1Hb8ZY\nlsH7yDRVVmGDi+8U0Dk14ua7Jw/6IUohNlhllCDpAoGBALatSNpqDONpenXm3REA\n/ldNGxlpPpwwgjFyiVzm+6siMQ2JxWrCiauDwmS5ktSs5GQi8YqDwYOum3ZD5NhI\nuo3W1qFoV8VeY3E9bcqTkGLWrPuRL5H5MgcUmzhJvfsrJx/CWXMA7cs82niD7d5m\nnWlr4NqPjb7ksR/3z+64IWnV\n-----END PRIVATE KEY-----\n",
+  "client_email": "ci-cd-935@aerial-venture-386206.iam.gserviceaccount.com",
+  "client_id": "112514767324418650784",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ci-cd-935%40aerial-venture-386206.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
