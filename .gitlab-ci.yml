@@ -1,24 +1,101 @@
-image: google/cloud-sdk
+image: joinal/google-cloud-sdk-movie-app:latest
 
 build-job:
   stage: build
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
-#    - curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-432.0.0-linux-x86_64.tar.gz
-#    - RUN mkdir -p /usr/local/gcloud \
-#      && tar -C /usr/local/gcloud -xvf /tmp/google-cloud-cli-432.0.0-linux-x86_64.tar.gz \
-#      && /usr/local/gcloud/google-cloud-sdk/install.sh
-#    - pwd
-#    - echo $PATH
-#    - export PATH=/usr/local/gcloud/google-cloud-sdk/bin:$PATH
-#    - echo $PATH
-#    - dir
-    - gcloud auth activate-service-account ci-cd-935@aerial-venture-386206.iam.gserviceaccount.com  --key-file=/builds/766963_JOINAL/movie-main-project/aerial-venture-386206-b11b4f81d05e.json --project=aerial-venture-386206
-#    - mvn compile
-#    - /usr/local/gcloud/google-cloud-sdk/bin/gcloud init
-    - cd api-gateway
-    - mvn compile
+    - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    - cd user-authentication
+    - mvn clean
     - mvn package
+    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication .
+    - gcloud auth configure-docker us-west1-docker.pkg.dev
+    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication
+    - sleep 5
+    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication \
+      --filter='-tags:*' --format='get(digest)' --limit=unlimited |\
+      xargs -I {arg} gcloud container images delete \
+      "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication@{arg}" --quiet
+    - kubectl rollout restart deploy movie-app-user-authentication
+    - cd ..
+    - cd eureka-server-1
+    - mvn clean
+    - mvn package
+    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-eureka-server-1/movie-app-eureka-server-1 .
+    - gcloud auth configure-docker us-west1-docker.pkg.dev
+    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-eureka-server-1/movie-app-eureka-server-1
+    - sleep 5
+    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-eureka-server-1/movie-app-eureka-server-1 \
+      --filter='-tags:*' --format='get(digest)' --limit=unlimited |\
+      xargs -I {arg} gcloud container images delete \
+      "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-eureka-server-1/movie-app-eureka-server-1@{arg}" --quiet
+    - kubectl rollout restart deploy movie-app-eureka-server-1
+    - cd ..
+    - cd eureka-server-2
+    - mvn clean
+    - mvn package
+    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-eureka-server-2/movie-app-eureka-server-2 .
+    - gcloud auth configure-docker us-west1-docker.pkg.dev
+    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-eureka-server-2/movie-app-eureka-server-2
+    - sleep 5
+    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-eureka-server-2/movie-app-eureka-server-2 \
+      --filter='-tags:*' --format='get(digest)' --limit=unlimited |\
+      xargs -I {arg} gcloud container images delete \
+      "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-eureka-server-2/movie-app-eureka-server-2@{arg}" --quiet
+    - kubectl rollout restart deploy movie-app-eureka-server-2
+    - cd ..
+    - cd api-gateway
+    - mvn clean
+    - mvn package
+    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway .
+    - gcloud auth configure-docker us-west1-docker.pkg.dev
+    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway
+    - sleep 5
+    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway \
+      --filter='-tags:*' --format='get(digest)' --limit=unlimited |\
+      xargs -I {arg} gcloud container images delete \
+      "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway@{arg}" --quiet
+    - kubectl rollout restart deploy movie-app-api-gateway
+    - cd ..
+    - cd push-notification
+    - mvn clean
+    - mvn package
+    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-push-notification/movie-app-push-notification .
+    - gcloud auth configure-docker us-west1-docker.pkg.dev
+    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-push-notification/movie-app-push-notification
+    - sleep 5
+    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-push-notification/movie-app-push-notification \
+      --filter='-tags:*' --format='get(digest)' --limit=unlimited |\
+      xargs -I {arg} gcloud container images delete \
+      "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-push-notification/movie-app-push-notification@{arg}" --quiet
+    - kubectl rollout restart deploy movie-app-push-notification
+    - cd ..
+    - cd user-movie
+    - mvn clean
+    - mvn package
+    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-movie/movie-app-user-movie .
+    - gcloud auth configure-docker us-west1-docker.pkg.dev
+    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-movie/movie-app-user-movie
+    - sleep 5
+    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-movie/movie-app-user-movie \
+      --filter='-tags:*' --format='get(digest)' --limit=unlimited |\
+      xargs -I {arg} gcloud container images delete \
+      "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-movie/movie-app-user-movie@{arg}" --quiet
+    - kubectl rollout restart deploy movie-app-user-movie
+    - cd ..
+    - cd recommended-service
+    - mvn clean
+    - mvn package
+    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-recommended-service/movie-app-recommended-service .
+    - gcloud auth configure-docker us-west1-docker.pkg.dev
+    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-recommended-service/movie-app-recommended-service
+    - sleep 5
+    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-recommended-service/movie-app-recommended-service \
+      --filter='-tags:*' --format='get(digest)' --limit=unlimited |\
+      xargs -I {arg} gcloud container images delete \
+      "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-recommended-service/movie-app-recommended-service@{arg}" --quiet
+    - kubectl rollout restart deploy movie-app-recommended-service
+    - cd ..
 
 test-job:
   stage: test
