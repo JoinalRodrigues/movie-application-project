@@ -6,3 +6,10 @@ RUN gcloud auth activate-service-account ci-cd-935@aerial-venture-386206.iam.gse
 
 RUN gcloud container clusters get-credentials movie-app-cluster --zone us-west1-a --project aerial-venture-386206
 
+RUN apt update && apt upgrade
+
+RUN apt install -y openjdk-17-jdk
+
+RUN apt update && apt upgrade
+
+RUN apt install -y maven
