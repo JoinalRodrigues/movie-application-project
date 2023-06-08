@@ -1,25 +1,20 @@
-image: joinal/google-cloud-sdk-movie-app:latest
+image: docker
+
+services:
+  - docker:dind
 
 stages:
   - build
   - test
-  - deploy
+  - package
 
-#  [[runners]]
-#  url = "https://gitlab.com/"
-#  token = RUNNER_TOKEN
-#  executor = "docker"
-#  [runners.docker]
-#  tls_verify = false
-#  image = "docker:20.10.16"
-#  privileged = false
-#  disable_cache = false
-#  volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
-#  [runners.cache]
-#  Insecure = false
-
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_DRIVER: overlay2
 
 build-job:
+  image: joinal/google-cloud-sdk-movie-app:latest
   stage: build
   script:
 #    - gitlab-runner register -n \
@@ -34,7 +29,7 @@ build-job:
     - cd user-authentication
     - mvn clean
     - mvn package
-    - cd..
+    - cd ..
   artifacts:
     paths:
       - "user-authentication/target/"
@@ -45,25 +40,21 @@ test-job:
     - echo "This job tests something"
 
 package-job:
-  stage: deploy
-  image: quay.io/buildah/stable
-  variables:
-    STORAGE_DRIVER: vfs
-    BUILDAH_FORMAT: docker
-    BUILDAH_ISOLATION: chroot
-    FQ_IMAGE_NAME: "$CI_REGISTRY_IMAGE/test"
+  stage: package
   script:
     - cd user-authentication
-    - buildah images
-    - buildah build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication
+    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication .
+    - cd ..
+
+deploy-job:
+  image: joinal/google-cloud-sdk-movie-app:latest
+  stage: deploy
+  script:
     - gcloud auth configure-docker us-west1-docker.pkg.dev
-    - buildah images
-    - buildah push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication
+    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication
     - sleep 5
     - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication \
       --filter='-tags:*' --format='get(digest)' --limit=unlimited |\
       xargs -I {arg} gcloud container images delete \
       "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication@{arg}" --quiet
     - kubectl rollout restart deploy movie-app-user-authentication
-    - cd ..
-
