@@ -12,10 +12,9 @@
    
             <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+trailer.key)" title="The Invisible Barrier 
             Keeping Two Worlds Apart" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-             allowfullscreen></iframe>
-             <a class="btn btn-md" (click)="add()" >Add to Favourite</a>
-
-<mat-icon>favourite</mat-icon>
+             allowfullscreen>
+             </iframe>
+           <mat-icon (click)="add()">favorite</mat-icon>
              <div class="row">
               
                 <div class="col-lg-10 mt-5 p-4">

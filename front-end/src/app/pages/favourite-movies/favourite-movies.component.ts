@@ -30,18 +30,7 @@ export class FavouriteMoviesComponent implements OnInit {
   }
 
   deleteFavouriteMovie(index: any) {
-    this.movieFavourites.deleteFavouriteMovies(index.movieId).subscribe((result) => {
-
-      // alert("Movie Deleted");
-      Swal.fire({
-        title: 'Custom animation with Animate.css',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        }
-      })
+    this.movieFavourites.deleteFavouriteMovies(index.movieId).subscribe((result) => {     
       window.location.reload();
     })
   }

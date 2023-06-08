@@ -34,7 +34,11 @@ iframe{
   color: #ffffff;
 }
 
-
+mat-icon{
+  /* color: #dd3675; */
+  color: #dd3675;
+  float:right;
+}
 
 /* *{
     padding: 0;

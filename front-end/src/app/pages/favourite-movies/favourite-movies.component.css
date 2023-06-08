@@ -9,7 +9,12 @@ button:hover {
    color: #ffffff;
 
 }
+mat-icon{
+color: #dd3675;
+/* float:right; */
+margin-left: 95px;
 
+}
 img {
    width: 300%;
 }
