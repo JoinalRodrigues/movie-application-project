@@ -82,7 +82,7 @@ public class SecurityConfiguration {
                 .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy", "frame-ancestors 'self' http://34.83.1.21 http://localhost:4200"))
                 .and()
                 .authenticationProvider(new AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider())
-                .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**").permitAll()
+                .authorizeHttpRequests(i -> i.requestMatchers("/api/v1/admin", "/api/v1/admin**", "/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().denyAll())
                 .addFilterBefore(new FilterForToken(), UsernamePasswordAuthenticationFilter.class);;
         return http.build();
