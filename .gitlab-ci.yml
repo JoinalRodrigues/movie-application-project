@@ -30,6 +30,7 @@ build-job:
     # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-the-overlayfs-driver
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
+    HEALTHCHECK_TCP_PORT: "2375"
   services:
     - name: docker:19.03.0-dind
       alias: docker
@@ -41,7 +42,7 @@ build-job:
     - cd /var/run
     - ls -a
     - echo $PATH
-    - until docker info; do sleep 1; done
+#    - until docker info; do sleep 1; done
     - docker version
 
 
