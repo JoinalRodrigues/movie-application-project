@@ -41,6 +41,7 @@ build-job:
     - cd var
     - cd run
     - dir
+    - echo $PATH
     - docker version
 
 
