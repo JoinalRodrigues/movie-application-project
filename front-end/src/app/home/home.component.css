@@ -17,7 +17,7 @@
     font-weight: bold;
     border: 3px solid #f1f1f1;
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
@@ -29,13 +29,17 @@
   .btn:hover {
     transform: scale(1.1);
     background-color: #dd3675 ;
-    color: white;
+    color: #ffffff;
   }
  
   .btn{
     width: 200px; 
     font-size: large;
-    
+    background-color: #dd3675 ;
+    color: #ffffff;
+    padding: 5px;
+
+
   }
   .background-radial-gradient {
     background-color: hsl(218, 41%, 15%);
@@ -62,6 +66,9 @@
 
   }
 
-
+*{
+  padding: 0;
+  margin: 0;
+}
 
  

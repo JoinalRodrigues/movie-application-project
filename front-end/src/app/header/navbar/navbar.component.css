@@ -1,0 +1,27 @@
+/* nav{
+    height:100%;
+} */
+.sidenav-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.sidenav-button:hover{
+    background-color: #ffffff90;
+    border-radius: 30%;
+}
+a{
+    color:#dd3675;
+}
+.navbar{
+    background-color: hsl(218, 41%, 19%);
+
+}
+img{
+    margin-top: 2px;
+    width: 70px;
+    height: 55px;
+    border-radius: 35px;
+}

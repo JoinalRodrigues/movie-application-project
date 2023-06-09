@@ -87,7 +87,8 @@
 </mat-tab>
 <mat-tab label="Services">
   <div class="container">
-  <iframe style="min-height:98vh" width="100%" (load)="hijackIframe($event)" src="http://34.83.1.21/eureka" name="eureka" title="Eureka" allowfullscreen></iframe> 
+    <button mat-raised-button color="primary" (click)="refreshIframe($event)">Refresh</button>
+      <iframe style="min-height:98vh" width="100%" (load)="hijackIframe($event)" src="http://34.83.1.21/eureka" name="eureka" title="Eureka" allowfullscreen></iframe> 
 </div>
 </mat-tab>
 </mat-tab-group>

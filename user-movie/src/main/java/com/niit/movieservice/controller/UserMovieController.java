@@ -45,6 +45,11 @@ public class UserMovieController {
         return new ResponseEntity<>(userMovieService.pushNotification(movie, principal.getName()), HttpStatus.OK);
 
     }
+    @GetMapping("/user/notification")
+    public ResponseEntity<?> getNotification(Principal principal){
+        return new ResponseEntity<>(userMovieService.getNotification(principal.getName()), HttpStatus.OK);
+
+    }
     @PostMapping("/user/favourite")
     public ResponseEntity<?> addMovieToFavourites(@RequestBody Movie movie, Principal principal) throws UserNotFoundException{
 

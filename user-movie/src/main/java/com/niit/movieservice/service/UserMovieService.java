@@ -17,5 +17,6 @@ public interface UserMovieService {
     List<Movie> getAllFavouriteMovies(String email);
     boolean removeMovieFromFavourites(int movieId, String emailId) throws MovieNotFoundException;
     boolean pushNotification(Movie movie,String email) throws UserNotFoundException;
+    List<Movie> getNotification(String email);
     void deleteNotification(NotificationDeliveredDTO notificationDeliveredDTO) throws Exception,UserNotFoundException;
     }

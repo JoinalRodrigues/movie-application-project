@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Movie } from 'src/app/movie';
-import { Trailer } from 'src/app/trailer';
-import { Cast } from 'src/app/cast';
+import { Movie } from 'src/app/model/movie';
+import { Trailer } from 'src/app/model/trailer';
+import { Cast } from 'src/app/model/cast';
 import { MovieTrailerService } from 'src/app/service/movie-trailer.service';
 import { MovieFavouritesService } from 'src/app/service/movie-favourites.service';
 
@@ -70,10 +70,6 @@ console.log(result,'getcast');
       this.router.navigate(['/user-favourite']);
     })};
 
-  // add() {
-  //   this.movieFavouritesService.addFavouriteMovies(this.movie).subscribe(res => null);
-  //   this.router.navigate(['/UserfavouriteMovies']);
 
-  // }
 }
 

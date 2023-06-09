@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl,FormGroup } from '@angular/forms';
-import { Movie } from 'src/app/movie';
+import { Movie } from 'src/app/model/movie';
 import { MovieApiServiceService } from 'src/app/service/movie-api-service.service';
 
 @Component({

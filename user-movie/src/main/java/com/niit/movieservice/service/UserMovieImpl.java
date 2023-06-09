@@ -69,6 +69,11 @@ throw new InternalServerError();
 
         return true ;
     }
+  @Override
+    public List<Movie> getNotification(String email){
+       return userMovieRepository.findById(email).get().getNotifications();
+
+  }
 
     @Override
     @RabbitListener(queues = "notification-delivered-queue", ackMode = "AUTO")

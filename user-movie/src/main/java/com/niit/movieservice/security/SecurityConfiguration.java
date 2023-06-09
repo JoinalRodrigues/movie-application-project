@@ -22,8 +22,6 @@ import org.springframework.security.web.method.annotation.AuthenticationPrincipa
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-
-
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {

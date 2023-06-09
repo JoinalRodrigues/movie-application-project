@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Movie } from '../movie';
-import { Trailer } from '../trailer';
-import { Cast } from '../cast';
+import { Movie } from '../model/movie';
+import { Trailer } from '../model/trailer';
+import { Cast } from '../model/cast';
 
 
 @Injectable({
@@ -26,24 +26,11 @@ export class MovieTrailerService {
   }
 
 
-  baseUrl = 'https://api.themoviedb.org/3/';
-  apiKey = "08cc33bd5ae3a747598ce2ad84376e66";
-
-  // bannerApiData():Observable<any>{
-  //   return this.http.get(`${this.baseUrl}/trending/all/week?api_key=${this.apiKey}`);
-  // }
-  // recommendedMovies():Observable<Movie[]>{
-  //   return this.http.get<Movie[]>(this.movieUrl);
-  // }
-
 
   getMovie(movieName:String):Observable<Movie[]>{
     return this.http.get<Movie[]>(this.movieUrl2+movieName);
   }
 
-  // public getTrailorsId(movieName:String):Observable<Trailer[]>{
-  //   return this.http.get<Trailer[]>(this.movieTrailerUrl+movieName);
-  // }
 
   public getMovieCast(movieName:string):Observable<Cast[]>{
     return this.http.get<Cast[]>(this.castUrl+movieName);

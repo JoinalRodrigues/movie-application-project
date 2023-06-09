@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MovieTrailerService } from 'src/app/service/movie-trailer.service';
-import { Movie } from 'src/app/movie';
+import { Movie } from 'src/app/model/movie';
 import { MovieFavouritesService } from 'src/app/service/movie-favourites.service';
 import Swal from 'sweetalert2';
 

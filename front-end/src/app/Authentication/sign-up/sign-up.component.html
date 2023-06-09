@@ -3,19 +3,18 @@
   <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
     <div class="row gx-lg-5 align-items-center mb-5">
       <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-        <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%); font-size: xxx-large;">
-          Watch Latest Movies <br><br>
-          <span style="color: hsl(218, 81%, 75%);font-size: xxx-large;">Anytime Anywhere</span>
+        <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+          Watch Latest Movies <br />
+          <span style="color: hsl(218, 81%, 75%)">Anytime Anywhere</span>
         </h1>
-        <br>
-        <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%); font-size: xx-large; font-style: italic;">
-          Register to watch your latest<br><br> trending movies
+        <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+          Register with your email and password <br>to watch the latest trending movies
         </p>
       </div>
 
       <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-        <!-- <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
-        <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div> -->
+        <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+        <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
 
         <div class="card bg-glass">
           <div class="card-body px-4 py-5 px-md-5">
@@ -34,9 +33,7 @@
               </div>
               <!-- Email input -->
               <div class="form-outline mb-4">
-                <label class="form-label" for="form3Example3">Email address</label>
-
-                <input type="email" id="form3Example3" class="form-control" formControlName="email"
+                <input type="email" id="form3Example3" class="form-control" placeholder="Email" formControlName="email"
                   [ngClass]="{ 'is-invalid': submitted && registerFormControl['email'].errors }" />
                 <div *ngIf="submitted && registerFormControl['email'].errors" class="invalid-feedback">
                   <div *ngIf="registerFormControl['email'].errors['required']">Email is required</div>
@@ -48,9 +45,7 @@
               </div>
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <label class="form-label" for="form3Example4">Password</label>
-
-                <input type="password" id="form3Example4" class="form-control" formControlName="password"
+                <input type="password" id="form3Example4" class="form-control" placeholder="password" formControlName="password"
                   [ngClass]="{ 'is-invalid': submitted && registerFormControl['password'].errors }" />
                 <div *ngIf="submitted && registerFormControl['password'].errors" class="invalid-feedback">
                   <div *ngIf="registerFormControl['password'].errors['required']">Password is required</div>
@@ -66,9 +61,7 @@
               </div>
               <!-- confirm password -->
               <div class="form-outline mb-4">
-                <label class="form-label" for="form3Example4">Confirm Password</label>
-
-                <input type="password" id="form3Example4" class="form-control" formControlName="confirmPassword"
+                <input type="password" id="form3Example4" class="form-control" placeholder="Confirm password" formControlName="confirmPassword"
                   [ngClass]="{ 'is-invalid': submitted && registerFormControl['confirmPassword'].errors }" />
                 <div *ngIf="submitted && registerFormControl['confirmPassword'].errors" class="invalid-feedback">
                   <div *ngIf="registerFormControl['confirmPassword'].errors['required']">
@@ -107,6 +100,8 @@
 
 
             </form>
+            <h3>Have already an account <a [routerLink]="['/signin']">SignIn</a></h3>
+
           </div>
         </div>
       </div>

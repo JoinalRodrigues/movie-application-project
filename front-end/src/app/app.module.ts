@@ -9,8 +9,6 @@ import { SearchComponent} from './pages/search/search.component';
 import { MovieDetailsComponent } from './pages/movie-details/movie-details.component';
 import  {HttpClientModule } from '@angular/common/http';
 import { MovieApiServiceService } from './service/movie-api-service.service';
-import { SignupComponent } from './Authentication/signup/signup.component';
-import { SigninComponent } from './Authentication/signin/signin.component';
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -28,12 +26,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { ArrayCombineSubstringPipe } from './pipes/array-combine-substring.pipe';
 import {ImageAuthPipe } from './pipes/image-auth-pipe';
-
 import { FavouriteMoviesComponent } from './pages/favourite-movies/favourite-movies.component';
 import {MatCardModule} from '@angular/material/card';
-import { NavbarComponent } from './navbar/navbar.component';
 import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
-
+import { SidenavComponent } from './header/sidenav/sidenav.component';
+import { NavbarComponent } from './header/navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
+import { SignInComponent } from './Authentication/sign-in/sign-in.component';
+import { SignUpComponent } from './Authentication/sign-up/sign-up.component';
 
 
 @NgModule({
@@ -42,15 +42,17 @@ import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
     HomeComponent,
     SearchComponent,
     MovieDetailsComponent,
-    SignupComponent,
-    SigninComponent,
     RecommendedComponent,
     NotificationComponent,
     AdminUsersComponent,
     ArrayCombineSubstringPipe,
     FavouriteMoviesComponent,
+    ImageAuthPipe,
+    SidenavComponent,
     NavbarComponent,
-    ImageAuthPipe
+    FooterComponent,
+    SignInComponent,
+    SignUpComponent
 
 
   ],

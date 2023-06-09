@@ -3,10 +3,10 @@
   padding: 0;
   margin-left: 0;
 }
-img{
+/* img{
     width:100%;
     height: auto;  
-}
+} */
 h2{
   color:#dd3675;
 }
@@ -18,6 +18,13 @@ p{
     color:#ffffff;
 
 }
+mat-icon{
+  float: right;
+  margin-right: 80px;
+  color:#dd3675;
+
+}
+
 
 
 

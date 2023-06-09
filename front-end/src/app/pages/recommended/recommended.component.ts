@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Movie } from 'src/app/movie';
+import { Movie } from 'src/app/model/movie';
 import { MovieApiServiceService } from 'src/app/service/movie-api-service.service';
 @Component({
   selector: 'app-recommended',
@@ -9,15 +9,7 @@ import { MovieApiServiceService } from 'src/app/service/movie-api-service.servic
 export class RecommendedComponent implements OnInit{
 
   constructor(private movieService:MovieApiServiceService) { }
-  // ngAfterViewInit(): void {
-  //   setTimeout(() => this.recommendedMovie(), 100);
-  //   setTimeout(() => this.upcomingMovies(), 200);
-  //   setTimeout(() => this.actionMovies(), 300);
-  //   setTimeout(() => this.comedyMovies(), 400);
-  //   setTimeout(() => this.crimeMovies(), 500);
-  //   setTimeout(() => this.familyMovies(), 600);
-  //   throw new Error('Method not implemented.');
-  // }
+
  bannerResult:any=[];
  recommendedMoviesResult:Movie[]=[];
  upcomingMoviesResult:Movie[]=[];
@@ -27,7 +19,6 @@ export class RecommendedComponent implements OnInit{
  familyMoviesResult:Movie[]=[];
 
   ngOnInit(): void {
-    // this.bannerData();
     this.recommendedMovie();
     this.upcomingMovies();
     this.actionMovies();
@@ -37,12 +28,7 @@ export class RecommendedComponent implements OnInit{
 
   }
 
-  // bannerData(){
-  //   this.movieService.bannerApiData().subscribe((result)=>{
-  //     console.log(result,'bannerresult');
-  //     this.bannerResult = result.results;
-  //   });
-  // }
+ 
 
   recommendedMovie(){
     this.movieService.recommendedMovies().subscribe((result)=>{

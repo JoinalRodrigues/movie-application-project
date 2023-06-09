@@ -64,8 +64,8 @@ export class AdminUsersComponent implements OnInit, AfterViewInit {
       this.changedDatabaseUser?.controls['enabled'].setValue(this.expandedElement.enabled);
       this.changedDatabaseUser?.controls['roles'].setValue(this.expandedElement.roles);
       //      this.changedDatabaseUser?.controls['accountNonLocked'].setValue(this.expandedElement.accountNonLocked);
-      if (databaseUser.email === 'test@test.com')
-        this.changedDatabaseUser?.controls['roles'].disable();
+      // if (databaseUser.email === 'test@test.com')
+      //   this.changedDatabaseUser?.controls['roles'].disable();
       this.changedDatabaseUser?.patchValue(this.expandedElement);
     }
     this.changedDatabaseUser?.markAsPristine();
@@ -96,15 +96,21 @@ export class AdminUsersComponent implements OnInit, AfterViewInit {
       }
       console.log(document.body.scrollHeight);
       let height = iframe?.contentWindow?.document.body.scrollHeight+'px';
-      console.log(iframe?.contentWindow?.document.body.scrollHeight);
-      console.log(iframe?.contentWindow?.document.body.offsetHeight);
-      console.log(iframe?.contentWindow?.document.documentElement.scrollHeight);
-      console.log(iframe?.contentWindow?.document.documentElement.offsetHeight);
-      console.log(height);
+      // console.log(iframe?.contentWindow?.document.body.scrollHeight);
+      // console.log(iframe?.contentWindow?.document.body.offsetHeight);
+      // console.log(iframe?.contentWindow?.document.documentElement.scrollHeight);
+      // console.log(iframe?.contentWindow?.document.documentElement.offsetHeight);
+      // console.log(height);
       if(height){
         // iframe.height= height;
       }
     }
+    
+  }
+
+  refreshIframe(event:Event){
+    let iframe: HTMLIFrameElement = (event.target as HTMLIFrameElement);
+    iframe.src="http://34.83.1.21/eureka";
     
   }
 }

@@ -1,4 +1,4 @@
-import { Component,HostListener, ViewChild } from '@angular/core';
+import { Component,HostListener, Input, ViewChild } from '@angular/core';
 import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
 
 @Component({
@@ -9,6 +9,8 @@ import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy
 export class AppComponent {
   title = 'movie-app';
   navbg:any;
+  sideNavStatus:boolean = false;
+  
   @HostListener('document:scroll') scrollover(){
 if(document.body.scrollTop > 0 || document.documentElement.scrollTop > 0){
   this.navbg = {
