@@ -1,4 +1,4 @@
-image: docker:18
+image: docker:20.10.16
 
 #before_script:
 #  - docker version
@@ -11,7 +11,7 @@ image: docker:18
 #      HEALTHCHECK_TCP_PORT: "2375"
 
 services:
-  - name: docker:18-dind
+  - name: docker:dind
     alias: docker
     # in our experience although you'd assume this would be sufficient, this did
     # nothing to prevent connection errors without `DOCKER_TLS_CERTDIR` being set
