@@ -1,4 +1,4 @@
-image: docker:20-dind
+image: docker:18-dind
 
 #before_script:
 #  - docker version
@@ -30,7 +30,6 @@ stages:
 #  DOCKER_DRIVER: overlay2
 
 build-job:
-  image: docker:18
   stage: build
   variables:
     # using "docker" as the host is only possible if you alias the service below
