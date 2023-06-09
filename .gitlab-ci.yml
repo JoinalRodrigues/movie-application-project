@@ -20,7 +20,7 @@ stages:
 #  DOCKER_DRIVER: overlay2
 
 build-job:
-  image: docker:19-dind
+  image: docker:19
   stage: build
   variables:
     # using "docker" as the host is only possible if you alias the service below
