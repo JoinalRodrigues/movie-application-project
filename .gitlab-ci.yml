@@ -3,12 +3,12 @@ image: docker:20-dind
 #before_script:
 #  - docker version
 
-services:
-  - name: docker:20-dind
-    alias: docker
-    command: ["--tls=false"]
-    variables:
-      HEALTHCHECK_TCP_PORT: "2375"
+#services:
+#  - name: docker:20-dind
+#    alias: docker
+#    command: ["--tls=false"]
+#    variables:
+#      HEALTHCHECK_TCP_PORT: "2375"
 
 stages:
   - build
@@ -22,7 +22,7 @@ stages:
 #  DOCKER_DRIVER: overlay2
 
 build-job:
-  image: docker:19.03.0
+  image: docker:18
   stage: build
   variables:
     # using "docker" as the host is only possible if you alias the service below
@@ -33,7 +33,7 @@ build-job:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
   services:
-    - name: docker:19.03.0-dind
+    - name: docker:18-dind
       alias: docker
       # in our experience although you'd assume this would be sufficient, this did
       # nothing to prevent connection errors without `DOCKER_TLS_CERTDIR` being set
@@ -43,7 +43,7 @@ build-job:
     - cd /var/run
     - ls -a
     - echo $PATH
-#    - until docker info; do sleep 1; done
+    - until docker info; do sleep 1; done
     - docker version
 
 
