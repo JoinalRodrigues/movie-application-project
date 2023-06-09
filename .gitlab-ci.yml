@@ -38,8 +38,7 @@ build-job:
       # to an empty string, and I would call that beyond mildly infuriating.
       command: ["--tls=false"]
   script:
-    - cd var
-    - cd run
+    - cd /var/run
     - dir
     - echo $PATH
     - docker version
