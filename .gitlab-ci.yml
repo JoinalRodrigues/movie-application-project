@@ -1,4 +1,4 @@
-image: docker:20.10.16
+image: joinal/google-cloud-sdk-movie-app:latest
 
 #before_script:
 #  - docker version
@@ -11,7 +11,7 @@ image: docker:20.10.16
 #      HEALTHCHECK_TCP_PORT: "2375"
 
 services:
-  - name: docker:dind
+  - name: docker:24.0.2-dind
     alias: docker
     # in our experience although you'd assume this would be sufficient, this did
     # nothing to prevent connection errors without `DOCKER_TLS_CERTDIR` being set
