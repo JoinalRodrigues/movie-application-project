@@ -1,4 +1,4 @@
-image: docker:19.03.0
+image: joinal/google-cloud-sdk-movie-app:latest
 
 before_script:
   - docker version
