@@ -1,7 +1,10 @@
-image: docker:20.10.16
+image: docker:19.03.0
+
+before_script:
+  - docker version
 
 services:
-  - name: docker:20.10.16-dind
+  - name: docker:19.03.0-dind
     alias: docker
 
 stages:
