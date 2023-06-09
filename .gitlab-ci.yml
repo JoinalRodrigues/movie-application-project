@@ -4,7 +4,8 @@ before_script:
   - docker version
 
 services:
-  - name: docker:19.03.0-dind
+  - name: docker:20-dind
+    command: ["--tls=false"]
     alias: docker
 
 stages:
