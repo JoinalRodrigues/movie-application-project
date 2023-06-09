@@ -39,7 +39,7 @@ build-job:
       command: ["--tls=false"]
   script:
     - cd /var/run
-    - dir
+    - ls -a
     - echo $PATH
     - docker version
 
