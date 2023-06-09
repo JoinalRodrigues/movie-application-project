@@ -41,6 +41,7 @@ build-job:
     - cd /var/run
     - ls -a
     - echo $PATH
+    - until docker info; do sleep 1; done
     - docker version
 
 
