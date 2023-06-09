@@ -1,12 +1,12 @@
 image: docker:20-dind
 
-before_script:
-  - docker version
+#before_script:
+#  - docker version
 
-services:
-  - name: docker:20-dind
-    alias: docker
-    command: ["--tls=false"]
+#services:
+#  - name: docker:20-dind
+#    alias: docker
+#    command: ["--tls=false"]
 
 stages:
   - build
@@ -14,10 +14,10 @@ stages:
   - package
   - deploy
 
-variables:
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_TLS_CERTDIR: ""
-  DOCKER_DRIVER: overlay2
+#variables:
+#  DOCKER_HOST: tcp://docker:2375
+#  DOCKER_TLS_CERTDIR: ""
+#  DOCKER_DRIVER: overlay2
 
 build-job:
   image: docker:19-dind
