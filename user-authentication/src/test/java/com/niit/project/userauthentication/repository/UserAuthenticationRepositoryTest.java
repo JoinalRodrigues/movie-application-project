@@ -27,82 +27,66 @@ public class UserAuthenticationRepositoryTest {
 
     @BeforeEach
     void setUp(){
-        databaseUser = new DatabaseUser();
-        databaseUser.setEmail("testingEmail@test.com");
-        databaseUser.setPassword("testing");
-        databaseUser.setEnabled(true);
-        databaseUser.setImage(new Image(new byte[]{1}));
-        databaseUser.setAccountNonLocked(true);
-        databaseUser.setCredentialsExpiryDate(LocalDate.ofYearDay(9999, 365));
-        databaseUser.setAccountExpiryDate(LocalDate.ofYearDay(9999, 365));
-        databaseUser.setRoles(List.of(new Role("ROLE_USER")));
+        this.databaseUser = new DatabaseUser();
+        this.databaseUser.setEmail("testingEmail@test.com");
+        this.databaseUser.setPassword("testing");
+        this.databaseUser.setEnabled(true);
+        this.databaseUser.setImage(new Image(new byte[]{1}));
+        this.databaseUser.setAccountNonLocked(true);
+        this.databaseUser.setCredentialsExpiryDate(LocalDate.ofYearDay(9999, 365));
+        this.databaseUser.setAccountExpiryDate(LocalDate.ofYearDay(9999, 365));
+        this.databaseUser.setRoles(List.of(new Role("ROLE_USER")));
     }
 
     @AfterEach
     void tearDown(){
-        databaseUserRepository.deleteById(databaseUser.getId());
+        if(this.databaseUser.getId() != null && this.databaseUser.getId() != 0L)
+            this.databaseUserRepository.deleteById(this.databaseUser.getId());
     }
 
     @Test
     @DisplayName("Testing saving user")
-    void testsavingProductData(){
-        databaseUser = databaseUserRepository.save(databaseUser);
-        DatabaseUser databaseUser1 = databaseUserRepository.findById(databaseUser.getId()).orElse(null);
+    void testSavingUser(){
+        this.databaseUser = this.databaseUserRepository.save(this.databaseUser);
+        DatabaseUser databaseUser1 = this.databaseUserRepository.findById(this.databaseUser.getId()).orElse(null);
         assertNotNull(databaseUser1);
-        assertEquals(databaseUser, databaseUser1);
+        assertEquals(this.databaseUser, databaseUser1);
     }
 
     @Test
-    @DisplayName("Testing saving user")
-    void testDeletingProductData(){
-        String id = iProductRepository.save(product).getId();
-        Product product1 = iProductRepository.findById(id).orElse(null);
-        assertNotNull(product1);
-        assertEquals(product1.hashCode(), product.hashCode());
-        iProductRepository.deleteProductById(product.getId());
-        product1 = iProductRepository.findById(id).orElse(null);
-        assertNull(product1);
+    @DisplayName("Test getting user by email")
+    void testGettingUserByEmail(){
+        this.databaseUser = this.databaseUserRepository.save(this.databaseUser);
+        DatabaseUser databaseUser1 = this.databaseUserRepository.findByEmail(this.databaseUser.getEmail());
+        assertNotNull(databaseUser1);
+        assertEquals(this.databaseUser, databaseUser1);
     }
 
     @Test
-    @DisplayName("Testing updating Cost When Id is provided")
-    void testUpdateProductCost(){
-        Double cost = iProductRepository.save(product).getCost();
-        assertEquals(cost, product.getCost());
-        iProductRepository.findAndUpdateAllById(product.getId(), 89.0);
-        Product product1 = iProductRepository.findById(product.getId()).orElse(null);
-        assertNotNull(product1);
-        assertEquals(89.0, product1.getCost());
+    @DisplayName("Testing user not saved when image is not provided")
+    void testUserNotSavedWhenNoImage(){
+        this.databaseUser.setImage(null);
+        assertThrows(Exception.class, () -> this.databaseUserRepository.save(this.databaseUser));
     }
 
     @Test
-    @DisplayName("Testing finding products in stock method")
-    void testGettingProductsInStock(){
-        Product product1 = new Product();
-        ProductDescription productDescription1 = new ProductDescription();
-        productDescription1.setDescription("testproductDescription1");
-        product1.setId("6739");
-        product1.setCode("7483");
-        product1.setName("tesingProduct1");
-        product1.setStock(2.0);
-        product1.setProductDescription(productDescription1);
-        iProductRepository.save(product);
-        iProductRepository.save(product1);
-        List<Product> products = iProductRepository.findByStockGreaterThan(4.0);
-        assertEquals(products.size(), 1);
-        assertEquals(products.get(0).hashCode(), product.hashCode());
-        products = iProductRepository.findByStockGreaterThan(1.0);
-        assertEquals(products.size(), 2);
-        assertEquals(products.get(0).hashCode(), product.hashCode());
-        assertEquals(products.get(1).hashCode(), product1.hashCode());
-    }
-
-    @Test
-    @DisplayName("Failing to get data")
-    void failGettingData(){
-        Product product1 = iProductRepository.findById(product.getId()).orElse(null);
-        assertNull(product1);
-        assertThrows(NullPointerException.class, () -> product1.getId());
+    @DisplayName("Testing email id is unique")
+    void testEmailIdIsUnique(){
+        DatabaseUser databaseUser1 = new DatabaseUser();
+        databaseUser1.setEmail(this.databaseUser.getEmail());
+        databaseUser1.setPassword(this.databaseUser.getPassword());
+        databaseUser1.setEnabled(this.databaseUser.isEnabled());
+        databaseUser1.setImage(this.databaseUser.getImage());
+        databaseUser1.setAccountNonLocked(this.databaseUser.isAccountNonLocked());
+        databaseUser1.setCredentialsExpiryDate(this.databaseUser.getCredentialsExpiryDate());
+        databaseUser1.setAccountExpiryDate(this.databaseUser.getAccountExpiryDate());
+        databaseUser1.setRoles(this.databaseUser.getRoles());
+        this.databaseUser = this.databaseUserRepository.save(this.databaseUser);
+        DatabaseUser finalDatabaseUser = databaseUser1;
+        assertThrows(Exception.class, () -> this.databaseUserRepository.save(finalDatabaseUser));
+        databaseUser1 = this.databaseUserRepository.findOptionalByEmail(databaseUser1.getEmail()).orElse(null);
+        if(databaseUser1 != null)
+            this.databaseUserRepository.deleteById(databaseUser1.getId());
     }
 
 }

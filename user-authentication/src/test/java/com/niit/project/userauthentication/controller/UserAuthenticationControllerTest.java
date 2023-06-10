@@ -2,11 +2,12 @@ package com.niit.project.userauthentication.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.niit.project.userauthentication.domain.DatabaseUser;
+import com.niit.project.userauthentication.domain.Image;
+import com.niit.project.userauthentication.domain.Role;
+import com.niit.project.userauthentication.dto.MessageDTO;
+import com.niit.project.userauthentication.service.AdminService;
 import com.niit.project.userauthentication.service.DatabaseUserService;
-import com.stackroute.mongoApi.exceptions.ProductAlreadyExists;
-import com.stackroute.mongoApi.model.Product;
-import com.stackroute.mongoApi.model.ProductDescription;
-import com.stackroute.mongoApi.service.ProductService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import static org.mockito.Mockito.*;
@@ -31,154 +33,52 @@ public class UserAuthenticationControllerTest {
     @Mock
     private DatabaseUserService databaseUserService;
 
+    @Mock
+    private AdminService adminService;
+
     @InjectMocks
     private UserAuthenticationController userAuthenticationController;
 
     private MockMvc mockMvc;
-    private Product product;
-    private ProductDescription productDescription;
-    private ProductDescription productDescription1;
-    private Product product1;
-    private List<Product> productList;
-
+    private DatabaseUser databaseUser;
     @BeforeEach
     void setUp(){
-        product = new Product();
-        product.setId("767289");
-        product.setName("testProductName");
-        product.setCode("6738");
-        product.setCost(27.0);
-        product.setProductDescription(productDescription);
-        product.setStock(13.0);
-        productDescription = new ProductDescription();
-        productDescription.setDescription("testProductDescription");
-        product1 = new Product();
-        productDescription1 = new ProductDescription();
-        productDescription1.setDescription("testproductDescription1");
-        product1.setId("6739");
-        product1.setCode("7483");
-        product1.setName("tesingProduct1");
-        product1.setStock(2.0);
-        product1.setProductDescription(productDescription1);
-        productList = new ArrayList<>();
-        productList.add(product);
-        productList.add(product1);
-        mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
+        this.databaseUser = new DatabaseUser();
+        this.databaseUser.setId(1L);
+        this.databaseUser.setEmail("testingEmail@test.com");
+        this.databaseUser.setPassword("testing");
+        this.databaseUser.setEnabled(true);
+        this.databaseUser.setImage(new Image(new byte[]{1}));
+        this.databaseUser.setAccountNonLocked(true);
+        this.databaseUser.setCredentialsExpiryDate(LocalDate.ofYearDay(9999, 365));
+        this.databaseUser.setAccountExpiryDate(LocalDate.ofYearDay(9999, 365));
+        this.databaseUser.setRoles(List.of(new Role("ROLE_USER")));
+        mockMvc = MockMvcBuilders.standaloneSetup(userAuthenticationController).build();
     }
 
     @AfterEach
     void tearDown(){
-        product = null;
-        productDescription = null;
-        productList = null;
+        databaseUser = null;
     }
-//    @GetMapping("/products")
-//    public ResponseEntity<?> getAllProducts()
+
+//    /api/v1/login
+//    /api/v1/admin/login
+//    /api/v1/save
+//    /api/v1/image
+//    /api/v1/admin/users
+//    /api/v1/admin/users
+//    /api/v1/admin/roles
 
     @Test
-    @DisplayName("Test getting all products")
+    @DisplayName("Test login")
     void testGettingData() throws Exception{
-        when(productService.getAllProducts()).thenReturn(productList);
-        mockMvc.perform(get("/api/v1/products")
+        when(this.databaseUserService.saveUser(this.databaseUser)).thenReturn(new MessageDTO("User " + this.databaseUser.getEmail() + " registered"));
+        mockMvc.perform(get("/api/v1/save")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(content().json(jsonToString(productList)));
-        verify(productService, times(1)).getAllProducts();
+                .andExpect(status().isOk()).andExpect(content().json(jsonToString(new MessageDTO("User " + this.databaseUser.getEmail() + " registered"))));
+        verify(this.databaseUserService, times(1)).saveUser(this.databaseUser);
     }
 
-//    @GetMapping("/products/{id}")
-//    public ResponseEntity<?> getProduct(@PathVariable("id") String id){
-    @Test
-    @DisplayName("Test getting product data by id")
-    void testGettingSingleProductData() throws Exception{
-        when(productService.getProduct(anyString())).thenReturn(product);
-        mockMvc.perform(get("/api/v1/products/1")
-                    .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk()).andExpect(content().json(jsonToString(product)));
-        verify(productService, times(1)).getProduct(anyString());
-    }
-
-    @Test
-    @DisplayName("Test getting error product not found")
-    void testErrorProductNotFound() throws Exception{
-        when(productService.getProduct(anyString())).thenThrow(NoSuchElementException.class);
-        mockMvc.perform(get("/api/v1/products/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-        verify(productService, times(1)).getProduct(anyString());
-    }
-//        @PostMapping("/products")
-//        public ResponseEntity<?> addProduct(@RequestBody Product product){
-    @Test
-    @DisplayName("Test adding one product")
-    void testSavingProduct() throws Exception{
-        when(productService.saveProduct(any(Product.class))).thenReturn(product);
-        mockMvc.perform(post("/api/v1/products")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonToString(product)))
-                .andExpect(status().isCreated()).andExpect(content().json(product.getId()));
-        verify(productService, times(1)).saveProduct(any(Product.class));
-    }
-
-    @Test
-    @DisplayName("Test getting error product already exists")
-    void testErrorProductAlreadyExists() throws Exception{
-        when(productService.saveProduct(any(Product.class))).thenThrow(ProductAlreadyExists.class);
-        mockMvc.perform(post("/api/v1/products")
-                        .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonToString(product)))
-                .andExpect(status().is5xxServerError());
-        verify(productService, times(1)).saveProduct(any(Product.class));
-    }
-//@PatchMapping("/products/{id}")
-//public ResponseEntity<?> updateProductCost(@PathVariable String id, @RequestBody Map<String, Double> mapObject){
-    @Test
-    @DisplayName("Test updating product cost")
-    void testUpdatingProductCost() throws Exception{
-        Map<String, Double> map = new HashMap<>();
-        map.put("cost", product.getCost());
-        when(productService.updateProductCost(anyString(), anyDouble())).thenReturn(product.getId());
-        mockMvc.perform(patch("/api/v1/products/" + product.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonToString(map)))
-                .andExpect(status().isOk())
-                .andExpect(content().string(product.getId()));
-        verify(productService, times(1)).updateProductCost(anyString(), anyDouble());
-    }
-
-    @Test
-    @DisplayName("Test getting error on invalid product cost updation")
-    void testGettingErrorOnIncorrectDetailsForCostUpdation() throws Exception{
-        Map<String, Double> map = new HashMap<>();
-        map.put("cost", product.getCost());
-        when(productService.updateProductCost(anyString(), anyDouble())).thenReturn(null);
-        mockMvc.perform(patch("/api/v1/products/" + product.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonToString(map)))
-                .andExpect(status().isInternalServerError());
-        verify(productService, times(1)).updateProductCost(anyString(), anyDouble());
-    }
-//@DeleteMapping("/products/{id}")
-//public ResponseEntity<?> deleteProduct(@PathVariable String id){
-    @Test
-    @DisplayName("Test deleting product data")
-    void testDeletingData() throws Exception{
-        when(productService.deleteProduct(anyString())).thenReturn(product.getId());
-        mockMvc.perform(delete("/api/v1/products/" + product.getId()))
-                .andExpect(status().isOk())
-                .andExpect(content().string(product.getId()));
-        verify(productService, times(1)).deleteProduct(anyString());
-    }
-//@GetMapping("/products/instock")
-//public ResponseEntity<?> getProductsInStock(){
-    @Test
-    @DisplayName("Test getting products in stock")
-    void testGettingProductsInStock() throws  Exception{
-        when(productService.getAllProductsInStock()).thenReturn(productList);
-        mockMvc.perform(get("/api/v1/products/instock"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(jsonToString(productList)));
-        verify(productService, times(1)).getAllProductsInStock();
-    }
 
     private String jsonToString(Object o){
         String result;

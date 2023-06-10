@@ -67,4 +67,10 @@ public class CentralExceptionHandler extends ResponseEntityExceptionHandler {
         e.printStackTrace();
         return new ResponseEntity<>(new ErrorMessageDTO(e.getMessage()), HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(value= UserNotEnabledException.class)
+    public ResponseEntity<ErrorMessageDTO> handleUserNotEnabledException(UserNotEnabledException e) {
+        e.printStackTrace();
+        return new ResponseEntity<>(new ErrorMessageDTO(e.getMessage()), HttpStatus.FORBIDDEN);
+    }
 }

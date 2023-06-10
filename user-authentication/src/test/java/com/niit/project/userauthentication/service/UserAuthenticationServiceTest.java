@@ -1,9 +1,13 @@
 package com.niit.project.userauthentication.service;
 
 
-import com.stackroute.mongoApi.model.Product;
-import com.stackroute.mongoApi.model.ProductDescription;
-import com.stackroute.mongoApi.respository.IProductRepository;
+import com.niit.project.userauthentication.domain.DatabaseUser;
+import com.niit.project.userauthentication.domain.Image;
+import com.niit.project.userauthentication.domain.Role;
+import com.niit.project.userauthentication.dto.MessageDTO;
+import com.niit.project.userauthentication.exception.InvalidCredentialsException;
+import com.niit.project.userauthentication.exception.UserEmailAlreadyExistsException;
+import com.niit.project.userauthentication.repository.DatabaseUserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -26,87 +31,60 @@ import static org.mockito.Mockito.*;
 public class UserAuthenticationServiceTest {
 
     @Mock
-    private IProductRepository iProductRepository;
+    private DatabaseUserRepository databaseUserRepository;
 
     @InjectMocks
-    private ProductService productService;
-
-    private Product product;
-    private ProductDescription productDescription;
+    private DatabaseUserService databaseUserService;
+    private DatabaseUser databaseUser;
 
     @BeforeEach
     void setUp(){
-        productDescription = new ProductDescription();
-        productDescription.setDescription("testProductDescription");
-        product = new Product();
-        product.setId("767289");
-        product.setName("testProductName");
-        product.setCode("6738");
-        product.setCost(27.0);
-        product.setProductDescription(productDescription);
-        product.setStock(13.0);
+        this.databaseUser = new DatabaseUser();
+        this.databaseUser.setId(1L);
+        this.databaseUser.setEmail("testingEmail@test.com");
+        this.databaseUser.setPassword("testing");
+        this.databaseUser.setEnabled(true);
+        this.databaseUser.setImage(new Image(new byte[]{1}));
+        this.databaseUser.setAccountNonLocked(true);
+        this.databaseUser.setCredentialsExpiryDate(LocalDate.ofYearDay(9999, 365));
+        this.databaseUser.setAccountExpiryDate(LocalDate.ofYearDay(9999, 365));
+        this.databaseUser.setRoles(List.of(new Role("ROLE_USER")));
     }
 
     @AfterEach
     void tearDown(){
-        product = null;
-        productDescription = null;
+        this.databaseUser = null;
+    }
+
+
+//    MessageDTO saveUser(DatabaseUser databaseUser) throws UserEmailAlreadyExistsException;
+//    DatabaseUser getUserFromEmailAndPassword(String userDatabase, String password) throws InvalidCredentialsException;
+//    Image getImageFromEmail(String email);
+    @Test
+    @DisplayName("Test Saving User")
+    void testSavingUser(){
+        when(this.databaseUserRepository.save(any())).thenReturn(this.databaseUser);
+        MessageDTO messageDTO = this.databaseUserService.saveUser(this.databaseUser);
+        assertEquals(messageDTO, new MessageDTO("User " + this.databaseUser.getEmail() + " registered"));
+        verify(this.databaseUserRepository,times(1)).save(any());
     }
 
     @Test
-    @DisplayName("Test Saving Product")
-    void testSavingProduct(){
-        when(iProductRepository.save(any())).thenReturn(product);
-        Product product1 = productService.saveProduct(product);
-        assertEquals(product1.hashCode(), product.hashCode());
-        verify(iProductRepository,times(1)).save(any());
-    }
-
-    @Test
-    @DisplayName("Test Getting Data")
+    @DisplayName("Test Getting User From EmailId And Password")
     void testGettingData(){
-        List<Product> productList = new ArrayList<>();
-        productList.add(product);
-        when(iProductRepository.findAll()).thenReturn(productList);
-        List<Product> returnedProductList = productService.getAllProducts();
-        assertEquals(returnedProductList.size(), productList.size());
-        assertEquals(returnedProductList.get(0).hashCode(), productList.get(0).hashCode());
-        verify(iProductRepository, times(1)).findAll();
+        when(this.databaseUserRepository.findByEmail(anyString())).thenReturn(this.databaseUser);
+        DatabaseUser databaseUser1 = this.databaseUserService.getUserFromEmailAndPassword(this.databaseUser.getEmail(), this.databaseUser.getPassword());
+        assertEquals(this.databaseUser, databaseUser1);
+        verify(this.databaseUserRepository, times(1)).findByEmail(anyString());
     }
 
     @Test
-    @DisplayName("Test Getting Product In Stock")
+    @DisplayName("Test Getting Image From Email")
     void testGettingInStockProducts(){
-        Product product1 = new Product();
-        product1.setId("767290");
-        product1.setName("testProduct1Name");
-        product1.setCode("6739");
-        product1.setCost(28.0);
-        product1.setProductDescription(productDescription);
-        product1.setStock(8.0);
-        List<Product> productList = new ArrayList<>();
-        productList.add(product);
-        productList.add(product1);
-        when(iProductRepository.findByStockGreaterThan(0.0)).thenReturn(productList);
-        List<Product> productList1 = productService.getAllProductsInStock();
-        assertEquals(productList1.size(), productList.size());
-        assertEquals(productList1.get(0).hashCode(), productList.get(0).hashCode());
-        assertEquals(productList1.get(1).hashCode(), productList.get(1).hashCode());
-        verify(iProductRepository,times(1)).findByStockGreaterThan(0.0);
+        when(this.databaseUserRepository.findOptionalByEmail(anyString())).thenReturn(Optional.ofNullable(this.databaseUser));
+        Image image1 = this.databaseUserService.getImageFromEmail(this.databaseUser.getEmail());
+        assertEquals(image1, databaseUser.getImage());
+        verify(databaseUserRepository,times(1)).findOptionalByEmail(anyString());
     }
 
-    @Test
-    @DisplayName("Test Error thrown on invalid Id when mwthod called to update cost")
-    void testUpdatingData(){
-        assertThrows(NoSuchElementException.class, ()->productService.updateProductCost("0", 0.0));
-    }
-
-    @Test
-    @DisplayName("Testing getting Product by Id")
-    void testGettingProductById(){
-        when(iProductRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        Product product1 = productService.getProduct(product.getId());
-        assertEquals(product1.hashCode(), product.hashCode());
-        verify(iProductRepository, times(1)).findById(anyString());
-    }
 }

@@ -3,6 +3,7 @@ package com.niit.project.userauthentication.service;
 
 import com.niit.project.userauthentication.domain.DatabaseUser;
 import com.niit.project.userauthentication.dto.MessageDTO;
+import com.niit.project.userauthentication.exception.UserNotEnabledException;
 import com.niit.project.userauthentication.security.DatabaseUserDetailsService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,9 +24,11 @@ public class JwtGeneratorService implements SecurityTokenGenerator{
     public final DatabaseUserDetailsService databaseUserDetailsService;
 
     @Override
-    public MessageDTO generateToken(DatabaseUser databaseUser) {
+    public MessageDTO generateToken(DatabaseUser databaseUser) throws UserNotEnabledException{
         String jwtToken = null;
         Map<String, Object> claims = new HashMap<>();
+        if(!databaseUser.isEnabled())
+            throw new UserNotEnabledException();
         claims.put("roles"
                 , DatabaseUserDetailsService.getAuthorities(databaseUser.getRoles())
                         .stream()
