@@ -1,0 +1,29 @@
+/* nav{
+    height:100%;
+} */
+.sidenav-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.sidenav-button:hover{
+    background-color: #ffffff90;
+    border-radius: 30%;
+}
+a{
+    color:#dd3675;
+    font-weight: 700;
+}
+.navbar{
+    background-color: hsl(218, 41%, 19%);
+}
+
+img{
+    /* margin-top: 2px; */
+    width: 60px;
+    height: 50px;
+    border-radius: 40px;
+    left: 30px;
+}

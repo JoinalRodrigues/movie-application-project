@@ -1,0 +1,33 @@
+button{
+    background-color: #dd3675;
+    color:#ffffff;
+    margin-left:5px;
+}
+button:hover{
+    background-color: #dd3675;
+    color:#ffffff;
+
+}
+img{
+    width:200%;
+}
+h3, p{
+    color: white;
+}
+
+/* .rowimg{
+    max-height: 200px;
+    object-fit:contain;
+    width:100%; 
+    box-sizing:content-box; 
+    transition:transform 450ms;
+    margin-right:5px;
+ }
+.largeposter{
+    max-height:300px;
+ } */
+/* .posters{
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
+} */
