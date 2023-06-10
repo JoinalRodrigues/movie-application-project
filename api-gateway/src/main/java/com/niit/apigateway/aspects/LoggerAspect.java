@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class LoggerAspect {
     private static final Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
 
-    @Pointcut("execution (* com.niit.project.apigateway.*.*(..))")
+    @Pointcut("execution (* com.niit.apigateway.*.*(..))")
     public void allMethods(){}
 
     @Before(value = "allMethods()")
@@ -53,7 +53,7 @@ public class LoggerAspect {
 
 //Around is giving error for async methods
 
-//    @Around("execution (* com.niit.project.eurekaserver.*.*(..))")
+//    @Around("execution (* com.niit.apigateway.*.*(..))")
 //    public void executingAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
 //        logger.info("**********@Around**********");
 //        logger.debug("Method name : {}", proceedingJoinPoint.getSignature().getName());
