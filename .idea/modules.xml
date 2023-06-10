@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/movie-main-project.iml" filepath="$PROJECT_DIR$/.idea/movie-main-project.iml" />
-      <module fileurl="file://$PROJECT_DIR$/recommended-service/recommended-service.iml" filepath="$PROJECT_DIR$/recommended-service/recommended-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/user-authentication/user-authentication.iml" filepath="$PROJECT_DIR$/user-authentication/user-authentication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eureka-server-1/eureka-server-1.iml" filepath="$PROJECT_DIR$/eureka-server-1/eureka-server-1.iml" />
     </modules>
   </component>
 </project>
