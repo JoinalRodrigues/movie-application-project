@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
+import { MovieFavouritesService } from 'src/app/service/movie-favourites.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -13,7 +14,7 @@ export class SignInComponent implements OnInit {
     email:new FormControl(''),
     password:new FormControl('')
   })
-  constructor(private router:Router,private authService:AuthServiceService) { }
+  constructor(private router:Router,private authService:AuthServiceService,private favService:MovieFavouritesService) { }
 
   ngOnInit(): void {
   }
@@ -22,8 +23,11 @@ export class SignInComponent implements OnInit {
     this.authService.loginUser(this.login.value).subscribe((result=>{
       sessionStorage.setItem('token', result.message.substring(6));
       console.log("login succesfully");
+      this.favService.getFavouriteMovies().subscribe(data=>
+        this.favService.favourites=data
+      )
+      this.router.navigate(['/movie'])
     }))
-    this.router.navigate(['/movie'])
   }
 
   // loginForm = new FormGroup({

@@ -1,7 +1,7 @@
 .carousel-inner{
     height:600px;
-border-radius: 10px;
-padding: 10px;
+/* border-radius: 10px;
+padding: 10px; */
 }
 .carousel-inner .carousel-item img{
     height:600px;

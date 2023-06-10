@@ -12,6 +12,8 @@ export class MovieFavouritesService {
   getFavouriteUrl !: string;
   deleteFavouriteUrl !: string;
 
+public favourites :Movie[]=[];
+
   constructor(private http: HttpClient) {
 
     this.sendFavouritesUrl = 'api/v1/user/favourite';

@@ -12,6 +12,7 @@ export class NotificationComponent implements OnInit {
   constructor(private notificationService:NotificationService){}
 
   ngOnInit(): void {
+    this.notificationService.getNotifications().subscribe(res => this.dataSource = res);
   }
 
   displayedColumns: string[] = ['position', 'movieName', 'releaseDate', 'button'];

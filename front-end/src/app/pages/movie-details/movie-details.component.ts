@@ -15,6 +15,7 @@ import { MovieFavouritesService } from 'src/app/service/movie-favourites.service
 export class MovieDetailsComponent implements OnInit {
 
   movie: any;
+  delmovie: Movie[] = [];
 
   movies !: Movie[];
   trailers: any;
@@ -26,10 +27,10 @@ export class MovieDetailsComponent implements OnInit {
   casts !: Cast[];
 
 
-  constructor(private movieService: MovieTrailerService, public domSanitizer: DomSanitizer, private route: ActivatedRoute,
-    private router: Router, private movieFavouritesService: MovieFavouritesService
+  constructor(private movieService: MovieTrailerService, private movieFavourites: MovieFavouritesService,public domSanitizer: DomSanitizer, private route: ActivatedRoute,
+    private router: Router, public movieFavouritesService: MovieFavouritesService
   ) {
-    this.movie = new Movie();
+    // this.movie = new Movie();
   }
 
 
@@ -70,6 +71,10 @@ console.log(result,'getcast');
       this.router.navigate(['/user-favourite']);
     })};
 
-
+    delete(index: any) {
+      this.movieFavourites.deleteFavouriteMovies(index.movieId).subscribe((result) => {     
+        window.location.reload();
+      })
+    }
 }
 

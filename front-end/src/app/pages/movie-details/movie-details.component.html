@@ -4,7 +4,21 @@
     allowfullscreen>
 </iframe>
 <!-- <a type="button" (click)="add()">Add to favourite</a> -->
-<mat-icon (click)="add()">favorite</mat-icon>
+<!-- <mat-icon (click)="add()">favorite</mat-icon> -->
+
+<a mat-fab extended *ngIf="movie.movieId | favAlreadyAdded: true | async">
+    <mat-icon (click)="add()">favorite_outline</mat-icon>
+    Favourite
+</a>
+<a mat-fab extended *ngIf="movie.movieId | favAlreadyAdded: false | async">
+    <mat-icon (click)="add()">favorite</mat-icon>
+    Favourite
+</a>
+<!-- <a mat-fab extended>
+    <mat-icon>favorite</mat-icon>
+    Favourite
+</a> -->
+
 <div class="row">
 
     <div class="col-lg-10 mt-5 p-4">

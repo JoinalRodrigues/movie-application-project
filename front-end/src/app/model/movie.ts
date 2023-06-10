@@ -6,7 +6,7 @@ export class Movie {
    overview:string="";
    voteAverage: string=""; 
   movieId!: number;
- 
+ releaseDate:string="";
  constructor(){}
  
  }

@@ -34,6 +34,7 @@ import { NavbarComponent } from './header/navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { SignInComponent } from './Authentication/sign-in/sign-in.component';
 import { SignUpComponent } from './Authentication/sign-up/sign-up.component';
+import { FavAlreadyAddedPipe } from './pipes/fav-already-added.pipe';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { SignUpComponent } from './Authentication/sign-up/sign-up.component';
     ArrayCombineSubstringPipe,
     FavouriteMoviesComponent,
     ImageAuthPipe,
+    FavAlreadyAddedPipe,
     SidenavComponent,
     NavbarComponent,
     FooterComponent,
