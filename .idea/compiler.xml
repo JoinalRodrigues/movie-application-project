@@ -2,20 +2,37 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="api-gateway" />
+        <module name="user-authentication" />
         <module name="eureka-server-1" />
+        <module name="recommended-service" />
+        <module name="push-notification" />
+        <module name="eureka-server-2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="api-gateway" target="17" />
       <module name="eureka-server-1" target="17" />
+      <module name="eureka-server-2" target="17" />
+      <module name="movie-app" target="17" />
+      <module name="push-notification" target="17" />
+      <module name="recommended-service" target="17" />
+      <module name="user-authentication" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gateway" options="-parameters" />
       <module name="eureka-server-1" options="-parameters" />
+      <module name="eureka-server-2" options="-parameters" />
+      <module name="push-notification" options="-parameters" />
+      <module name="recommended-service" options="-parameters" />
+      <module name="user-authentication" options="-parameters" />
     </option>
   </component>
 </project>

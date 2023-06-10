@@ -27,9 +27,10 @@
 		<module>api-gateway</module>
 		<module>user-authentication</module>
 <!--		<module>user-movie</module>-->
-<!--		<module>recommended-service</module>-->
+		<module>recommended-service</module>
 		<module>push-notification</module>
 		<module>eureka-server-1</module>
+		<module>eureka-server-2</module>
 	</modules>
 
 	<dependencies>
