@@ -4,10 +4,10 @@ image: docker:20.10.16
 #before_script:
 #  - docker version
 
-#services:
-#  - name: docker:20-dind
-#    alias: docker
-#    command: ["--tls=false"]
+services:
+  - name: docker:20-dind
+    alias: docker
+    command: ["--tls=false"]
 #    variables:
 #      HEALTHCHECK_TCP_PORT: "2375"
 
