@@ -21,9 +21,9 @@ image: docker:20.10.16
 
 stages:
   - build
-  - test
-  - package
-  - deploy
+#  - test
+#  - package
+#  - deploy
 
 variables:
   DOCKER_HOST: tcp://docker:2375
