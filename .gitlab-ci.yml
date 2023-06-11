@@ -28,19 +28,36 @@ build-job:
     - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
     - cd user-authentication
     - mvn clean
-    - mvn package
+    - mvn compile
     - cd ..
-  artifacts:
-    paths:
-      - "user-authentication/target/"
+  rules:
+    - changes:
+        - "user-authentication/**/*"
 
 test-job:
   stage: test
   script:
     - echo "This job tests something"
+    - mvn test
+  rules:
+    - changes:
+        - "user-authentication/**/*"
 
 package-job:
   stage: package
+  script:
+    - cd user-authentication
+    - mvn package
+  artifacts:
+    paths:
+      - "user-authentication/target/"
+  rules:
+    - changes:
+        - "user-authentication/**/*"
+
+
+deploy-job:
+  stage: deploy
   script:
     - cd user-authentication
     - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication .
@@ -50,9 +67,7 @@ package-job:
     - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication --filter='-tags:*' --format='get(digest)' --limit=unlimited | xargs -I {arg} gcloud container images delete "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication@{arg}" --quiet
     - kubectl rollout restart deploy movie-app-user-authentication
     - cd ..
-
-deploy-job:
-  stage: deploy
-  script:
-    - docker images
+  rules:
+    - changes:
+        - "user-authentication/**/*"
 
