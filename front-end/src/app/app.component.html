@@ -4,7 +4,7 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
- 
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
@@ -26,23 +26,24 @@
           <button class="btn btn-outline" style="color: #dd3675; " routerLink="login">Login</button>
 
         </li>
-        
+
         <li>
           <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search" routerLink="search"></i></button>
 
         </li>
         <li>
-         
-          <img [src]="'http://34.83.1.21/api/v1/image' | imageAuth | async" /> 
+
+          <img [src]="'http://34.83.1.21/api/v1/image' | imageAuth | async" />
 
         </li>
-        
-       
-   
+
+
+
       </ul>
     </div>
   </div>
 </nav> -->
+
 <div class="container-fluid g-0">
 <app-navbar (sideNavToggled)="sideNavStatus = $event;"></app-navbar>
 
