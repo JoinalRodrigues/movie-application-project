@@ -8,14 +8,16 @@ services:
 #      HEALTHCHECK_TCP_PORT: "2375"
 
 stages:
-  - build-user-authentication
-  - test-user-authentication
-  - package-user-authentication
-  - deploy-user-authentication
+  - package-front-end
+  - deploy-front-end
   - build-api-gateway
   - test-api-gateway
   - package-api-gateway
   - deploy-api-gateway
+  - build-user-authentication
+  - test-user-authentication
+  - package-user-authentication
+  - deploy-user-authentication
   - build-eureka-server-1
   - test-eureka-server-1
   - package-eureka-server-1
@@ -43,6 +45,98 @@ variables:
   DOCKER_DRIVER: overlay2
 #  FF_NETWORK_PER_BUILD: "true"
 
+package-front-end-job:
+  image: node:16-alpine
+  stage: package-front-end
+  script:
+    - cd front-end
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - "front-end/dist/"
+  rules:
+    - changes:
+        - "front-end/**/*"
+  allow_failure: true
+
+deploy-front-end-job:
+  stage: deploy-front-end
+  script:
+    - rm -r ./api-gateway/src/main/resources/static
+    - mv ./front-end/dist/movie-app ./api-gateway/src/main/resources/static
+  artifacts:
+    paths:
+      - "api-gateway/src/main/resources/static/"
+  rules:
+    - changes:
+        - "front-end/**/*"
+  allow_failure: true
+  needs: ['package-front-end-job']
+
+build-api-gateway-job:
+  stage: build-api-gateway
+  script:
+    - echo "Hello, $GITLAB_USER_LOGIN!"
+    - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    - cd api-gateway
+    - mvn clean
+    - mvn compile
+    - cd ..
+  rules:
+    - changes:
+        - "api-gateway/**/*"
+        - "front-end/**/*"
+  allow_failure: true
+
+test-api-gateway-job:
+  stage: test-api-gateway
+  script:
+    - echo "This job tests something"
+    - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    - cd api-gateway
+    - mvn test
+  rules:
+    - changes:
+        - "api-gateway/**/*"
+        - "front-end/**/*"
+  allow_failure: true
+  needs: ['build-api-gateway-job']
+
+package-api-gateway-job:
+  stage: package-api-gateway
+  script:
+    - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    - cd api-gateway
+    - mvn package
+  artifacts:
+    paths:
+      - "api-gateway/target/"
+  rules:
+    - changes:
+        - "api-gateway/**/*"
+        - "front-end/**/*"
+  allow_failure: true
+  needs: ['build-api-gateway-job', 'test-api-gateway-job']
+
+
+deploy-api-gateway-job:
+  stage: deploy-api-gateway
+  script:
+    - cd api-gateway
+    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway .
+    - gcloud auth configure-docker us-west1-docker.pkg.dev
+    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway
+    - sleep 5
+    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway --filter='-tags:*' --format='get(digest)' --limit=unlimited | xargs -I {arg} gcloud container images delete "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway@{arg}" --quiet
+    - kubectl rollout restart deploy movie-app-api-gateway
+    - cd ..
+  rules:
+    - changes:
+        - "api-gateway/**/*"
+        - "front-end/**/*"
+  allow_failure: true
+  needs: ['build-api-gateway-job', 'test-api-gateway-job', 'package-api-gateway-job']
 
 build-user-authentication-job:
   stage: build-user-authentication
@@ -104,66 +198,6 @@ deploy-user-authentication-job:
   allow_failure: true
   needs: ['build-user-authentication-job', 'test-user-authentication-job', 'package-user-authentication-job']
 
-
-build-api-gateway-job:
-  stage: build-api-gateway
-  script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
-    - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-    - cd api-gateway
-    - mvn clean
-    - mvn compile
-    - cd ..
-  rules:
-    - changes:
-        - "api-gateway/**/*"
-  allow_failure: true
-
-test-api-gateway-job:
-  stage: test-api-gateway
-  script:
-    - echo "This job tests something"
-    - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-    - cd api-gateway
-    - mvn test
-  rules:
-    - changes:
-        - "api-gateway/**/*"
-  allow_failure: true
-  needs: ['build-api-gateway-job']
-
-package-api-gateway-job:
-  stage: package-api-gateway
-  script:
-    - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-    - cd api-gateway
-    - mvn package
-  artifacts:
-    paths:
-      - "api-gateway/target/"
-  rules:
-    - changes:
-        - "api-gateway/**/*"
-  allow_failure: true
-  needs: ['build-api-gateway-job', 'test-api-gateway-job']
-
-
-deploy-api-gateway-job:
-  stage: deploy-api-gateway
-  script:
-    - cd api-gateway
-    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway .
-    - gcloud auth configure-docker us-west1-docker.pkg.dev
-    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway
-    - sleep 5
-    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway --filter='-tags:*' --format='get(digest)' --limit=unlimited | xargs -I {arg} gcloud container images delete "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-api-gateway/movie-app-api-gateway@{arg}" --quiet
-    - kubectl rollout restart deploy movie-app-api-gateway
-    - cd ..
-  rules:
-    - changes:
-        - "api-gateway/**/*"
-  allow_failure: true
-  needs: ['build-api-gateway-job', 'test-user-authentication-job', 'package-user-authentication-job']
 
 build-eureka-server-1-job:
   stage: build-eureka-server-1
