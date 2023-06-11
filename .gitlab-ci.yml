@@ -1,4 +1,5 @@
-image: joinal/google-cloud-sdk-movie-app:latest
+image: docker:20.10.16
+#image: joinal/google-cloud-sdk-movie-app:latest
 
 #before_script:
 #  - docker version
@@ -24,29 +25,29 @@ stages:
   - package
   - deploy
 
-#variables:
-#  DOCKER_HOST: tcp://docker:2375
-#  DOCKER_TLS_CERTDIR: ""
-#  DOCKER_DRIVER: overlay2
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_DRIVER: overlay2
 #  FF_NETWORK_PER_BUILD: "true"
 
 build-job:
-  image: docker
+#  image: docker
   stage: build
-  services:
-    - name: docker:dind
-      alias: docker
+#  services:
+#    - name: docker:dind
+#      alias: docker
 #      variables:
 #        DOCKER_TLS_CERTDIR: ""
-  variables:
+#  variables:
     # using "docker" as the host is only possible if you alias the service below
-    DOCKER_HOST: tcp://docker:2375
+#    DOCKER_HOST: tcp://docker:2375
     # could be wrong here but although Docker defaults to overlay2,
     # Docker-in-Docker (DIND) does not according to the following GitLab doc:
 #     https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-the-overlayfs-driver
 #    DOCKER_DRIVER: overlay2
-    DOCKER_TLS_CERTDIR: ""
-    FF_NETWORK_PER_BUILD: "true"
+#    DOCKER_TLS_CERTDIR: ""
+#    FF_NETWORK_PER_BUILD: "true"
   script:
     - cd /var/run
     - ls -a
@@ -55,41 +56,41 @@ build-job:
     - docker version
 
 
-test-job:
-  image: joinal/google-cloud-sdk-movie-app:latest
-  stage: test
-  script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
-    - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-    - cd user-authentication
-    - mvn clean
-    - mvn package
-    - cd ..
-  artifacts:
-    paths:
-      - "user-authentication/target/"
+#test-job:
+#  image: joinal/google-cloud-sdk-movie-app:latest
+#  stage: test
+#  script:
+#    - echo "Hello, $GITLAB_USER_LOGIN!"
+#    - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+#    - cd user-authentication
+#    - mvn clean
+#    - mvn package
+#    - cd ..
+#  artifacts:
+#    paths:
+#      - "user-authentication/target/"
 
 #test-job:
 #  stage: test
 #  script:
 #    - echo "This job tests something"
 
-package-job:
-  stage: package
-  script:
-    - cd user-authentication
-    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication .
-    - cd ..
-
-deploy-job:
-  image: joinal/google-cloud-sdk-movie-app:latest
-  stage: deploy
-  script:
-    - gcloud auth configure-docker us-west1-docker.pkg.dev
-    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication
-    - sleep 5
-    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication \
-      --filter='-tags:*' --format='get(digest)' --limit=unlimited |\
-      xargs -I {arg} gcloud container images delete \
-      "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication@{arg}" --quiet
-    - kubectl rollout restart deploy movie-app-user-authentication
+#package-job:
+#  stage: package
+#  script:
+#    - cd user-authentication
+#    - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication .
+#    - cd ..
+#
+#deploy-job:
+#  image: joinal/google-cloud-sdk-movie-app:latest
+#  stage: deploy
+#  script:
+#    - gcloud auth configure-docker us-west1-docker.pkg.dev
+#    - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication
+#    - sleep 5
+#    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication \
+#      --filter='-tags:*' --format='get(digest)' --limit=unlimited |\
+#      xargs -I {arg} gcloud container images delete \
+#      "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication@{arg}" --quiet
+#    - kubectl rollout restart deploy movie-app-user-authentication
