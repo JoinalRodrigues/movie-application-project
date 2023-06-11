@@ -7,11 +7,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="api-gateway" />
         <module name="user-authentication" />
-        <module name="eureka-server-1" />
         <module name="recommended-service" />
         <module name="push-notification" />
+        <module name="user-movie" />
+        <module name="api-gateway" />
+        <module name="eureka-server-1" />
         <module name="eureka-server-2" />
       </profile>
     </annotationProcessing>
@@ -23,6 +24,7 @@
       <module name="push-notification" target="17" />
       <module name="recommended-service" target="17" />
       <module name="user-authentication" target="17" />
+      <module name="user-movie" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -33,6 +35,7 @@
       <module name="push-notification" options="-parameters" />
       <module name="recommended-service" options="-parameters" />
       <module name="user-authentication" options="-parameters" />
+      <module name="user-movie" options="-parameters" />
     </option>
   </component>
 </project>

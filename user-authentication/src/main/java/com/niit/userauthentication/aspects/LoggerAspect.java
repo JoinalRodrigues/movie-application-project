@@ -1,5 +1,4 @@
-package com.niit.eurekaserver.aspects;
-
+package com.niit.userauthentication.aspects;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -14,7 +13,9 @@ import java.util.Arrays;
 public class LoggerAspect {
     private static final Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
 
-    @Pointcut("execution (* com.niit.eurekaserver.*.*(..))")
+    @Pointcut("execution (* com.niit.project.usersauthentication.repository.*.*(..)) || "
+    + "execution (* com.niit.project.usersauthentication.controller.*.*(..)) || "
+    + "execution (* com.niit.project.usersauthentication.service.*.*(..))")
     public void allMethods(){}
 
     @Before(value = "allMethods()")
@@ -53,7 +54,8 @@ public class LoggerAspect {
 
 //Around is giving error for async methods
 
-//    @Around("execution (* com.niit.eurekaserver.*.*(..))")
+//    @Around("execution (* com.niit.project.usersauthentication.controller.*.*(..))")
+//    @Async
 //    public void executingAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
 //        logger.info("**********@Around**********");
 //        logger.debug("Method name : {}", proceedingJoinPoint.getSignature().getName());

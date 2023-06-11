@@ -31,7 +31,7 @@ stages:
 #  FF_NETWORK_PER_BUILD: "true"
 
 build-job:
-  image: joinal/google-cloud-sdk-movie-app:latest
+  image: docker
   stage: build
   services:
     - name: docker:dind
@@ -44,7 +44,7 @@ build-job:
     # could be wrong here but although Docker defaults to overlay2,
     # Docker-in-Docker (DIND) does not according to the following GitLab doc:
 #     https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-the-overlayfs-driver
-    DOCKER_DRIVER: overlay2
+#    DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
     FF_NETWORK_PER_BUILD: "true"
   script:
