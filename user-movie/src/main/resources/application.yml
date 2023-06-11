@@ -123,16 +123,3 @@ management:
 logging:
   file:
     name: ./logs/user-movie.log
-
-#  logback:
-#    rollingpolicy:
-#      max-file-size: 10MB
-
-
-
-
-
-
-
-
-
