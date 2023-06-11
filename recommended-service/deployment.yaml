@@ -16,7 +16,6 @@ spec:
       containers:
         - name: movie-app-recommended-service-service
           image: us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-recommended-service/movie-app-recommended-service:latest
-#          imagePullPolicy: Never   # So it doesn't pull the image from remote registry
           ports:
             - containerPort: 8080
           env:
