@@ -434,7 +434,7 @@ test-user-movie-job:
   needs: ['build-user-movie-job']
 
 package-user-movie-job:
-  stage: package-recommended-service
+  stage: package-user-movie
   script:
     - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
     - cd user-movie
