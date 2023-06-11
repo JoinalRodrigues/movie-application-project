@@ -11,6 +11,7 @@ stages:
   - build
   - test
   - package
+  - deploy
 
 variables:
   DOCKER_HOST: tcp://docker:2375
