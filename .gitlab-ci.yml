@@ -47,10 +47,7 @@ package-job:
     - gcloud auth configure-docker us-west1-docker.pkg.dev
     - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication
     - sleep 5
-    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication \
-      --filter='-tags:*' --format='get(digest)' --limit=unlimited |\
-      xargs -I {arg} gcloud container images delete \
-      "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication@{arg}" --quiet
+    - gcloud container images list-tags us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication --filter='-tags:*' --format='get(digest)' --limit=unlimited | xargs -I {arg} gcloud container images delete "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication@{arg}" --quiet
     - kubectl rollout restart deploy movie-app-user-authentication
     - cd ..
 
