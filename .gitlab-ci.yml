@@ -7,14 +7,10 @@ services:
 #    variables:
 #      HEALTHCHECK_TCP_PORT: "2375"
 
-before_script:
-  - docker images
-
 stages:
   - build
   - test
   - package
-  - deploy
 
 variables:
   DOCKER_HOST: tcp://docker:2375
@@ -47,11 +43,6 @@ package-job:
   script:
     - cd user-authentication
     - docker build -t us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication .
-    - cd ..
-
-deploy-job:
-  stage: deploy
-  script:
     - gcloud auth configure-docker us-west1-docker.pkg.dev
     - docker push us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication
     - sleep 5
@@ -60,3 +51,10 @@ deploy-job:
       xargs -I {arg} gcloud container images delete \
       "us-west1-docker.pkg.dev/aerial-venture-386206/movie-app-user-authentication/movie-app-user-authentication@{arg}" --quiet
     - kubectl rollout restart deploy movie-app-user-authentication
+    - cd ..
+
+deploy-job:
+  stage: deploy
+  script:
+    - docker images
+
