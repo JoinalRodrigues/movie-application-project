@@ -437,16 +437,16 @@ package-user-movie-job:
   stage: package-recommended-service
   script:
     - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-    - cd recommended-service
+    - cd user-movie
     - mvn package
   artifacts:
     paths:
-      - "recommended-service/target/"
+      - "user-movie/target/"
   rules:
     - changes:
-        - "recommended-service/**/*"
+        - "user-movie/**/*"
   allow_failure: true
-  needs: ['build-recommended-service-job', 'test-recommended-service-job']
+  needs: ['build-user-movie-job', 'test-user-movie-job']
 
 deploy-user-movie-job:
   stage: deploy-user-movie
