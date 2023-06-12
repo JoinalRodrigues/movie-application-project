@@ -66,7 +66,7 @@ deploy-front-end-job:
   stage: deploy-front-end
   script:
     - cd front-end/dist/movie-app
-    - dir
+    - cat index.html
     - cd ..
     - cd ..
     - cd ..
@@ -86,12 +86,12 @@ build-api-gateway-job:
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
     - cd front-end/dist/movie-app
-    - dir
+    - cat index.html
     - cd ..
     - cd ..
     - cd ..
     - cd api-gateway/src/main/resources/static
-    - dir
+    - cat index.html
     - cd ..
     - cd ..
     - cd ..
