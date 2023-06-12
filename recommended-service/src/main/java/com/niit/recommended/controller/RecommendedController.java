@@ -9,6 +9,7 @@ import com.niit.recommended.service.RecommendedForUser;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,27 +25,20 @@ import static org.springframework.cglib.core.TypeUtils.add;
 
 
 
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/")
 public class RecommendedController {
 
     private ResponseEntity<?> responseEntity;
 
-
-    private RecommendedForUser recommendedForUser;
-
-    @Autowired
-    public RecommendedController(RecommendedForUser recommendedForUser)
-    {
-        this.recommendedForUser = recommendedForUser;
-    }
+    private final RecommendedForUser recommendedForUser;
 
     @ApiResponse(description = "Get(), gets genre list")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/genre")
-    private List<Genre> movieListGenre()
+    public List<Genre> movieListGenre()
     {
         List<Genre> genres=recommendedForUser.getGenreList();
         return genres;
@@ -54,7 +48,7 @@ public class RecommendedController {
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/popularMovie")
-    private List<Movie> getRecommendedMovieList()
+    public List<Movie> getRecommendedMovieList()
     {
         List<Movie> movies=recommendedForUser.getRecommendedList();
         return movies;
@@ -64,7 +58,7 @@ public class RecommendedController {
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/{name}")
-    private List<Movie> movieListByGenreName(@PathVariable String name)
+    public List<Movie> movieListByGenreName(@PathVariable String name)
     {
         List<Movie> movie=recommendedForUser.getMovieListByGenreName(name);
         return movie;
@@ -74,7 +68,7 @@ public class RecommendedController {
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/movie/{movieName}")
-    private List<Movie> movieListByMovieName(@PathVariable String movieName)
+    public List<Movie> movieListByMovieName(@PathVariable String movieName)
     {
         List<Movie> movie = recommendedForUser.getMovieListByMovieName(movieName);
         return movie;

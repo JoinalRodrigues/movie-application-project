@@ -8,9 +8,7 @@ import com.niit.userauthentication.repository.DatabaseUserRepository;
 import com.niit.userauthentication.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -68,7 +66,7 @@ public class AdminServiceImpl implements AdminService{
         Role role = this.roleRepository.findByName(roleName);
         if(role == null)
             throw new RoleNotFoundException();
-        databaseUser.setRoles(databaseUser.getRoles().stream().filter(i -> !i.toString().equals(role.toString())).collect(Collectors.toList()));
+        databaseUser.setRoles(databaseUser.getRoles().stream().filter(i -> !i.toString().equals(role.toString())).toList());
         return this.databaseUserRepository.saveAndFlush(databaseUser);
     }
 

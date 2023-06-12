@@ -8,7 +8,6 @@
 
     <appender name="FILE_AUDIT" class="ch.qos.logback.core.FileAppender">
         <file>${LOG_FILE_LOCATION}/${LOG_FILE_NAME}${LOG_FILE_EXTENSION}</file>
-<!--        <file>${LOG_FILE_LOCATION}/${LOG_FILE_NAME}_${bySecond}${LOG_FILE_EXTENSION}</file>-->
         <encoder>
             <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>

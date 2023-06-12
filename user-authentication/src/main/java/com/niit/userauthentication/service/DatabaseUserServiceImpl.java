@@ -43,8 +43,7 @@ public class DatabaseUserServiceImpl implements DatabaseUserService{
         savingDatabaseUser.setCredentialsExpiryDate(LocalDate.ofYearDay(9999, 365));
         savingDatabaseUser.setAccountNonLocked(true);
         savingDatabaseUser.setImage(databaseUser.getImage());
-        MessageDTO messageDTO = new MessageDTO("User " + databaseUserRepository.save(savingDatabaseUser).getEmail() + " registered");
-        return messageDTO;
+        return new MessageDTO("User " + databaseUserRepository.save(savingDatabaseUser).getEmail() + " registered");
     }
 
     @Override
@@ -62,7 +61,6 @@ public class DatabaseUserServiceImpl implements DatabaseUserService{
 
     @Override
     public Image getImageFromEmail(String email) {
-        Image image = databaseUserRepository.findOptionalByEmail(email).orElseThrow(InvalidCredentialsException::new).getImage();
-        return image;
+        return databaseUserRepository.findOptionalByEmail(email).orElseThrow(InvalidCredentialsException::new).getImage();
     }
 }

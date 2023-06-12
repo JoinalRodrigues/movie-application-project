@@ -35,7 +35,6 @@ public class JwtGeneratorService implements SecurityTokenGenerator{
                         .map(GrantedAuthority::getAuthority)
                         .reduce("", (i, t) -> t + "," + i)
                         .substring(0));
-        System.out.println(claims.get("roles"));
         jwtToken = Jwts.builder().setSubject(databaseUser.getEmail())
                 .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.DAYS)))
                 .addClaims(claims)

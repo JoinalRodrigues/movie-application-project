@@ -54,7 +54,6 @@ public class UserAuthenticationController {
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     public CompletableFuture<ResponseEntity<?>> adminLogin(Authentication authentication) throws InvalidCredentialsException {
-        System.err.println(authentication);
         return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.OK));
     }
 
@@ -78,7 +77,6 @@ public class UserAuthenticationController {
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     public CompletableFuture<ResponseEntity<byte[]>> getImage(Principal principal) {
-        System.err.println(principal);
         return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.databaseUserService.getImageFromEmail(principal.getName()).getImage(), HttpStatus.OK));
     }
 

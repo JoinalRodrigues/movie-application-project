@@ -2,7 +2,6 @@ package com.niit.userauthentication.exceptionhandling;
 
 import com.niit.userauthentication.dto.ErrorMessageDTO;
 import com.niit.userauthentication.exception.*;
-import com.niit.userauthentication.exception.*;
 import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
