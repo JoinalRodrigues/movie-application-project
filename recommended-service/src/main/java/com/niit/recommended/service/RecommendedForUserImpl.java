@@ -94,7 +94,6 @@ public class RecommendedForUserImpl implements RecommendedForUser{
         System.out.println(url1);
         RestTemplate restTemplate = new RestTemplate();
         JSONObject result = restTemplate.getForObject(url1, JSONObject.class);
-
         System.out.println(result.get("results"));
        List<Movie> movie = ((List<Object>)result.get("results"))
                 .stream()
