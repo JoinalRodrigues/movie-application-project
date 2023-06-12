@@ -9,6 +9,7 @@ services:
 
 stages:
   - package-front-end
+  - deploy-front-end
   - build-api-gateway
   - test-api-gateway
   - package-api-gateway
@@ -59,12 +60,25 @@ package-front-end-job:
         - "front-end/**/*"
   allow_failure: true
 
+deploy-front-end-job:
+  image: alpine
+  stage: deploy-front-end
+  script:
+    - rm -r -f ./api-gateway/src/main/resources/static
+    - mv ./front-end/dist/movie-app ./api-gateway/src/main/resources/static
+  artifacts:
+    paths:
+      - "api-gateway/src/main/resources/static/"
+  rules:
+    - changes:
+        - "front-end/**/*"
+  allow_failure: true
+  needs: ['package-front-end-job']
+
 build-api-gateway-job:
   stage: build-api-gateway
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
-    - rm -r -f ./api-gateway/src/main/resources/static
-    - mv ./front-end/dist/movie-app ./api-gateway/src/main/resources/static
     - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
     - cd api-gateway
     - mvn clean
