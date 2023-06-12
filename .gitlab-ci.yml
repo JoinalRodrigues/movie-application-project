@@ -102,6 +102,9 @@ build-api-gateway-job:
     - mvn clean
     - mvn compile
     - cd ..
+  artifacts:
+    paths:
+      - "api-gateway/src/main/resources/static/"
   rules:
     - changes:
         - "api-gateway/**/*"
@@ -115,6 +118,9 @@ test-api-gateway-job:
     - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
     - cd api-gateway
     - mvn test
+  artifacts:
+    paths:
+      - "api-gateway/src/main/resources/static/"
   rules:
     - changes:
         - "api-gateway/**/*"

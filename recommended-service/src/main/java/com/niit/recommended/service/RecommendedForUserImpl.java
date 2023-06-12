@@ -105,7 +105,7 @@ public class RecommendedForUserImpl implements RecommendedForUser{
                         ,i.get("poster_path").toString()
                         ,i.get("vote_average").toString()
                         ,i.get("release_date").toString()))
-               .limit(1)
+               .limit(6)
                 .toList();
 
 
