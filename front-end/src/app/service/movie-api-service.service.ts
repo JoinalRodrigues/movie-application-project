@@ -20,10 +20,6 @@ export class MovieApiServiceService {
 
     return this.http.get<Movie[]>(this.baseUrl + '/api/v1/recommended/popularMovie');
   }
-  // public recommendedGenre(): Observable<Movie[]> {
-   
-  //   return this.http.get<Movie[]>(this.baseUrl + '/api/v1/recommended/genre');
-  // }
 
   public searchMovie(movieName: string): Observable<any> {
    

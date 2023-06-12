@@ -27,7 +27,8 @@ export class SignInComponent implements OnInit {
       this.favService.getFavouriteMovies().subscribe(data=>
         this.favService.favourites=data
       )
-      this.router.navigate(['/movie'])
+      this.router.navigateByUrl('/movie');
+      // this.router.navigate(['/movie'])
     }),
        error => {
         console.warn(error);

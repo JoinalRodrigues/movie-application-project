@@ -9,7 +9,6 @@ import { MovieApiServiceService } from 'src/app/service/movie-api-service.servic
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  // movies:Movie[]=[];
   constructor(private service:MovieApiServiceService) { }
 
   ngOnInit(): void {

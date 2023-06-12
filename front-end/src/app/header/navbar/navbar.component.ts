@@ -30,9 +30,6 @@ navbg:any;
 if(document.body.scrollTop > 0 || document.documentElement.scrollTop > 0){
   this.navbg = {
     'background-color': '#000000a8'
-
-    // 'background-color':'#ffffff'
-    // 'background-color':'hsl(218, 41%, 30%)',
          
   }
 }else{

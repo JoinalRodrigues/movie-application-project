@@ -9,7 +9,7 @@ import { MovieFavouritesService } from './service/movie-favourites.service';
 })
 export class AppComponent {
   title = 'movie-app';
-  navbg:any;
+ 
   sideNavStatus:boolean = false;
   
   constructor(private moviefavourites:MovieFavouritesService){

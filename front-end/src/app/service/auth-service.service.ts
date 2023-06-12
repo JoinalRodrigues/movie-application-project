@@ -24,9 +24,7 @@ export class AuthServiceService {
     public loginUser(user:any):Observable<any>{
       return  this.http.post<User>(this.usersUrl2, user);
     }
-    // public loginUser(user:FormData):Observable<any>{
-    //   return  this.http.post<User>(this.usersUrl2, user);
-    // }
+  
       loggingOut(){
         sessionStorage.clear();
         this.router.navigateByUrl("");

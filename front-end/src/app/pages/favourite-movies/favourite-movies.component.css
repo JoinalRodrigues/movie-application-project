@@ -31,7 +31,7 @@ p {
 }
 h1{
    color: #dd3675;
-
+font-weight: 600;
 }
 h2{
    float: left;

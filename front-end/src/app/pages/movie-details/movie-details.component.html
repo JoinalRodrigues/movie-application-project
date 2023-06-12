@@ -1,10 +1,11 @@
+<!-- show trailers -->
 <iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+trailer.key)" title="The Invisible Barrier 
             Keeping Two Worlds Apart" frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen>
 </iframe>
 
-
+<!-- add and delete from favourite -->
 <a mat-fab extended (click)="delete(movie.movieId)" *ngIf="movie.movieId | favAlreadyAdded: true">
     <mat-icon>favorite</mat-icon>
     Favourite
@@ -13,10 +14,11 @@
     <mat-icon>favorite_outline</mat-icon>
     Favourite
 </a>
+<!-- set notification -->
 <button mat-fab color="accent" (click)="addNotification()">
     <mat-icon>notifications</mat-icon>
 </button>
-
+<!-- movie details -->
 
 <div class="row">
 
