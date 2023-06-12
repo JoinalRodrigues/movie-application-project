@@ -126,6 +126,13 @@ package-api-gateway-job:
   stage: package-api-gateway
   script:
     - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    - cd api-gateway/src/main/resources/static
+    - cat index.html
+    - cd ..
+    - cd ..
+    - cd ..
+    - cd ..
+    - cd ..
     - cd api-gateway
     - mvn package
   artifacts:
