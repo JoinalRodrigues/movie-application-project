@@ -65,11 +65,6 @@ deploy-front-end-job:
   image: alpine
   stage: deploy-front-end
   script:
-    - cd front-end/dist/movie-app
-    - cat index.html
-    - cd ..
-    - cd ..
-    - cd ..
     - rm -r -f ./api-gateway/src/main/resources/static
     - mv ./front-end/dist/movie-app ./api-gateway/src/main/resources/static
   artifacts:
@@ -85,18 +80,6 @@ build-api-gateway-job:
   stage: build-api-gateway
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
-    - cd front-end/dist/movie-app
-    - cat index.html
-    - cd ..
-    - cd ..
-    - cd ..
-    - cd api-gateway/src/main/resources/static
-    - cat index.html
-    - cd ..
-    - cd ..
-    - cd ..
-    - cd ..
-    - cd ..
     - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
     - cd api-gateway
     - mvn clean
@@ -132,13 +115,6 @@ package-api-gateway-job:
   stage: package-api-gateway
   script:
     - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-    - cd api-gateway/src/main/resources/static
-    - cat index.html
-    - cd ..
-    - cd ..
-    - cd ..
-    - cd ..
-    - cd ..
     - cd api-gateway
     - mvn package
   artifacts:
