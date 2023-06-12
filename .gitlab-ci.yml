@@ -63,7 +63,7 @@ build-api-gateway-job:
   stage: build-api-gateway
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
-    - rm -r ./api-gateway/src/main/resources/static
+    - rm -r -f ./api-gateway/src/main/resources/static
     - mv ./front-end/dist/movie-app ./api-gateway/src/main/resources/static
     - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
     - cd api-gateway
