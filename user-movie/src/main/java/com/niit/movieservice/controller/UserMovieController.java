@@ -21,6 +21,7 @@ import java.security.Principal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -37,61 +38,63 @@ public class UserMovieController {
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("file") MultipartFile file) throws UserAlreadyExistsException , InternalServerError {
-        User user = new User();
-        try {
-            responseEntity =  new ResponseEntity<>(userMovieService.registerUser(email,password,file), HttpStatus.CREATED);
-        }
-        catch(UserAlreadyExistsException | IOException | ExecutionException | InterruptedException e)
-        {
-            throw new UserAlreadyExistsException();
-        }
-        return responseEntity;
+    public CompletableFuture<ResponseEntity<User>> registerUser(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("file") MultipartFile file) throws UserAlreadyExistsException, InternalServerError, IOException, ExecutionException, InterruptedException {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new ResponseEntity<>(this.userMovieService.registerUser(email,password,file), HttpStatus.OK);
+            } catch (IOException | ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+//        try {
+//            responseEntity =  new ResponseEntity<>(userMovieService.registerUser(email,password,file), HttpStatus.CREATED);
+//        }
+//        catch(UserAlreadyExistsException | IOException | ExecutionException | InterruptedException e)
+//        {
+//            throw new UserAlreadyExistsException();
+//        }
+//        return responseEntity;
     }
 
     @ApiResponse(description = "Post(notification), adds new notification to user")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @PostMapping("/user/notification")
-    public ResponseEntity<?> addNotification(@RequestBody Movie movie,Principal principal) throws Exception, UserNotFoundException {
-        return new ResponseEntity<>(userMovieService.pushNotification(movie, principal.getName()), HttpStatus.OK);
-
+    public CompletableFuture<ResponseEntity<Boolean>> addNotification(@RequestBody Movie movie,Principal principal) throws Exception, UserNotFoundException {
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.userMovieService.pushNotification(movie, principal.getName()), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(), gets notifications of user")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping("/user/notification")
-    public ResponseEntity<?> getNotification(Principal principal){
-        return new ResponseEntity<>(userMovieService.getNotification(principal.getName()), HttpStatus.OK);
-
+    public CompletableFuture<ResponseEntity<List<Movie>>> getNotification(Principal principal){
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.userMovieService.getNotification(principal.getName()), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Post(movie), adds movie to user")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @PostMapping("/user/favourite")
-    public ResponseEntity<?> addMovieToFavourites(@RequestBody Movie movie, Principal principal) throws UserNotFoundException{
-
-        return new ResponseEntity<>(userMovieService.addMovieToFavourites(movie, principal.getName()), HttpStatus.OK);
+    public  CompletableFuture<ResponseEntity<User>> addMovieToFavourites(@RequestBody Movie movie, Principal principal) throws UserNotFoundException{
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.userMovieService.addMovieToFavourites(movie, principal.getName()), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(), gets all favourites of user")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping("/user/favourite")
-    public ResponseEntity<?> getAllFavourites(Principal principal) {
-        return new ResponseEntity<>(userMovieService.getAllFavouriteMovies(principal.getName()), HttpStatus.OK);
+    public CompletableFuture<ResponseEntity<List<Movie>>> getAllFavourites(Principal principal) {
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.userMovieService.getAllFavouriteMovies(principal.getName()), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Delete(movieId), deletes movie from favorites list of user")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @DeleteMapping("/user/favourite/{movieId}")
-    public ResponseEntity<?> deleteFavouriteFromList(@PathVariable int movieId,Principal principal) throws MovieNotFoundException
+    public CompletableFuture<ResponseEntity<Boolean>> deleteFavouriteFromList(@PathVariable int movieId,Principal principal) throws MovieNotFoundException
     {
-        return new ResponseEntity<>(userMovieService.removeMovieFromFavourites(movieId,principal.getName()), HttpStatus.OK);
-
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.userMovieService.removeMovieFromFavourites(movieId,principal.getName()), HttpStatus.OK));
     }
 
     public CompletableFuture<ResponseEntity<MessageDTO>> fallback(Exception e) throws Exception {

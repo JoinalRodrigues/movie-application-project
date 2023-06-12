@@ -8,7 +8,10 @@ import com.niit.recommended.exception.TokenExpiredException;
 import com.niit.recommended.service.RecommendedForUser;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,75 +41,63 @@ public class RecommendedController {
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/genre")
-    public List<Genre> movieListGenre()
+    public CompletableFuture<ResponseEntity<List<Genre>>> movieListGenre()
     {
-        List<Genre> genres=recommendedForUser.getGenreList();
-        return genres;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.getGenreList(), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(), gets recommended movie list")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/popularMovie")
-    public List<Movie> getRecommendedMovieList()
+    public CompletableFuture<ResponseEntity<List<Movie>>> getRecommendedMovieList()
     {
-        List<Movie> movies=recommendedForUser.getRecommendedList();
-        return movies;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.getRecommendedList(), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(genreName), gets movie list by genre name")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/{name}")
-    public List<Movie> movieListByGenreName(@PathVariable String name)
+    public CompletableFuture<ResponseEntity<List<Movie>>> movieListByGenreName(@PathVariable String name)
     {
-        List<Movie> movie=recommendedForUser.getMovieListByGenreName(name);
-        return movie;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.getMovieListByGenreName(name), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(movieName), gets movie list by movieName")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/movie/{movieName}")
-    public List<Movie> movieListByMovieName(@PathVariable String movieName)
+    public CompletableFuture<ResponseEntity<List<Movie>>> movieListByMovieName(@PathVariable String movieName)
     {
-        List<Movie> movie = recommendedForUser.getMovieListByMovieName(movieName);
-        return movie;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.getMovieListByMovieName(movieName), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(searchName), returns list of movie matching search name")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/searchMovie/{movieName}" )  //Search Function by giving MovieName
-    public List<Movie> searchMovieListByMovieName(@PathVariable String movieName)
+    public CompletableFuture<ResponseEntity<List<Movie>>> searchMovieListByMovieName(@PathVariable String movieName)
     {
-
-       List<Movie> searchMovieList = recommendedForUser.searchMovieListByMovieName(movieName);
-
-       return  searchMovieList;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.searchMovieListByMovieName(movieName), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(movieName), gets cast of movie")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/cast/{name}")
-    public List<Cast> getCastForMovies(@PathVariable String name)
+    public CompletableFuture<ResponseEntity<List<Cast>>> getCastForMovies(@PathVariable String name)
     {
-        List<Cast> castsLists = recommendedForUser.getCastForMovies(name);
-        return castsLists;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.getCastForMovies(name), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(movieName), gets specific movie data")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/{movieName}")
-    public Object getMovieInfoData(String movieName)
+    public CompletableFuture<ResponseEntity<Object>> getMovieInfoData(String movieName)
     {
-
-
-        Object movieInfoList = recommendedForUser.getMovieInfoData(movieName);
-        return  movieInfoList;
-
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.getMovieInfoData(movieName), HttpStatus.OK));
     }
 
 
@@ -114,60 +105,54 @@ public class RecommendedController {
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/upcomingMovies")
-    public List<Movie> upcomingMovieList()
+    public CompletableFuture<ResponseEntity<List<Movie>>> upcomingMovieList()
     {
-        List<Movie> upcomingMovieList = recommendedForUser.upcomingMovieList();
-        return upcomingMovieList;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.upcomingMovieList(), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(movieName), gets movie trailer")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/trailer/{name}")
-    public List<Trailer> getMovieTrailer(@PathVariable String name)
+    public CompletableFuture<ResponseEntity<List<Trailer>>> getMovieTrailer(@PathVariable String name)
     {
-        List<Trailer> trailer = recommendedForUser.getMovieTrailer(name);
-        return trailer;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.getMovieTrailer(name), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(), gets movie list belonging to action genre")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/Action")
-    public List<Movie> getMovieListActionGenre()
+    public CompletableFuture<ResponseEntity<List<Movie>>> getMovieListActionGenre()
     {
-        List<Movie> actionMovieList = recommendedForUser.getMovieListActionGenre();
-        return actionMovieList;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.getMovieListActionGenre(), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(), gets movie list belonging to comedy genre")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/Comedy")
-    public List<Movie> getMovieListComedyGenre()
+    public CompletableFuture<ResponseEntity<List<Movie>>> getMovieListComedyGenre()
     {
-        List<Movie> comedyMovieList = recommendedForUser.getMovieListComedyGenre();
-        return comedyMovieList;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.getMovieListComedyGenre(), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(), gets movie list belonging to crime genre")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/Crime")
-    public List<Movie> getMovieListCrimeGenre()
+    public CompletableFuture<ResponseEntity<List<Movie>>> getMovieListCrimeGenre()
     {
-        List<Movie> crimeMovieList = recommendedForUser.getMovieListCrimeGenre();
-        return crimeMovieList;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.getMovieListCrimeGenre(), HttpStatus.OK));
     }
 
     @ApiResponse(description = "Get(), gets movie list belonging to family genre")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
     @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/Family")
-    public List<Movie> getMovieListFamilyGenre()
+    public CompletableFuture<ResponseEntity<List<Movie>>> getMovieListFamilyGenre()
     {
-        List<Movie> familyMovieList = recommendedForUser.getMovieListFamilyGenre();
-        return familyMovieList;
+        return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.recommendedForUser.getMovieListFamilyGenre(), HttpStatus.OK));
     }
 
     public CompletableFuture<ResponseEntity<MessageDTO>> fallback(Exception e) throws Exception {
