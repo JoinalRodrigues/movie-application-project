@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Output, ViewChild } from '@angular/core';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
 
 @Component({
@@ -24,4 +25,23 @@ this.sideNavToggled.emit(this.menuStatus);
     this.auth.loggingOut();
     
 }
+navbg:any;
+  @HostListener('document:scroll') scrollover(){
+if(document.body.scrollTop > 0 || document.documentElement.scrollTop > 0){
+  this.navbg = {
+    'background-color': '#000000a8'
+
+    // 'background-color':'#ffffff'
+    // 'background-color':'hsl(218, 41%, 30%)',
+         
+  }
+}else{
+  this.navbg = {}
+}
+  }
+  @ViewChild(MatMenuTrigger) trigger!: MatMenuTrigger;
+
+  someMethod() {
+    this.trigger.openMenu();
+  }
 }

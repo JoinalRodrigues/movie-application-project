@@ -3,21 +3,20 @@
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen>
 </iframe>
-<!-- <a type="button" (click)="add()">Add to favourite</a> -->
-<!-- <mat-icon (click)="add()">favorite</mat-icon> -->
 
-<a mat-fab extended *ngIf="movie.movieId | favAlreadyAdded: true | async">
-    <mat-icon (click)="add()">favorite_outline</mat-icon>
-    Favourite
-</a>
-<a mat-fab extended *ngIf="movie.movieId | favAlreadyAdded: false | async">
-    <mat-icon (click)="add()">favorite</mat-icon>
-    Favourite
-</a>
-<!-- <a mat-fab extended>
+
+<a mat-fab extended (click)="delete(movie.movieId)" *ngIf="movie.movieId | favAlreadyAdded: true">
     <mat-icon>favorite</mat-icon>
     Favourite
-</a> -->
+</a>
+<a mat-fab extended (click)="add()" *ngIf="movie.movieId | favAlreadyAdded: false">
+    <mat-icon>favorite_outline</mat-icon>
+    Favourite
+</a>
+<button mat-fab color="accent" (click)="addNotification()">
+    <mat-icon>notifications</mat-icon>
+</button>
+
 
 <div class="row">
 

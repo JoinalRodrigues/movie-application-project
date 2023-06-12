@@ -17,56 +17,35 @@ export class MovieApiServiceService {
   }
 
   public recommendedMovies(): Observable<Movie[]> {
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-      })
-    }
+
     return this.http.get<Movie[]>(this.baseUrl + '/api/v1/recommended/popularMovie');
   }
-
+  // public recommendedGenre(): Observable<Movie[]> {
+   
+  //   return this.http.get<Movie[]>(this.baseUrl + '/api/v1/recommended/genre');
+  // }
 
   public searchMovie(movieName: string): Observable<any> {
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-      })
-    }
+   
     return this.http.get<any>(`${this.baseUrl + '/api/v1/recommended/searchMovie'}/${movieName}`);
   }
 
 
   upComingMovies(): Observable<Movie[]> {
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-      })
-    }
+   
     return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/upcomingMovies');
   }
 
   actionMovies(): Observable<Movie[]> {
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-      })
-    }
+  
     return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Action');
   }
   comedyMovies(): Observable<Movie[]> {
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-      })
-    }
+   
     return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Comedy');
   }
   crimeMovies(): Observable<Movie[]> {
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-      })
-    }
+  
     return this.http.get<Movie[]>(this.baseUrl + '/api/v1/thirdParty/Crime');
   }
   familyMovies(): Observable<Movie[]> {

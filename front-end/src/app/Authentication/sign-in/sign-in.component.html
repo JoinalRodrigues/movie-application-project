@@ -13,18 +13,22 @@
             </div>
 
             <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-
+                <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+                <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
                 <div class="card bg-glass">
                     <div class="card-body px-4 py-5 px-md-5">
                         <h2 class="fw-bold mb-2 text-uppercase" style="font-size: xx-large;">Login</h2>
-                        <br><br><br>
-        <form [formGroup]="login" (ngSubmit)="signin()">
+                        <br><br>
+                        <small class="text-danger" style="font-size:medium; font-weight: 600;">{{msg}}</small>
+                        <br>
+                        <form [formGroup]="login" (ngSubmit)="signin()">
 
 
 
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                <input type="text" name="email" id="email" class="form-control" placeholder="email" formControlName="email">
+                                <input type="text" name="email" id="email" class="form-control" placeholder="Email"
+                                    formControlName="email">
 
 
 
@@ -32,21 +36,20 @@
                             <br>
                             <!-- Password input -->
                             <div class="form-outline mb-4">
-                <input type="password" name="password" id="pwd" class="form-control" placeholder="Password" formControlName="password">
-                                   
+                                <input type="password" name="password" id="pwd" class="form-control"
+                                    placeholder="Password" formControlName="password">
+
 
                             </div>
 
-                            <div class="group">
+                            <!-- <div class="group">
                                 <input id="check" type="checkbox" class="check" checked>
-                                <label for="check"><span class="icon"></span> Keep me Signed in</label>
-                            </div>
-
+                                <label for="check"><span class="icon"></span>Remember me</label>
+                            </div> -->
+                            <br><br>
                             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-4" style=" margin-left: 4px; width: 100%; ">Login</button>
-
-                
-
+                            <button type="submit" class="btn btn-primary btn-block mb-4"
+                                style=" margin-left: 4px; width: 100%; ">Login</button>
 
                         </form>
                         <h3>Don't have an account <a [routerLink]="['/signup']">Signup</a></h3>

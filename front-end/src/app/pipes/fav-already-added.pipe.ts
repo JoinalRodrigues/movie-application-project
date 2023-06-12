@@ -8,20 +8,16 @@ import { Observable } from 'rxjs';
   name: 'favAlreadyAdded'
 })
 export class FavAlreadyAddedPipe implements PipeTransform {
-constructor(private favService:MovieFavouritesService){
-
-}
-
-  transform(value: number, ...args: unknown[]): Observable<boolean> {
-    // console.log(value,'value');
-    // console.log(args[0]);
-  return new Observable<boolean>(observor => {
-    observor.next((args[0] as boolean) ? this.favService.favourites.filter(i=>i.movieId===value).length>0 : this.favService.favourites.filter(i=>i.movieId===value).length == 0);
-    observor.complete();
-  });
-  //(args[0] as Movie[]).filter(i=>i.movieId===value).length>0;
-
-  
+  constructor(private favService: MovieFavouritesService) {
+  }
+  transform(value: number, ...args: unknown[]): boolean {
+    if (!this.favService.favourites)
+      return false;
+    return (args[0] as boolean) ? this.favService.favourites?.filter(i => i.movieId == value).length > 0 : this.favService.favourites?.filter(i => i.movieId == value).length == 0;
   }
 
+
+
 }
+
+

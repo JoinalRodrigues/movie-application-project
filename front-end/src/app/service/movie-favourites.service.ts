@@ -12,7 +12,7 @@ export class MovieFavouritesService {
   getFavouriteUrl !: string;
   deleteFavouriteUrl !: string;
 
-public favourites :Movie[]=[];
+  public favourites: Movie[] | null = null;
 
   constructor(private http: HttpClient) {
 
@@ -36,9 +36,8 @@ public favourites :Movie[]=[];
 
 
 
-
-
   addFavouriteMovies(movie: Movie) {
+    console.log(movie, 'movie');
     let httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + sessionStorage.getItem('token')

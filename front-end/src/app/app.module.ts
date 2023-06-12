@@ -56,7 +56,6 @@ import { FavAlreadyAddedPipe } from './pipes/fav-already-added.pipe';
     SignInComponent,
     SignUpComponent
 
-
   ],
   imports: [
     BrowserModule,

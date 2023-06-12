@@ -45,7 +45,8 @@
               </div>
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <input type="password" id="form3Example4" class="form-control" placeholder="password" formControlName="password"
+                <input type="password" id="form3Example4" class="form-control" placeholder="Password"
+                  formControlName="password"
                   [ngClass]="{ 'is-invalid': submitted && registerFormControl['password'].errors }" />
                 <div *ngIf="submitted && registerFormControl['password'].errors" class="invalid-feedback">
                   <div *ngIf="registerFormControl['password'].errors['required']">Password is required</div>
@@ -60,18 +61,19 @@
               </div>
               <!-- confirm password -->
               <div class="form-outline mb-4">
-                <input type="password" id="form3Example4" class="form-control" placeholder="Confirm password" formControlName="confirmPassword"
+                <input type="password" id="form3Example4" class="form-control" placeholder="Confirm password"
+                  formControlName="confirmPassword"
                   [ngClass]="{ 'is-invalid': submitted && registerFormControl['confirmPassword'].errors }" />
                 <div *ngIf="submitted && registerFormControl['confirmPassword'].errors" class="invalid-feedback">
                   <div *ngIf="registerFormControl['confirmPassword'].errors['required']">
                     Confirm Password is required
                   </div>
-                 
+
                   <div *ngIf="registerFormControl['confirmPassword'].errors['passwordMismatch']">
                     Confirm Password does not match
                   </div>
-              
-               
+
+
                 </div>
 
               </div>
@@ -79,7 +81,8 @@
               <!-- Checkbox -->
               <div class="form-check d-flex justify-content-center mb-4">
                 <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33"
-                  formControlName="acceptTerms" [ngClass]="{ 'is-invalid': submitted && registerFormControl['acceptTerms'].errors }" />
+                  formControlName="acceptTerms"
+                  [ngClass]="{ 'is-invalid': submitted && registerFormControl['acceptTerms'].errors }" />
 
                 <label class="form-check-label" for="form2Example33">
                   I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>

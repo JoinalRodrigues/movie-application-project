@@ -22,7 +22,7 @@
 	text-decoration: none;
   }
  
-  /* #radius-shape-1 {
+  #radius-shape-1 {
 	height: 220px;
 	width: 220px;
 	top: -60px;
@@ -39,7 +39,7 @@
 	height: 300px;
 	background: radial-gradient(#44006b, #ad1fff);
 	overflow: hidden;
-  } */
+  }
 
   .bg-glass {
 	background-color: hsl(218, 41%, 65%);

@@ -9,7 +9,8 @@ button:hover{
 
 }
 img{
-    width:200%;
+    width:300%;
+    border-radius: 10px;
 }
 h3, p{
     color: white;

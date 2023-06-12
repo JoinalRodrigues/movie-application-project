@@ -1,5 +1,6 @@
 import { Component,HostListener, Input, ViewChild } from '@angular/core';
 import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
+import { MovieFavouritesService } from './service/movie-favourites.service';
 
 @Component({
   selector: 'app-root',
@@ -11,24 +12,11 @@ export class AppComponent {
   navbg:any;
   sideNavStatus:boolean = false;
   
-  @HostListener('document:scroll') scrollover(){
-if(document.body.scrollTop > 0 || document.documentElement.scrollTop > 0){
-  this.navbg = {
-    // 'background-color':'hsl(218, 41%, 30%)',
-
-    // 'background-color':'#ffffff'
-    // 'background-color':'hsl(218, 41%, 30%)',
-         
-  }
-}else{
-  this.navbg = {
-
-  }
-}
-  }
-  @ViewChild(MatMenuTrigger) trigger!: MatMenuTrigger;
-
-  someMethod() {
-    this.trigger.openMenu();
+  constructor(private moviefavourites:MovieFavouritesService){
+    if(!this.moviefavourites.favourites){
+      if(sessionStorage.getItem('token')){
+        this.moviefavourites.getFavouriteMovies().subscribe(res => this.moviefavourites.favourites = res);
+      }
+    }
   }
 }

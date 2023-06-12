@@ -14,6 +14,7 @@ export class SignInComponent implements OnInit {
     email:new FormControl(''),
     password:new FormControl('')
   })
+  msg:string="";
   constructor(private router:Router,private authService:AuthServiceService,private favService:MovieFavouritesService) { }
 
   ngOnInit(): void {
@@ -27,7 +28,13 @@ export class SignInComponent implements OnInit {
         this.favService.favourites=data
       )
       this.router.navigate(['/movie'])
-    }))
+    }),
+       error => {
+        console.warn(error);
+        console.log("user does not exist");
+        this.msg="Bad credentials,please enter valid email and password";
+          
+      })
   }
 
   // loginForm = new FormGroup({
