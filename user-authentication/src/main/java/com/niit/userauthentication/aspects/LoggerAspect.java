@@ -13,9 +13,9 @@ import java.util.Arrays;
 public class LoggerAspect {
     private static final Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
 
-    @Pointcut("execution (* com.niit.project.userauthentication.repository.*.*(..)) || "
-    + "execution (* com.niit.project.userauthentication.controller.*.*(..)) || "
-    + "execution (* com.niit.project.userauthentication.service.*.*(..))")
+    @Pointcut("execution (* com.niit.userauthentication.repository.*.*(..)) || "
+    + "execution (* com.niit.userauthentication.controller.*.*(..)) || "
+    + "execution (* com.niit.userauthentication.service.*.*(..))")
     public void allMethods(){}
 
     @Before(value = "allMethods()")
@@ -54,7 +54,7 @@ public class LoggerAspect {
 
 //Around is giving error for async methods
 
-//    @Around("execution (* com.niit.project.userauthentication.controller.*.*(..))")
+//    @Around("execution (* com.niit.userauthentication.controller.*.*(..))")
 //    @Async
 //    public void executingAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
 //        logger.info("**********@Around**********");

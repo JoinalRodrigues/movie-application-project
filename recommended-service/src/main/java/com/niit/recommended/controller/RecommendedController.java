@@ -2,14 +2,22 @@ package com.niit.recommended.controller;
 
 import com.niit.recommended.domain.*;
 
+import com.niit.recommended.dto.MessageDTO;
+import com.niit.recommended.exception.InvalidCredentialsException;
+import com.niit.recommended.exception.TokenExpiredException;
 import com.niit.recommended.service.RecommendedForUser;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import static org.springframework.cglib.core.TypeUtils.add;
@@ -32,6 +40,9 @@ public class RecommendedController {
         this.recommendedForUser = recommendedForUser;
     }
 
+    @ApiResponse(description = "Get(), gets genre list")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/genre")
     private List<Genre> movieListGenre()
     {
@@ -39,7 +50,9 @@ public class RecommendedController {
         return genres;
     }
 
-
+    @ApiResponse(description = "Get(), gets recommended movie list")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/popularMovie")
     private List<Movie> getRecommendedMovieList()
     {
@@ -47,7 +60,9 @@ public class RecommendedController {
         return movies;
     }
 
-
+    @ApiResponse(description = "Get(genreName), gets movie list by genre name")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/{name}")
     private List<Movie> movieListByGenreName(@PathVariable String name)
     {
@@ -55,7 +70,9 @@ public class RecommendedController {
         return movie;
     }
 
-
+    @ApiResponse(description = "Get(movieName), gets movie list by movieName")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/movie/{movieName}")
     private List<Movie> movieListByMovieName(@PathVariable String movieName)
     {
@@ -63,6 +80,9 @@ public class RecommendedController {
         return movie;
     }
 
+    @ApiResponse(description = "Get(searchName), returns list of movie matching search name")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/recommended/searchMovie/{movieName}" )  //Search Function by giving MovieName
     public List<Movie> searchMovieListByMovieName(@PathVariable String movieName)
     {
@@ -72,6 +92,9 @@ public class RecommendedController {
        return  searchMovieList;
     }
 
+    @ApiResponse(description = "Get(movieName), gets cast of movie")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/cast/{name}")
     public List<Cast> getCastForMovies(@PathVariable String name)
     {
@@ -79,6 +102,9 @@ public class RecommendedController {
         return castsLists;
     }
 
+    @ApiResponse(description = "Get(movieName), gets specific movie data")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/{movieName}")
     public Object getMovieInfoData(String movieName)
     {
@@ -90,7 +116,9 @@ public class RecommendedController {
     }
 
 
-
+    @ApiResponse(description = "Get(), gets upcoming movies list")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/upcomingMovies")
     public List<Movie> upcomingMovieList()
     {
@@ -98,6 +126,9 @@ public class RecommendedController {
         return upcomingMovieList;
     }
 
+    @ApiResponse(description = "Get(movieName), gets movie trailer")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/trailer/{name}")
     public List<Trailer> getMovieTrailer(@PathVariable String name)
     {
@@ -105,6 +136,9 @@ public class RecommendedController {
         return trailer;
     }
 
+    @ApiResponse(description = "Get(), gets movie list belonging to action genre")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/Action")
     public List<Movie> getMovieListActionGenre()
     {
@@ -112,7 +146,9 @@ public class RecommendedController {
         return actionMovieList;
     }
 
-
+    @ApiResponse(description = "Get(), gets movie list belonging to comedy genre")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/Comedy")
     public List<Movie> getMovieListComedyGenre()
     {
@@ -120,6 +156,9 @@ public class RecommendedController {
         return comedyMovieList;
     }
 
+    @ApiResponse(description = "Get(), gets movie list belonging to crime genre")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/Crime")
     public List<Movie> getMovieListCrimeGenre()
     {
@@ -127,12 +166,23 @@ public class RecommendedController {
         return crimeMovieList;
     }
 
-
+    @ApiResponse(description = "Get(), gets movie list belonging to family genre")
+    @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "WindowOf10", fallbackMethod = "fallback")
     @GetMapping(value = "/thirdParty/Family")
     public List<Movie> getMovieListFamilyGenre()
     {
         List<Movie> familyMovieList = recommendedForUser.getMovieListFamilyGenre();
         return familyMovieList;
+    }
+
+    public CompletableFuture<ResponseEntity<MessageDTO>> fallback(Exception e) throws Exception {
+        if(e instanceof InvalidCredentialsException)
+            throw e;
+        if(e instanceof TokenExpiredException)
+            throw e;
+        e.printStackTrace();
+        return CompletableFuture.completedFuture(new ResponseEntity<>(new MessageDTO("Server error, please try in some time"), HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
 
