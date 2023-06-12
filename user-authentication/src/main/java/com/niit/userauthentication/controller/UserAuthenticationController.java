@@ -15,7 +15,10 @@ import com.niit.userauthentication.service.SecurityTokenGenerator;
 import com.niit.userauthentication.service.DatabaseUserService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -72,6 +75,7 @@ public class UserAuthenticationController {
         return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(this.databaseUserService.saveUser(databaseUser), HttpStatus.CREATED));
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @ApiResponse(description = "Get(), gets image")
     @GetMapping(value = "/api/v1/image", produces = "image/webp")
     @TimeLimiter(name = "TimeoutIn5Seconds", fallbackMethod = "fallback")
