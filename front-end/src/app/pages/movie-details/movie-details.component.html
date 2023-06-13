@@ -1,0 +1,43 @@
+<!-- show trailers -->
+<iframe [src]="domSanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+trailer.key)" title="The Invisible Barrier 
+            Keeping Two Worlds Apart" frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+
+<!-- add and delete from favourite -->
+<a mat-fab extended (click)="delete(movie.movieId)" *ngIf="movie.movieId | favAlreadyAdded: true">
+    <mat-icon>favorite</mat-icon>
+    Favourite
+</a>
+<a mat-fab extended (click)="add()" *ngIf="movie.movieId | favAlreadyAdded: false">
+    <mat-icon>favorite_outline</mat-icon>
+    Favourite
+</a>
+<!-- set notification -->
+<button mat-fab color="accent" (click)="addNotification()">
+    <mat-icon>notifications</mat-icon>
+</button>
+<!-- movie details -->
+
+<div class="row">
+
+    <div class="col-lg-10 mt-5 p-4">
+        <h2 class="mt-2 mb-2">{{movie.originalTitle}}</h2>
+        <p class="mt-3 mb-3">{{movie.overview}}</p>
+    </div>
+    <div class=" p-4">
+        <h2 class="text-white">Cast</h2>
+        <div class="row">
+
+            <div class="col-lg-4" *ngFor="let t of casts">
+
+                <div class="row">
+                    <div class="col-lg-10">
+                        <p class="text-white">{{t.name}}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

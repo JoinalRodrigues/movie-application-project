@@ -139,9 +139,6 @@ management:
 logging:
   file:
     name: ./logs/user-authentication.log
-#  logback:
-#    rollingpolicy:
-#      max-file-size: 10MB
 ---
 # test
 

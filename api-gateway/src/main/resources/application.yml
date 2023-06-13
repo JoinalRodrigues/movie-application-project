@@ -140,6 +140,5 @@ logging:
   file:
     name: ./logs/api-gateway.log
   logback:
-#    rollingpolicy:
-#      max-file-size: 10MB
+
 
